@@ -1,0 +1,19 @@
+Document (dev.stxt.namespace):Contribuye con nosotros
+
+	Metadata:
+		Description: Cosas que faltan por hacer en el lenguaje @STXT@ y formas de contribuir con el mantenimiento y los contenidos del portal.
+		Author: Joan Costa Mombiela
+		Last modif: 2013-10-17
+		
+	Header: ¿Quieres contribuir?
+		
+	Alert: ¡¡Gracias por querer colaborar con nosotros!!
+		
+	Content>>
+		La mejor forma de ayudarnos es dando a conocer el lenguaje. Usándolo,
+		hablando a otras personas, y disfrutando con él. Nosotros ya lo hemos 
+		usado, y la experiencia ha sido genial.
+		
+		Aunque queda mucho trabajo por hacer. Faltan librerías, editores de texto,
+		aplicaciones,... la lista es interminable.
+	

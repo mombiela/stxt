@@ -1,0 +1,66 @@
+Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
+	Header: @STXT@: Introduction 
+
+	Alert>>
+		@STXT@ has a **Human-First** spirit, putting people at the center. \\
+		The documents are readable and expressive, while also being reliable for machines.
+		
+	Subheader: Documents
+	
+	Content>>
+		An @STXT@ document is a structured text file, designed to be human-readable and easy for machines to process.
+		It contains "nodes": non-empty lines (outside of `>>` blocks) that define "Name" and value pairs, or blocks of literal text.
+		
+	Subheader: Main features
+		
+	Content>>
+		* Inline/container nodes: `Name: Value` (can have indented children).
+		* Text blocks: `Name >>` followed by literal lines that are not parsed internally.
+		* Hierarchy is defined by indentation (tabs or 4 spaces per level depending on the document).
+		* Supports namespaces (e.g. `(@com.example)`), comments outside blocks (`# ...`), and validation via schemas (`@stxt.schema`).
+		
+		An STXT document balances human clarity with explicit semantic structure — ideal for content, configurations, and interoperable data.
+	
+	Code>>
+		***Email***:
+			From: John Smith
+			To: Mery Adams
+			Cc: Keyla Brown
+			Title: Project report
+			***Body Content >>***
+				Hello Mery! 
+				The book is finished!
+
+	Subheader: Documents with namespace
+	
+	Content: @STXT@ allows the use of namespaces, to give meaning and structure to the content.
+		
+	Code>>
+		***Email (com.example.docs)***:
+			From: John Smith
+			To: Mery Adams
+			Cc: Keyla Brown
+			Title: Project report
+			Body Content >>
+				Hello Mery!! 
+				The book is finished!!
+	Content>>
+		And the definition of the namespace
+		
+	Code>>
+		***Schema (@stxt.schema):***
+			Namespace: ***com.example.docs***
+			Node: Email
+				Childs >>
+					From
+					To
+					Cc
+					Bcc
+					Title
+					Body Content
+			Node: From
+			Node: To
+			Node: Cc
+			Node: Bcc
+			Node: Title
+			Node: Body Content

@@ -1,0 +1,56 @@
+Document(dev.stxt.namespace): STXT: El Libro
+	SubHeader: @STXT@
+	
+	Link: Introducción
+		Page: index
+		
+	Link: Tutorial
+		Page: lang-tutorial
+	
+	Subheader: Referencia del Lenguaje
+	
+	Link: Documentos @STXT@
+		Page: lang-reference
+		
+	Link: Esquemas @STXT@
+		Page: lang-schema-ref
+		
+	Link: Grammar
+		Page: lang-grammar
+			
+	SubHeader: Casos de uso 
+	
+	Link: @STXT@2
+		Page: use-cases-stxt2
+		
+	Link: Documentos Corporativos
+		Page: use-cases-corporate-docs
+		
+	Link: Wikipedia
+		Page: use-cases-wikipedia
+		
+	Link: CMS
+		Page: use-cases-cms
+		
+	Link: Publicaciones
+		Page: use-cases-editorial
+		
+	Link: Ficheros configuración
+		Page: use-cases-config-files
+		
+	Link: Open api
+		Page: use-cases-open-api
+			
+	SubHeader: Herramientas
+	
+	Link: Parsers
+		Page: tools-parsers
+		
+	Link: IDE's
+		Page: tools-ides
+		
+	Link: Editor online
+		Page: tools-online-editor
+	
+	
+	

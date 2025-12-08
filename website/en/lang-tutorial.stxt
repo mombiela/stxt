@@ -1,0 +1,107 @@
+Document (dev.stxt.namespace): STXT Tutorial
+
+	Header: @STXT@ Tutorial
+
+	SubHeader: What is @STXT@?
+
+	Content>>
+		@STXT@ is a semantic and readable textual language, designed to represent
+		structured documents in a simple and machine-processable way. Its basic rules
+		allow inline nodes, literal text blocks, and namespaces.
+
+	SubHeader: Example: book record for publishers
+
+	Content>>
+		Below we show a practical and simple example to describe a book
+		that a publisher can use: metadata, chapters, and sample content.
+
+	Code>>
+		Book: Example Book
+			Title: Modern Software Architecture
+			Authors:
+				Author: María Pérez
+				Author: Juan García
+			ISBN: 978-84-123456-7-8
+			Publisher: ACME Publishing
+			Published: 2025-10-01
+			Summary >>
+				This book offers a practical view of patterns and best practices
+				for designing distributed and scalable systems.
+			Chapters:
+				Chapter: 1
+					Title: Introduction to Architecture
+					Pages: 20
+					Content >>
+						In this chapter we present basic concepts: monoliths, microservices,
+						and criteria for choosing a suitable architecture.
+				Chapter: 2
+					Title: Communication Between Services
+					Pages: 30
+					Content >>
+						Protocols, messaging, and integration patterns are described.
+
+	SubHeader: Associate the document with a namespace
+
+	Content>>
+		We can associate the record with a namespace to validate it using a schema.
+
+	Code>>
+		Book (@com.acme.book): Example Book
+			Title: Modern Software Architecture
+			Authors:
+				Author: María Pérez
+			ISBN: 978-84-123456-7-8
+
+	SubHeader: Example schema (simplified)
+
+	Content>>
+		A schema allows you to define the shape and types of the nodes in a namespace.
+
+	Code>>
+		Schema (@stxt.schema): com.acme.book
+			Node: Book
+				Type: EMPTY
+				Childs >>
+					(1) Title
+					(1) Authors
+					(1) ISBN
+			Node: Title
+				Type: TEXT INLINE
+			Node: Authors
+				Type: TEXT MULTILINE
+			Node: ISBN
+				Type: TEXT INLINE
+			Node: Chapter
+				Type: EMPTY
+				Childs >>
+					(1) Title
+					(?) Pages
+					(?) Content
+
+	SubHeader: Best practices
+
+	Content>>
+		- Use `>>` blocks for chapter content or multiline texts.
+		- Keep indentation consistent (4 spaces per level) and do not mix tabs and spaces.
+		- Use namespaces to separate schemas by publishers or collections.
+		- Define minimum cardinalities in schemas to ensure key data.
+
+	SubHeader: Complete final example
+
+	Code>>
+		Book (@com.acme.book): ACME - Modern Software Architecture
+			Title: Modern Software Architecture
+			Authors:
+				Author: María Pérez
+				Author: Juan García
+			ISBN: 978-84-123456-7-8
+			Chapters:
+				Chapter: 1
+					Title: Introduction to Architecture
+					Content >>
+						Basic concepts and objectives of the book.
+
+	Content>>
+		If you want, I can generate from this example: (a) an intermediate JSON
+		conversion for automatic processing, (b) a converter to a catalog format
+		(ISBN/OPDS), or (c) validation tests against the example schema. Which do you prefer?
