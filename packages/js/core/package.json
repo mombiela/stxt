@@ -1,0 +1,7 @@
+{
+  "name": "@stxt-lang/core",
+  "version": "0.0.1",
+  "description": "STXT core parser for JavaScript/Node",
+  "main": "src/index.js",
+  "license": "MIT"
+}

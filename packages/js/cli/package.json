@@ -1,0 +1,12 @@
+{
+  "name": "@stxt-lang/cli",
+  "version": "0.0.1",
+  "description": "STXT command line interface",
+  "bin": {
+    "stxt": "bin/stxt"
+  },
+  "dependencies": {
+    "@stxt-lang/core": "0.0.1"
+  },
+  "license": "MIT"
+}
