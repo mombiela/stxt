@@ -5,15 +5,11 @@ Document (dev.stxt.namespace):Contribute with us
 		Author: Joan Costa Mombiela
 		Last modif: 2013-10-17
 		
-	Header: Do you want to contribute?
+	Header: Contribute with us
 		
-	Alert: Thank you so much for wanting to collaborate with us!!
+	Alert >>
+		**Page under construction.**\\
+		The content is shown only as an example of the current progress,
+		and may change significantly in the final version.
 		
-	Content>>
-		The best way to help us is by spreading the word about the language. Using it,
-		telling other people, and enjoying it. We have already used it,
-		and the experience has been great.
-		
-		Although there is still a lot of work to do. Libraries are missing, text editors,
-		applications,... the list is endless.
 	

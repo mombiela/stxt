@@ -1,7 +1,7 @@
 Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 	Header: @STXT@: Introducción 
 
-	Alert>>
+	Assert>>
 		@STXT@ tiene un espíritu **Human-First**, colocando las personas en el centro. \\
 		Los documentos son legibles y expresivos, y al mismo tiempo fiables para máquinas.
 		
@@ -64,3 +64,6 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 			Node: Bcc
 			Node: Title
 			Node: Body Content
+				Type: TEXT
+			
+			

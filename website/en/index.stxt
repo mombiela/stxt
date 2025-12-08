@@ -1,15 +1,15 @@
 Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 	Header: @STXT@: Introduction 
 
-	Alert>>
+	Assert>>
 		@STXT@ has a **Human-First** spirit, putting people at the center. \\
-		The documents are readable and expressive, while also being reliable for machines.
+		The documents are readable and expressive, while also reliable for machines.
 		
 	Subheader: Documents
 	
 	Content>>
 		An @STXT@ document is a structured text file, designed to be human-readable and easy for machines to process.
-		It contains "nodes": non-empty lines (outside of `>>` blocks) that define "Name" and value pairs, or blocks of literal text.
+		It contains "nodes": non-empty lines (outside of `>>` blocks) that define "Name" and value pairs, or literal text blocks.
 		
 	Subheader: Main features
 		
@@ -31,7 +31,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 				Hello Mery! 
 				The book is finished!
 
-	Subheader: Documents with namespace
+	Subheader: Namespaced documents
 	
 	Content: @STXT@ allows the use of namespaces, to give meaning and structure to the content.
 		
@@ -45,7 +45,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 				Hello Mery!! 
 				The book is finished!!
 	Content>>
-		And the definition of the namespace
+		And the namespace definition
 		
 	Code>>
 		***Schema (@stxt.schema):***
@@ -64,3 +64,6 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 			Node: Bcc
 			Node: Title
 			Node: Body Content
+				Type: TEXT
+			
+			

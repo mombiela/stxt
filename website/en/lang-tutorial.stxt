@@ -2,6 +2,11 @@ Document (dev.stxt.namespace): STXT Tutorial
 
 	Header: @STXT@ Tutorial
 
+	Alert >>
+		**Page under construction.**\\
+		The content is shown only as an example of the current progress,
+		and may change significantly in the final version.
+		
 	SubHeader: What is @STXT@?
 
 	Content>>
@@ -13,7 +18,7 @@ Document (dev.stxt.namespace): STXT Tutorial
 
 	Content>>
 		Below we show a practical and simple example to describe a book
-		that a publisher can use: metadata, chapters, and sample content.
+		that a publisher could use: metadata, chapters, and sample content.
 
 	Code>>
 		Book: Example Book
@@ -102,6 +107,4 @@ Document (dev.stxt.namespace): STXT Tutorial
 						Basic concepts and objectives of the book.
 
 	Content>>
-		If you want, I can generate from this example: (a) an intermediate JSON
-		conversion for automatic processing, (b) a converter to a catalog format
-		(ISBN/OPDS), or (c) validation tests against the example schema. Which do you prefer?
+		If you want, I can generate from this example: (a) an intermediate JSON conversion for automatic processing, (b) a converter to a catalog format (ISBN/OPDS), or (c) validation tests against the example schema. Which do you prefer?

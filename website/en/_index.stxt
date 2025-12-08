@@ -7,6 +7,12 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: Tutorial
 		Page: lang-tutorial
 	
+	Link: STXT CLI
+		Page: lang-cli-stxt
+	
+	Link: Online Editor
+		Page: lang-online-editor
+	
 	Subheader: Language Reference
 	
 	Link: @STXT@ Documents
@@ -15,14 +21,21 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: @STXT@ Schemas
 		Page: lang-schema-ref
 		
-	Link: Grammar
+	Link: @STXT@ Grammar
 		Page: lang-grammar
 			
+	Subheader: Transformations		
+	
+	Link: STXT to XML
+		Page: stxt2xml
+		
+	Subheader: Migrations		
+	
+	Link: XML to STXT
+		Page: migrate-xml		
+		
 	SubHeader: Use Cases 
 	
-	Link: @STXT@2
-		Page: use-cases-stxt2
-		
 	Link: Corporate Documents
 		Page: use-cases-corporate-docs
 		
@@ -37,20 +50,3 @@ Document(dev.stxt.namespace): STXT: The Book
 		
 	Link: Configuration Files
 		Page: use-cases-config-files
-		
-	Link: Open api
-		Page: use-cases-open-api
-			
-	SubHeader: Tools
-	
-	Link: Parsers
-		Page: tools-parsers
-		
-	Link: IDE's
-		Page: tools-ides
-		
-	Link: Online Editor
-		Page: tools-online-editor
-	
-	
-	

@@ -6,6 +6,11 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 	Header: STXT-SPEC-DRAFT
 	
+	Alert >>
+		**Page under construction.**\\
+		The content is shown only as an example of current progress,
+		and may change significantly in the final version. 
+		
 	Content>>
 	
 		**STXT (Semantic Text) — Core Language Specification**
@@ -55,7 +60,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		# 4. Syntactic Unit: Node
 		
-		Each non-empty line in the document that is not a comment nor part of a `>>` block defines a **node**.
+		Each non-empty line of the document that is not a comment nor part of a `>>` block defines a **node**.
 		
 		There are two forms of node:
 		
@@ -88,7 +93,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		  - The start of a namespace `(`,
 		  - The character `:`,
 		  - The operator `>>`,
-		  - Or the end of line.
+		  - Or the end of the line.
 		
 		On that fragment, apply:
 		
@@ -175,7 +180,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Block >>
 		    Text
 		        Child: value YES allowed, it's text, not parsed
-		        Other child: YES allowed
+		        Another child: YES allowed
 		    # This is also text
 		NextNode: value
 		```
@@ -183,7 +188,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		In this example:
 		
 		* Everything indented below `Block >>` is literal text.
-		* `Child: value` and `Other child: YES allowed` are **not** nodes, but text.
+		* `Child: value` and `Another child: YES allowed` are **not** nodes, but text.
 		* `NextNode: value` is outside the `>>` block.
 		
 		---
@@ -202,7 +207,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* **SHOULD** use hierarchical format (`@a.b.c`).
 		* It is inherited by child nodes.
 		* The default namespace is **`@stxt`**.
-		* A child node can redefine its namespace by indicating (@other.namespace), in which case it uses that namespace instead of the inherited one.
+		* A child node may redefine its namespace by indicating (@other.namespace), in which case it uses that namespace instead of the inherited one.
 		
 		---
 		
@@ -248,7 +253,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Inside a `>>` block:
 		
 		* Any line with indentation equal to or greater than the minimum indentation of the block **MUST** be treated as literal text, even if it starts with `#`.
-		* A line less indented than the block ends the block and can be:
+		* A line less indented than the block ends the block and may be:
 		
 		  * A comment, if it starts with `#`.
 		  * A structured node.
@@ -260,7 +265,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    Text >>
 		        # This is text
 		        Normal line
-		            # This is also text
+		            # Also text
 		    # This is a comment
 		```
 		
@@ -274,7 +279,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		When parsing a node with `:`:
 		
-		1. The parser takes all characters from immediately after `:` to the end of the line.
+		1. The parser takes all characters immediately after `:` up to the end of the line.
 		2. The inline value **MUST** be normalized by applying:
 		
 		   * Removal of leading spaces and tabs (left trim).
@@ -300,7 +305,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		1. The parser determines the content of the line from the text that follows the minimum indentation of the block (i.e., only the block indentation is removed, but any additional indentation is preserved as part of the text).
 		2. On that content, the parser **MUST** remove all trailing spaces and tabs (right trim).
 		
-		Example of line canonicalization:
+		Example of canonicalization of lines:
 		
 		```stxt
 		Block >>
@@ -388,7 +393,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* It correctly interprets nodes with `:` and `>>` blocks.
 		* It interprets comments outside of `>>` blocks.
 		* It treats **everything** inside `>>` blocks as literal text.
-		* It applies the whitespace normalization rules from section 10.
+		* It applies the whitespace normalization rules of section 10.
 		* It rejects invalid documents according to section 11.
 		
 		---
@@ -465,7 +470,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Block >>
 		    Text
 		        Child: value YES allowed
-		        Other child: YES allowed
+		        Another child: YES allowed
 		    # This is also text
 		Next: Node
 		```

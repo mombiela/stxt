@@ -5,15 +5,11 @@ Document (dev.stxt.namespace):Contribuye con nosotros
 		Author: Joan Costa Mombiela
 		Last modif: 2013-10-17
 		
-	Header: ¿Quieres contribuir?
+	Header: Contribuye con nosostros
 		
-	Alert: ¡¡Gracias por querer colaborar con nosotros!!
+	Alert >>
+		**Página en construcción.**\\
+		El contenido se muestra sólo como ejemplo del progreso actual,
+		y puede cambiar notablemente con la versión definitiva. 
 		
-	Content>>
-		La mejor forma de ayudarnos es dando a conocer el lenguaje. Usándolo,
-		hablando a otras personas, y disfrutando con él. Nosotros ya lo hemos 
-		usado, y la experiencia ha sido genial.
-		
-		Aunque queda mucho trabajo por hacer. Faltan librerías, editores de texto,
-		aplicaciones,... la lista es interminable.
 	

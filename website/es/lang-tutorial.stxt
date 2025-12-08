@@ -2,6 +2,11 @@ Document (dev.stxt.namespace): STXT Tutorial
 
 	Header: @STXT@ Tutorial
 
+	Alert >>
+		**Página en construcción.**\\
+		El contenido se muestra sólo como ejemplo del progreso actual,
+		y puede cambiar notablemente con la versión definitiva. 
+		
 	SubHeader: ¿Qué es @STXT@?
 
 	Content>>

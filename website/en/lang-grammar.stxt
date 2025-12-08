@@ -6,6 +6,11 @@ Document (dev.stxt.namespace):EBNF
 		
 	Header: EBNF
 		
+	Alert >>
+		**Page under construction.**\\
+		The content is shown only as an example of the current progress,
+		and may change significantly in the final version. 
+		
 	Content:Below we show the EBNF grammar:
 	
 	Code>>

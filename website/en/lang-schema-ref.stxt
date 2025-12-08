@@ -6,6 +6,11 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 	Header: STXT-SCHEMA-SPEC-DRAFT
 	
+	Alert >>
+		**Page under construction.**\\
+		The content is shown only as an example of current progress,
+		and may change significantly in the final version. 
+		
 	Content>>
 	
 		**STXT (Semantic Text) — Schema Language Specification**
@@ -32,9 +37,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		# 2. Terminology
 		
-		The keywords **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** are interpreted according to **RFC 2119**.
+		The keywords **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** are to be interpreted as described in **RFC 2119**.
 		
-		Terms such as *node*, *indentation*, *namespace*, *inline*, and *block `>>`* retain their meaning in *STXT-SPEC*.
+		Terms such as *node*, *indentation*, *namespace*, *inline*, and *block `>>`* retain their meaning as in *STXT-SPEC*.
 		
 		---
 		
@@ -43,7 +48,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		Validation via schema occurs **after** STXT parsing:
 		
 		1. Parsing to hierarchical STXT structure.
-		2. Resolution of the logical namespace (inheritance).
+		2. Resolution of logical namespace (inheritance).
 		3. Application of the corresponding schema.
 		
 		---
@@ -121,7 +126,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		* `(@namespace)` (optional):
 		
 		  * If omitted: the schema's target namespace is assumed.
-		  * If indicated: the child belongs to that specific namespace.
+		  * If specified: the child belongs to that specific namespace.
 		
 		## 7.1. NEW RULE (strict and mandatory)
 		
@@ -138,9 +143,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		  then **there must exist a schema for `com.google.html`**
 		  **and within it there must be `Node: Metadata`**.
 		
-		* This rule is mandatory both in *strict* and non-strict mode.
+		* This rule is mandatory in both *strict* and non-strict mode.
 		
-		This avoids “phantom” children and guarantees that all nodes have defined semantics.
+		This avoids “phantom” children and ensures that all nodes have defined semantics.
 		
 		---
 		
@@ -162,7 +167,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		* Applies per instance of the parent node.
 		* Counts only **direct** children with name + effective namespace.
-		* A conformant validator **MUST** check cardinalities.
+		* A conforming validator **MUST** check cardinalities.
 		
 		---
 		
@@ -196,8 +201,8 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		## 9.2. Key Rules
 		
-		* The type **DOES NOT control obligatoriness**, only form and validity of the value.
-		  The obligatoriness of appearance is controlled via cardinality.
+		* The type **DOES NOT control obligatoriness**, only the form and validity of the value.
+		  The obligatoriness of appearance is controlled by cardinality.
 		* **BLOCK-only** types (`TEXT MULTILINE`, `CODE:*`, `BASE64`)
 		  ⇒ **MUST NOT** have children.
 		* `EMPTY`:
@@ -231,10 +236,10 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		* If a namespace has no schema:
 		
-		  * May accept the document but **SHOULD** emit a warning.
+		  * The document may be accepted but **SHOULD** emit a warning.
 		* If a `Node` is not defined:
 		
-		  * May be accepted with a warning.
+		  * It may be accepted with a warning.
 		* Children not contemplated in `Childs>>`:
 		
 		  * Are accepted but marked as "not covered by the schema".
@@ -375,7 +380,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		## 14.3. Quick Reading
+		## 14.3. Quick Reference
 		
 		* `Schema`
 		  Inline value = target namespace (e.g. `com.example.docs`).
@@ -429,5 +434,3 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		```
 		
 		# 15. End of Document
-			
-				

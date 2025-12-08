@@ -1,10 +1,10 @@
-Document (dev.stxt.namespace):xxx
+Document (dev.stxt.namespace):CLI
 
 	Metadata:
 		Author: Joan Costa Mombiela
 		Last modif: 2025-12-05
 		
-	Header: xxx
+	Header: CLI
 		
 	Alert >>
 		**Página en construcción.**\\
