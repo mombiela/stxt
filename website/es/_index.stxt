@@ -13,6 +13,9 @@ Document(dev.stxt.namespace): STXT: El Libro
 	Link: Editor online
 		Page: lang-online-editor
 	
+	Link: Herramientas
+		Page: lang-tools
+	
 	Subheader: Referencia del Lenguaje
 	
 	Link: Documentos @STXT@
