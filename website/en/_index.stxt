@@ -26,6 +26,9 @@ Document(dev.stxt.namespace): STXT: The Book
 			
 	Subheader: Transformations		
 	
+	Link: STXT to JSON
+		Page: stxt2json
+		
 	Link: STXT to HTML
 		Page: stxt2html
 		
