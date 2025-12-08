@@ -6,6 +6,7 @@ Multilanguage implementation of the STXT language.
 - Java library in `packages/java`
 - Python package in `packages/python`
 - Specs in `spec/`
+- Parser (pseudocode) in `core/`
 
 ## Project website
 
