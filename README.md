@@ -1,6 +1,6 @@
 # STXT
 
-Multilanguage implementation of the STXT language.
+Multilanguage implementation and reference of the STXT language.
 
 - JavaScript / Node (core parser + CLI) in `packages/js`
 - Java library in `packages/java`
