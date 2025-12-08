@@ -26,13 +26,25 @@ Document(dev.stxt.namespace): STXT: The Book
 			
 	Subheader: Transformations		
 	
+	Link: STXT to HTML
+		Page: stxt2html
+		
+	Link: STXT to PDF
+		Page: stxt2pdf
+		
 	Link: STXT to XML
 		Page: stxt2xml
+		
+	Link: STXT to YAML
+		Page: stxt2yaml
 		
 	Subheader: Migrations		
 	
 	Link: XML to STXT
 		Page: migrate-xml		
+		
+	Link: YAML to STXT
+		Page: migrate-yaml		
 		
 	SubHeader: Use Cases 
 	
