@@ -1,6 +1,40 @@
-.project
+###############################
+# Node / JavaScript / TypeScript
+###############################
 
-# Byte-compiled / optimized / DLL files
+# Dependencies
+node_modules/
+
+# Output
+dist/
+build/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Coverage
+coverage/
+*.lcov
+
+# Misc
+.next/
+.svelte-kit/
+*.tsbuildinfo
+
+
+###############################
+# Python
+###############################
+
+# Byte-compiled / optimized files
 __pycache__/
 *.py[cod]
 *.pyo
@@ -9,8 +43,90 @@ __pycache__/
 # Virtual environments
 .venv/
 venv/
+env/
 
-# Packaging
+# Distribution / packaging
 build/
 dist/
 *.egg-info/
+.eggs/
+MANIFEST
+
+# Python test/cache
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+
+###############################
+# Java / Maven
+###############################
+
+target/
+dependency-reduced-pom.xml
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Gradle
+.gradle/
+gradlew
+gradlew.bat
+
+
+###############################
+# VSCode
+###############################
+
+.vscode/
+.history/
+
+
+###############################
+# macOS / Linux / Windows
+###############################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux thumbnails
+*.thumb
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+
+###############################
+# General
+###############################
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Logs
+*.log
+
+# Local configs
+*.local
