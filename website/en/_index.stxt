@@ -24,8 +24,8 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: @STXT@ Schemas
 		Page: lang-schema-ref
 		
-	Link: @STXT@ Grammar
-		Page: lang-grammar
+	Link: @STXT@ Slots
+		Page: lang-slots
 			
 	Subheader: Transformations		
 	

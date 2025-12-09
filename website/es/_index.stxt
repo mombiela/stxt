@@ -18,38 +18,38 @@ Document(dev.stxt.namespace): STXT: El Libro
 	
 	Subheader: Referencia del Lenguaje
 	
-	Link: Documentos @STXT@
+	Link: @STXT@ Documentos
 		Page: lang-reference
 		
-	Link: Esquemas @STXT@
+	Link: @STXT@ Schema
 		Page: lang-schema-ref
 		
-	Link: Gramática @STXT@
-		Page: lang-grammar
+	Link: @STXT@ Slots
+		Page: lang-slots
 			
 	Subheader: Transformaciones		
 	
-	Link: STXT to JSON
+	Link: STXT a JSON
 		Page: stxt2json
 		
-	Link: STXT to HTML
+	Link: STXT a HTML
 		Page: stxt2html
 		
-	Link: STXT to PDF
+	Link: STXT a PDF
 		Page: stxt2pdf
 		
-	Link: STXT to XML
+	Link: STXT a XML
 		Page: stxt2xml
 		
-	Link: STXT to YAML
+	Link: STXT a YAML
 		Page: stxt2yaml
 		
 	Subheader: Migraciones		
 	
-	Link: XML to STXT
+	Link: XML a STXT
 		Page: migrate-xml		
 		
-	Link: YAML to STXT
+	Link: YAML a STXT
 		Page: migrate-yaml		
 		
 	SubHeader: Casos de uso 
