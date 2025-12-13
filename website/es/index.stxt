@@ -51,7 +51,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 		***Schema (@stxt.schema):***
 			Namespace: ***com.example.docs***
 			Node: Email
-				Childs >>
+				Children >>
 					From
 					To
 					Cc
