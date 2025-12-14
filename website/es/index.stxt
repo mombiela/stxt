@@ -58,12 +58,12 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 					Bcc
 					Title
 					Body Content
-			Node: From
+			Node: From (1)
 			Node: To
 			Node: Cc
 			Node: Bcc
-			Node: Title
-			Node: Body Content
+			Node: Title (?)
+			Node: Body Content (1)
 				Type: TEXT
 			
 			
