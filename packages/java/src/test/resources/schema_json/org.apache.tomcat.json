@@ -1,0 +1,592 @@
+{
+    "nodes" : {
+        "server" : {
+            "name" : "Server",
+            "normalized_name" : "server",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:engine" : {
+                    "normalized_name" : "engine",
+                    "name" : "Engine",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:engine"
+                },
+                "org.apache.tomcat:port" : {
+                    "normalized_name" : "port",
+                    "name" : "Port",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:port"
+                },
+                "org.apache.tomcat:listener" : {
+                    "normalized_name" : "listener",
+                    "name" : "Listener",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:listener"
+                },
+                "org.apache.tomcat:shutdown-command" : {
+                    "normalized_name" : "shutdown-command",
+                    "name" : "Shutdown command",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:shutdown-command"
+                },
+                "org.apache.tomcat:service" : {
+                    "normalized_name" : "service",
+                    "name" : "Service",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:service"
+                },
+                "org.apache.tomcat:global-naming-resources" : {
+                    "normalized_name" : "global-naming-resources",
+                    "name" : "Global Naming Resources",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:global-naming-resources"
+                }
+            }
+        },
+        "port" : {
+            "name" : "Port",
+            "normalized_name" : "port",
+            "type" : "INTEGER",
+            "children" : { }
+        },
+        "shutdown-command" : {
+            "name" : "Shutdown command",
+            "normalized_name" : "shutdown-command",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "listener" : {
+            "name" : "Listener",
+            "normalized_name" : "listener",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "global-naming-resources" : {
+            "name" : "Global Naming Resources",
+            "normalized_name" : "global-naming-resources",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:resource" : {
+                    "normalized_name" : "resource",
+                    "name" : "Resource",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:resource"
+                }
+            }
+        },
+        "resource" : {
+            "name" : "Resource",
+            "normalized_name" : "resource",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:factory-class" : {
+                    "normalized_name" : "factory-class",
+                    "name" : "Factory class",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:factory-class"
+                },
+                "org.apache.tomcat:type" : {
+                    "normalized_name" : "type",
+                    "name" : "Type",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:type"
+                },
+                "org.apache.tomcat:auth" : {
+                    "normalized_name" : "auth",
+                    "name" : "Auth",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:auth"
+                },
+                "org.apache.tomcat:name" : {
+                    "normalized_name" : "name",
+                    "name" : "Name",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:name"
+                },
+                "org.apache.tomcat:description" : {
+                    "normalized_name" : "description",
+                    "name" : "Description",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:description"
+                },
+                "org.apache.tomcat:path-name" : {
+                    "normalized_name" : "path-name",
+                    "name" : "Path Name",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:path-name"
+                }
+            }
+        },
+        "name" : {
+            "name" : "Name",
+            "normalized_name" : "name",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "auth" : {
+            "name" : "Auth",
+            "normalized_name" : "auth",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "type" : {
+            "name" : "Type",
+            "normalized_name" : "type",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "description" : {
+            "name" : "Description",
+            "normalized_name" : "description",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "factory-class" : {
+            "name" : "Factory class",
+            "normalized_name" : "factory-class",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "path-name" : {
+            "name" : "Path Name",
+            "normalized_name" : "path-name",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "service" : {
+            "name" : "Service",
+            "normalized_name" : "service",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:connector" : {
+                    "normalized_name" : "connector",
+                    "name" : "Connector",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:connector"
+                },
+                "org.apache.tomcat:executor" : {
+                    "normalized_name" : "executor",
+                    "name" : "Executor",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:executor"
+                }
+            }
+        },
+        "executor" : {
+            "name" : "Executor",
+            "normalized_name" : "executor",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:min-spare-threads" : {
+                    "normalized_name" : "min-spare-threads",
+                    "name" : "Min Spare Threads",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:min-spare-threads"
+                },
+                "org.apache.tomcat:max-threads" : {
+                    "normalized_name" : "max-threads",
+                    "name" : "Max Threads",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:max-threads"
+                },
+                "org.apache.tomcat:name-prefix" : {
+                    "normalized_name" : "name-prefix",
+                    "name" : "Name Prefix",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:name-prefix"
+                }
+            }
+        },
+        "name-prefix" : {
+            "name" : "Name Prefix",
+            "normalized_name" : "name-prefix",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "max-threads" : {
+            "name" : "Max Threads",
+            "normalized_name" : "max-threads",
+            "type" : "NUMBER",
+            "children" : { }
+        },
+        "min-spare-threads" : {
+            "name" : "Min Spare Threads",
+            "normalized_name" : "min-spare-threads",
+            "type" : "NUMBER",
+            "children" : { }
+        },
+        "connector" : {
+            "name" : "Connector",
+            "normalized_name" : "connector",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:redirect-port" : {
+                    "normalized_name" : "redirect-port",
+                    "name" : "Redirect Port",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:redirect-port"
+                },
+                "org.apache.tomcat:port" : {
+                    "normalized_name" : "port",
+                    "name" : "Port",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:port"
+                },
+                "org.apache.tomcat:ssl-config" : {
+                    "normalized_name" : "ssl-config",
+                    "name" : "SSL Config",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:ssl-config"
+                },
+                "org.apache.tomcat:protocol" : {
+                    "normalized_name" : "protocol",
+                    "name" : "Protocol",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:protocol"
+                },
+                "org.apache.tomcat:max-threads" : {
+                    "normalized_name" : "max-threads",
+                    "name" : "Max Threads",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:max-threads"
+                },
+                "org.apache.tomcat:ssl-enabled" : {
+                    "normalized_name" : "ssl-enabled",
+                    "name" : "SSL Enabled",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:ssl-enabled"
+                },
+                "org.apache.tomcat:connection-timeout" : {
+                    "normalized_name" : "connection-timeout",
+                    "name" : "Connection timeout",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:connection-timeout"
+                }
+            }
+        },
+        "protocol" : {
+            "name" : "Protocol",
+            "normalized_name" : "protocol",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "connection-timeout" : {
+            "name" : "Connection timeout",
+            "normalized_name" : "connection-timeout",
+            "type" : "INTEGER",
+            "children" : { }
+        },
+        "redirect-port" : {
+            "name" : "Redirect Port",
+            "normalized_name" : "redirect-port",
+            "type" : "INTEGER",
+            "children" : { }
+        },
+        "ssl-enabled" : {
+            "name" : "SSL Enabled",
+            "normalized_name" : "ssl-enabled",
+            "type" : "BOOLEAN",
+            "children" : { }
+        },
+        "ssl-config" : {
+            "name" : "SSL Config",
+            "normalized_name" : "ssl-config",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:type" : {
+                    "normalized_name" : "type",
+                    "name" : "Type",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:type"
+                },
+                "org.apache.tomcat:certificate-keystore-file" : {
+                    "normalized_name" : "certificate-keystore-file",
+                    "name" : "Certificate Keystore File",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:certificate-keystore-file"
+                },
+                "org.apache.tomcat:certificate-keystore-password" : {
+                    "normalized_name" : "certificate-keystore-password",
+                    "name" : "Certificate Keystore Password",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:certificate-keystore-password"
+                }
+            }
+        },
+        "certificate-keystore-file" : {
+            "name" : "Certificate Keystore File",
+            "normalized_name" : "certificate-keystore-file",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "certificate-keystore-password" : {
+            "name" : "Certificate Keystore Password",
+            "normalized_name" : "certificate-keystore-password",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "engine" : {
+            "name" : "Engine",
+            "normalized_name" : "engine",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:jvm-route" : {
+                    "normalized_name" : "jvm-route",
+                    "name" : "JVM Route",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:jvm-route"
+                },
+                "org.apache.tomcat:realm" : {
+                    "normalized_name" : "realm",
+                    "name" : "Realm",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:realm"
+                },
+                "org.apache.tomcat:host" : {
+                    "normalized_name" : "host",
+                    "name" : "Host",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:host"
+                },
+                "org.apache.tomcat:default-host" : {
+                    "normalized_name" : "default-host",
+                    "name" : "Default host",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:default-host"
+                }
+            }
+        },
+        "default-host" : {
+            "name" : "Default host",
+            "normalized_name" : "default-host",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "jvm-route" : {
+            "name" : "JVM Route",
+            "normalized_name" : "jvm-route",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "realm" : {
+            "name" : "Realm",
+            "normalized_name" : "realm",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:resource-name" : {
+                    "normalized_name" : "resource-name",
+                    "name" : "Resource Name",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:resource-name"
+                }
+            }
+        },
+        "resource-name" : {
+            "name" : "Resource Name",
+            "normalized_name" : "resource-name",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "host" : {
+            "name" : "Host",
+            "normalized_name" : "host",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:valve" : {
+                    "normalized_name" : "valve",
+                    "name" : "Valve",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : null,
+                    "qualified_name" : "org.apache.tomcat:valve"
+                },
+                "org.apache.tomcat:app-base" : {
+                    "normalized_name" : "app-base",
+                    "name" : "App Base",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:app-base"
+                },
+                "org.apache.tomcat:unpack-wars" : {
+                    "normalized_name" : "unpack-wars",
+                    "name" : "Unpack Wars",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:unpack-wars"
+                },
+                "org.apache.tomcat:auto-deploy" : {
+                    "normalized_name" : "auto-deploy",
+                    "name" : "Auto Deploy",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:auto-deploy"
+                }
+            }
+        },
+        "app-base" : {
+            "name" : "App Base",
+            "normalized_name" : "app-base",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "unpack-wars" : {
+            "name" : "Unpack Wars",
+            "normalized_name" : "unpack-wars",
+            "type" : "BOOLEAN",
+            "children" : { }
+        },
+        "auto-deploy" : {
+            "name" : "Auto Deploy",
+            "normalized_name" : "auto-deploy",
+            "type" : "BOOLEAN",
+            "children" : { }
+        },
+        "valve" : {
+            "name" : "Valve",
+            "normalized_name" : "valve",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "org.apache.tomcat:class-name" : {
+                    "normalized_name" : "class-name",
+                    "name" : "Class Name",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : 1,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:class-name"
+                },
+                "org.apache.tomcat:prefix" : {
+                    "normalized_name" : "prefix",
+                    "name" : "Prefix",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:prefix"
+                },
+                "org.apache.tomcat:suffix" : {
+                    "normalized_name" : "suffix",
+                    "name" : "Suffix",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:suffix"
+                },
+                "org.apache.tomcat:directory" : {
+                    "normalized_name" : "directory",
+                    "name" : "Directory",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:directory"
+                },
+                "org.apache.tomcat:pattern" : {
+                    "normalized_name" : "pattern",
+                    "name" : "Pattern",
+                    "namespace" : "org.apache.tomcat",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "org.apache.tomcat:pattern"
+                }
+            }
+        },
+        "class-name" : {
+            "name" : "Class Name",
+            "normalized_name" : "class-name",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "directory" : {
+            "name" : "Directory",
+            "normalized_name" : "directory",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "prefix" : {
+            "name" : "Prefix",
+            "normalized_name" : "prefix",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "suffix" : {
+            "name" : "Suffix",
+            "normalized_name" : "suffix",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        },
+        "pattern" : {
+            "name" : "Pattern",
+            "normalized_name" : "pattern",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        }
+    },
+    "namespace" : "org.apache.tomcat"
+}

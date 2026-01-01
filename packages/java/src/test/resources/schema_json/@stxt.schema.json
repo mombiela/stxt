@@ -1,0 +1,121 @@
+{
+    "nodes" : {
+        "schema" : {
+            "name" : "Schema",
+            "normalized_name" : "schema",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "@stxt.schema:description" : {
+                    "normalized_name" : "description",
+                    "name" : "Description",
+                    "namespace" : "@stxt.schema",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "@stxt.schema:description"
+                },
+                "@stxt.schema:node" : {
+                    "normalized_name" : "node",
+                    "name" : "Node",
+                    "namespace" : "@stxt.schema",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "@stxt.schema:node"
+                }
+            }
+        },
+        "node" : {
+            "name" : "Node",
+            "normalized_name" : "node",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "@stxt.schema:type" : {
+                    "normalized_name" : "type",
+                    "name" : "Type",
+                    "namespace" : "@stxt.schema",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "@stxt.schema:type"
+                },
+                "@stxt.schema:description" : {
+                    "normalized_name" : "description",
+                    "name" : "Description",
+                    "namespace" : "@stxt.schema",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "@stxt.schema:description"
+                },
+                "@stxt.schema:children" : {
+                    "normalized_name" : "children",
+                    "name" : "Children",
+                    "namespace" : "@stxt.schema",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "@stxt.schema:children"
+                }
+            }
+        },
+        "children" : {
+            "name" : "Children",
+            "normalized_name" : "children",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "@stxt.schema:child" : {
+                    "normalized_name" : "child",
+                    "name" : "Child",
+                    "namespace" : "@stxt.schema",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "@stxt.schema:child"
+                }
+            }
+        },
+        "description" : {
+            "name" : "Description",
+            "normalized_name" : "description",
+            "type" : "TEXT",
+            "children" : { }
+        },
+        "child" : {
+            "name" : "Child",
+            "normalized_name" : "child",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "@stxt.schema:min" : {
+                    "normalized_name" : "min",
+                    "name" : "Min",
+                    "namespace" : "@stxt.schema",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "@stxt.schema:min"
+                },
+                "@stxt.schema:max" : {
+                    "normalized_name" : "max",
+                    "name" : "Max",
+                    "namespace" : "@stxt.schema",
+                    "min" : null,
+                    "max" : 1,
+                    "qualified_name" : "@stxt.schema:max"
+                }
+            }
+        },
+        "min" : {
+            "name" : "Min",
+            "normalized_name" : "min",
+            "type" : "NATURAL",
+            "children" : { }
+        },
+        "max" : {
+            "name" : "Max",
+            "normalized_name" : "max",
+            "type" : "NATURAL",
+            "children" : { }
+        },
+        "type" : {
+            "name" : "Type",
+            "normalized_name" : "type",
+            "type" : "VALUE_NODE",
+            "children" : { }
+        }
+    },
+    "namespace" : "@stxt.schema"
+}

@@ -1,0 +1,40 @@
+package dev.stxt.template;
+
+import java.io.IOException;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import dev.stxt.Node;
+import dev.stxt.Parser;
+import dev.stxt.resources.ResourcesLoader;
+import dev.stxt.resources.ResourcesLoaderDirectory;
+import dev.stxt.schema.Schema;
+import test.FileTestLoction;
+import test.JSON;
+import test.FileChecks;
+
+public class TemplateToSchemaTest {
+	@Test
+	void testReadSchema() throws IOException {
+		// Validator
+		String ns = "com.example.docs";
+		ResourcesLoader resourcesLoader = new ResourcesLoaderDirectory(FileTestLoction.getFile(""));
+		String schema = resourcesLoader.retrieve("@stxt.template", ns);
+		System.out.println("exists: " + schema);
+		System.out.println("==========================================================");
+		Parser parser = new Parser();
+		List<Node> nodes = parser.parse(schema);
+		for (Node node : nodes) {
+			//System.out.println(JSON.toJsonPretty(node));
+			Schema sch = TemplateParser.transformNodeToSchema(node);
+			showSchema(sch);
+			FileChecks.checkContentWithJsonFile(sch, "schema_json", ns);
+		}
+	}
+
+	private void showSchema(Schema sch) {
+		System.out.println("SCH => " + JSON.toJsonPretty(sch));
+	}
+
+}

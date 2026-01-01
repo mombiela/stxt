@@ -1,0 +1,4 @@
+Template (@stxt.template): com.kocinando.recetario
+	Structure >>
+		Recetario:
+			Receta (com.kocinando.receta): (+)

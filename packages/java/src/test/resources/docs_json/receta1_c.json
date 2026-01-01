@@ -1,0 +1,220 @@
+{
+    "name" : "Receta",
+    "normalized_name" : "receta",
+    "namespace" : "com.kocinando.receta",
+    "text_node" : false,
+    "value" : "",
+    "text_lines" : [ ],
+    "line" : 5,
+    "level" : 0,
+    "children" : [
+        {
+            "name" : "Nombre Receta",
+            "normalized_name" : "nombre-receta",
+            "namespace" : "com.kocinando.receta",
+            "text_node" : false,
+            "value" : "Una receta",
+            "text_lines" : [ ],
+            "line" : 6,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "Una receta",
+            "qualified_name" : "com.kocinando.receta:nombre-receta"
+        },
+        {
+            "name" : "Descripción",
+            "normalized_name" : "descripcion",
+            "namespace" : "com.kocinando.receta",
+            "text_node" : false,
+            "value" : "Esta es una receta de ejemplo",
+            "text_lines" : [ ],
+            "line" : 7,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "Esta es una receta de ejemplo",
+            "qualified_name" : "com.kocinando.receta:descripcion"
+        },
+        {
+            "name" : "Pasos",
+            "normalized_name" : "pasos",
+            "namespace" : "com.kocinando.receta",
+            "text_node" : false,
+            "value" : "",
+            "text_lines" : [ ],
+            "line" : 8,
+            "level" : 1,
+            "children" : [
+                {
+                    "name" : "Paso",
+                    "normalized_name" : "paso",
+                    "namespace" : "com.kocinando.receta",
+                    "text_node" : false,
+                    "value" : "1",
+                    "text_lines" : [ ],
+                    "line" : 9,
+                    "level" : 2,
+                    "children" : [ ],
+                    "text" : "1",
+                    "qualified_name" : "com.kocinando.receta:paso"
+                },
+                {
+                    "name" : "Descripción",
+                    "normalized_name" : "descripcion",
+                    "namespace" : "com.kocinando.receta",
+                    "text_node" : true,
+                    "value" : "",
+                    "text_lines" : [
+                        "Esta receta te guiará a través de los pasos necesarios para preparar una deliciosa pizza de jamón en casa.",
+                        "Sigue las instrucciones cuidadosamente para obtener los mejores resultados."
+                    ],
+                    "line" : 10,
+                    "level" : 2,
+                    "children" : [ ],
+                    "text" : "Esta receta te guiará a través de los pasos necesarios para preparar una deliciosa pizza de jamón en casa.\nSigue las instrucciones cuidadosamente para obtener los mejores resultados.",
+                    "qualified_name" : "com.kocinando.receta:descripcion"
+                }
+            ],
+            "text" : "",
+            "qualified_name" : "com.kocinando.receta:pasos"
+        },
+        {
+            "name" : "Dificultad",
+            "normalized_name" : "dificultad",
+            "namespace" : "com.kocinando.receta",
+            "text_node" : false,
+            "value" : "media",
+            "text_lines" : [ ],
+            "line" : 13,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "media",
+            "qualified_name" : "com.kocinando.receta:dificultad"
+        },
+        {
+            "name" : "Ingredientes",
+            "normalized_name" : "ingredientes",
+            "namespace" : "com.kocinando.receta",
+            "text_node" : false,
+            "value" : "",
+            "text_lines" : [ ],
+            "line" : 14,
+            "level" : 1,
+            "children" : [
+                {
+                    "name" : "Ingrediente",
+                    "normalized_name" : "ingrediente",
+                    "namespace" : "com.kocinando.receta",
+                    "text_node" : false,
+                    "value" : "",
+                    "text_lines" : [ ],
+                    "line" : 15,
+                    "level" : 2,
+                    "children" : [
+                        {
+                            "name" : "Cantidad",
+                            "normalized_name" : "cantidad",
+                            "namespace" : "com.kocinando.receta",
+                            "text_node" : false,
+                            "value" : "1",
+                            "text_lines" : [ ],
+                            "line" : 16,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "1",
+                            "qualified_name" : "com.kocinando.receta:cantidad"
+                        },
+                        {
+                            "name" : "Unidades",
+                            "normalized_name" : "unidades",
+                            "namespace" : "com.kocinando.receta",
+                            "text_node" : false,
+                            "value" : "dl",
+                            "text_lines" : [ ],
+                            "line" : 17,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "dl",
+                            "qualified_name" : "com.kocinando.receta:unidades"
+                        },
+                        {
+                            "name" : "Nombre",
+                            "normalized_name" : "nombre",
+                            "namespace" : "com.kocinando.receta",
+                            "text_node" : false,
+                            "value" : "Agua",
+                            "text_lines" : [ ],
+                            "line" : 18,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "Agua",
+                            "qualified_name" : "com.kocinando.receta:nombre"
+                        }
+                    ],
+                    "text" : "",
+                    "qualified_name" : "com.kocinando.receta:ingrediente"
+                }
+            ],
+            "text" : "",
+            "qualified_name" : "com.kocinando.receta:ingredientes"
+        },
+        {
+            "name" : "Documento",
+            "normalized_name" : "documento",
+            "namespace" : "com.dokumentando.doc",
+            "text_node" : false,
+            "value" : "",
+            "text_lines" : [ ],
+            "line" : 19,
+            "level" : 1,
+            "children" : [
+                {
+                    "name" : "Título",
+                    "normalized_name" : "titulo",
+                    "namespace" : "com.dokumentando.doc",
+                    "text_node" : false,
+                    "value" : "Primer documento simple",
+                    "text_lines" : [ ],
+                    "line" : 20,
+                    "level" : 2,
+                    "children" : [ ],
+                    "text" : "Primer documento simple",
+                    "qualified_name" : "com.dokumentando.doc:titulo"
+                },
+                {
+                    "name" : "Description",
+                    "normalized_name" : "description",
+                    "namespace" : "com.dokumentando.doc",
+                    "text_node" : true,
+                    "value" : "",
+                    "text_lines" : [
+                        "Este es el",
+                        "primer documento",
+                        "simple. Tiene varias líneas"
+                    ],
+                    "line" : 21,
+                    "level" : 2,
+                    "children" : [ ],
+                    "text" : "Este es el\nprimer documento\nsimple. Tiene varias líneas",
+                    "qualified_name" : "com.dokumentando.doc:description"
+                },
+                {
+                    "name" : "Tipo Documento",
+                    "normalized_name" : "tipo-documento",
+                    "namespace" : "com.dokumentando.doc",
+                    "text_node" : false,
+                    "value" : "informe",
+                    "text_lines" : [ ],
+                    "line" : 25,
+                    "level" : 2,
+                    "children" : [ ],
+                    "text" : "informe",
+                    "qualified_name" : "com.dokumentando.doc:tipo-documento"
+                }
+            ],
+            "text" : "",
+            "qualified_name" : "com.dokumentando.doc:documento"
+        }
+    ],
+    "text" : "",
+    "qualified_name" : "com.kocinando.receta:receta"
+}

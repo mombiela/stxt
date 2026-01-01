@@ -1,0 +1,11 @@
+Template (@stxt.template): @stxt.schema
+	Structure >>
+	    Schema:
+	    	Description: (?) TEXT
+	        Node: (+)
+	        	Type: (?)
+	        	Description: (?) @Description
+	        	Children: (?)
+	        		Child: (+)
+	        			Min: (?) NATURAL
+	        			Max: (?) NATURAL

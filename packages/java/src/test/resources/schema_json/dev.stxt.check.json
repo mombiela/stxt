@@ -1,0 +1,124 @@
+{
+    "nodes" : {
+        "type-list" : {
+            "name" : "Type List",
+            "normalized_name" : "type-list",
+            "type" : "VALUE_NODE",
+            "children" : {
+                "dev.stxt.check:number" : {
+                    "normalized_name" : "number",
+                    "name" : "number",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:number"
+                },
+                "dev.stxt.check:text" : {
+                    "normalized_name" : "text",
+                    "name" : "text",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:text"
+                },
+                "dev.stxt.check:base64" : {
+                    "normalized_name" : "base64",
+                    "name" : "Base64",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:base64"
+                },
+                "dev.stxt.check:natural" : {
+                    "normalized_name" : "natural",
+                    "name" : "natural",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:natural"
+                },
+                "dev.stxt.check:integer" : {
+                    "normalized_name" : "integer",
+                    "name" : "integer",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:integer"
+                },
+                "dev.stxt.check:boolean" : {
+                    "normalized_name" : "boolean",
+                    "name" : "Boolean",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:boolean"
+                },
+                "dev.stxt.check:url" : {
+                    "normalized_name" : "url",
+                    "name" : "Url",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:url"
+                },
+                "dev.stxt.check:hexadecimal" : {
+                    "normalized_name" : "hexadecimal",
+                    "name" : "hexadecimal",
+                    "namespace" : "dev.stxt.check",
+                    "min" : 1,
+                    "max" : null,
+                    "qualified_name" : "dev.stxt.check:hexadecimal"
+                }
+            }
+        },
+        "text" : {
+            "name" : "text",
+            "normalized_name" : "text",
+            "type" : "TEXT",
+            "children" : { }
+        },
+        "natural" : {
+            "name" : "natural",
+            "normalized_name" : "natural",
+            "type" : "NATURAL",
+            "children" : { }
+        },
+        "integer" : {
+            "name" : "integer",
+            "normalized_name" : "integer",
+            "type" : "INTEGER",
+            "children" : { }
+        },
+        "number" : {
+            "name" : "number",
+            "normalized_name" : "number",
+            "type" : "NUMBER",
+            "children" : { }
+        },
+        "hexadecimal" : {
+            "name" : "hexadecimal",
+            "normalized_name" : "hexadecimal",
+            "type" : "HEXADECIMAL",
+            "children" : { }
+        },
+        "base64" : {
+            "name" : "Base64",
+            "normalized_name" : "base64",
+            "type" : "BASE64",
+            "children" : { }
+        },
+        "boolean" : {
+            "name" : "Boolean",
+            "normalized_name" : "boolean",
+            "type" : "BOOLEAN",
+            "children" : { }
+        },
+        "url" : {
+            "name" : "Url",
+            "normalized_name" : "url",
+            "type" : "URL",
+            "children" : { }
+        }
+    },
+    "namespace" : "dev.stxt.check"
+}

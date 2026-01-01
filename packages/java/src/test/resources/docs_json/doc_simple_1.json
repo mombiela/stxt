@@ -1,0 +1,57 @@
+{
+    "name" : "Documento",
+    "normalized_name" : "documento",
+    "namespace" : "com.dokumentando.doc",
+    "text_node" : false,
+    "value" : "",
+    "text_lines" : [ ],
+    "line" : 1,
+    "level" : 0,
+    "children" : [
+        {
+            "name" : "Título",
+            "normalized_name" : "titulo",
+            "namespace" : "com.dokumentando.doc",
+            "text_node" : false,
+            "value" : "Primer documento simple",
+            "text_lines" : [ ],
+            "line" : 2,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "Primer documento simple",
+            "qualified_name" : "com.dokumentando.doc:titulo"
+        },
+        {
+            "name" : "Description",
+            "normalized_name" : "description",
+            "namespace" : "com.dokumentando.doc",
+            "text_node" : true,
+            "value" : "",
+            "text_lines" : [
+                "Este es el",
+                "primer documento",
+                "simple. Tiene varias líneas"
+            ],
+            "line" : 3,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "Este es el\nprimer documento\nsimple. Tiene varias líneas",
+            "qualified_name" : "com.dokumentando.doc:description"
+        },
+        {
+            "name" : "Tipo Documento",
+            "normalized_name" : "tipo-documento",
+            "namespace" : "com.dokumentando.doc",
+            "text_node" : false,
+            "value" : "informe",
+            "text_lines" : [ ],
+            "line" : 7,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "informe",
+            "qualified_name" : "com.dokumentando.doc:tipo-documento"
+        }
+    ],
+    "text" : "",
+    "qualified_name" : "com.dokumentando.doc:documento"
+}

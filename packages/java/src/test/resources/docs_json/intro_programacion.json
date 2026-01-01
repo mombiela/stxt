@@ -1,0 +1,303 @@
+{
+    "name" : "Documento",
+    "normalized_name" : "documento",
+    "namespace" : "com.dokumentando.documento",
+    "text_node" : false,
+    "value" : "123456-179",
+    "text_lines" : [ ],
+    "line" : 1,
+    "level" : 0,
+    "children" : [
+        {
+            "name" : "Título",
+            "normalized_name" : "titulo",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "Introducción a la Programación",
+            "text_lines" : [ ],
+            "line" : 3,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "Introducción a la Programación",
+            "qualified_name" : "com.dokumentando.documento:titulo"
+        },
+        {
+            "name" : "Autor",
+            "normalized_name" : "autor",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "Juan Pérez",
+            "text_lines" : [ ],
+            "line" : 4,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "Juan Pérez",
+            "qualified_name" : "com.dokumentando.documento:autor"
+        },
+        {
+            "name" : "Cuerpo",
+            "normalized_name" : "cuerpo",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : true,
+            "value" : "",
+            "text_lines" : [
+                "La programación es el proceso de crear software mediante la escritura de código.",
+                "Este documento proporciona una visión general de los conceptos básicos de programación."
+            ],
+            "line" : 5,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "La programación es el proceso de crear software mediante la escritura de código.\nEste documento proporciona una visión general de los conceptos básicos de programación.",
+            "qualified_name" : "com.dokumentando.documento:cuerpo"
+        },
+        {
+            "name" : "Fecha Creación",
+            "normalized_name" : "fecha-creacion",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "2024-06-08",
+            "text_lines" : [ ],
+            "line" : 8,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "2024-06-08",
+            "qualified_name" : "com.dokumentando.documento:fecha-creacion"
+        },
+        {
+            "name" : "Última modificación",
+            "normalized_name" : "ultima-modificacion",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "2024-06-08T14:30:00Z",
+            "text_lines" : [ ],
+            "line" : 9,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "2024-06-08T14:30:00Z",
+            "qualified_name" : "com.dokumentando.documento:ultima-modificacion"
+        },
+        {
+            "name" : "Email Contacto",
+            "normalized_name" : "email-contacto",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "juan.perez@example.com",
+            "text_lines" : [ ],
+            "line" : 10,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "juan.perez@example.com",
+            "qualified_name" : "com.dokumentando.documento:email-contacto"
+        },
+        {
+            "name" : "Sitio Web",
+            "normalized_name" : "sitio-web",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "https://www.programacionbasica.com",
+            "text_lines" : [ ],
+            "line" : 11,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "https://www.programacionbasica.com",
+            "qualified_name" : "com.dokumentando.documento:sitio-web"
+        },
+        {
+            "name" : "Código Postal",
+            "normalized_name" : "codigo-postal",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "12345",
+            "text_lines" : [ ],
+            "line" : 12,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "12345",
+            "qualified_name" : "com.dokumentando.documento:codigo-postal"
+        },
+        {
+            "name" : "Es Público",
+            "normalized_name" : "es-publico",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "true",
+            "text_lines" : [ ],
+            "line" : 13,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "true",
+            "qualified_name" : "com.dokumentando.documento:es-publico"
+        },
+        {
+            "name" : "Color Tema",
+            "normalized_name" : "color-tema",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "#FF5733",
+            "text_lines" : [ ],
+            "line" : 14,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "#FF5733",
+            "qualified_name" : "com.dokumentando.documento:color-tema"
+        },
+        {
+            "name" : "Tipo Documento",
+            "normalized_name" : "tipo-documento",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "artículo",
+            "text_lines" : [ ],
+            "line" : 15,
+            "level" : 1,
+            "children" : [ ],
+            "text" : "artículo",
+            "qualified_name" : "com.dokumentando.documento:tipo-documento"
+        },
+        {
+            "name" : "Secciones",
+            "normalized_name" : "secciones",
+            "namespace" : "com.dokumentando.documento",
+            "text_node" : false,
+            "value" : "",
+            "text_lines" : [ ],
+            "line" : 16,
+            "level" : 1,
+            "children" : [
+                {
+                    "name" : "Sección",
+                    "normalized_name" : "seccion",
+                    "namespace" : "com.dokumentando.documento",
+                    "text_node" : false,
+                    "value" : "",
+                    "text_lines" : [ ],
+                    "line" : 17,
+                    "level" : 2,
+                    "children" : [
+                        {
+                            "name" : "Título",
+                            "normalized_name" : "titulo",
+                            "namespace" : "com.dokumentando.documento",
+                            "text_node" : false,
+                            "value" : "Fundamentos de Programación",
+                            "text_lines" : [ ],
+                            "line" : 18,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "Fundamentos de Programación",
+                            "qualified_name" : "com.dokumentando.documento:titulo"
+                        },
+                        {
+                            "name" : "Contenido",
+                            "normalized_name" : "contenido",
+                            "namespace" : "com.dokumentando.documento",
+                            "text_node" : true,
+                            "value" : "",
+                            "text_lines" : [
+                                "La programación implica el uso de lenguajes de programación para crear soluciones a problemas.",
+                                "Existen diversos paradigmas de programación, incluyendo programación estructurada, orientada a objetos, y funcional."
+                            ],
+                            "line" : 19,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "La programación implica el uso de lenguajes de programación para crear soluciones a problemas.\nExisten diversos paradigmas de programación, incluyendo programación estructurada, orientada a objetos, y funcional.",
+                            "qualified_name" : "com.dokumentando.documento:contenido"
+                        }
+                    ],
+                    "text" : "",
+                    "qualified_name" : "com.dokumentando.documento:seccion"
+                },
+                {
+                    "name" : "Sección",
+                    "normalized_name" : "seccion",
+                    "namespace" : "com.dokumentando.documento",
+                    "text_node" : false,
+                    "value" : "",
+                    "text_lines" : [ ],
+                    "line" : 22,
+                    "level" : 2,
+                    "children" : [
+                        {
+                            "name" : "Título",
+                            "normalized_name" : "titulo",
+                            "namespace" : "com.dokumentando.documento",
+                            "text_node" : false,
+                            "value" : "Lenguajes de Programación",
+                            "text_lines" : [ ],
+                            "line" : 23,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "Lenguajes de Programación",
+                            "qualified_name" : "com.dokumentando.documento:titulo"
+                        },
+                        {
+                            "name" : "Contenido",
+                            "normalized_name" : "contenido",
+                            "namespace" : "com.dokumentando.documento",
+                            "text_node" : true,
+                            "value" : "",
+                            "text_lines" : [
+                                "Los lenguajes de programación son herramientas que permiten a los programadores comunicarse con las computadoras.",
+                                "Ejemplos de lenguajes populares incluyen Python, Java, C++, y JavaScript."
+                            ],
+                            "line" : 24,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "Los lenguajes de programación son herramientas que permiten a los programadores comunicarse con las computadoras.\nEjemplos de lenguajes populares incluyen Python, Java, C++, y JavaScript.",
+                            "qualified_name" : "com.dokumentando.documento:contenido"
+                        }
+                    ],
+                    "text" : "",
+                    "qualified_name" : "com.dokumentando.documento:seccion"
+                },
+                {
+                    "name" : "Sección",
+                    "normalized_name" : "seccion",
+                    "namespace" : "com.dokumentando.documento",
+                    "text_node" : false,
+                    "value" : "",
+                    "text_lines" : [ ],
+                    "line" : 27,
+                    "level" : 2,
+                    "children" : [
+                        {
+                            "name" : "Título",
+                            "normalized_name" : "titulo",
+                            "namespace" : "com.dokumentando.documento",
+                            "text_node" : false,
+                            "value" : "Buenas Prácticas",
+                            "text_lines" : [ ],
+                            "line" : 28,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "Buenas Prácticas",
+                            "qualified_name" : "com.dokumentando.documento:titulo"
+                        },
+                        {
+                            "name" : "Contenido",
+                            "normalized_name" : "contenido",
+                            "namespace" : "com.dokumentando.documento",
+                            "text_node" : true,
+                            "value" : "",
+                            "text_lines" : [
+                                "Es importante seguir buenas prácticas de programación, como la escritura de código limpio y comentado.",
+                                "Además, se recomienda el uso de control de versiones y pruebas de software para asegurar la calidad del código."
+                            ],
+                            "line" : 29,
+                            "level" : 3,
+                            "children" : [ ],
+                            "text" : "Es importante seguir buenas prácticas de programación, como la escritura de código limpio y comentado.\nAdemás, se recomienda el uso de control de versiones y pruebas de software para asegurar la calidad del código.",
+                            "qualified_name" : "com.dokumentando.documento:contenido"
+                        }
+                    ],
+                    "text" : "",
+                    "qualified_name" : "com.dokumentando.documento:seccion"
+                }
+            ],
+            "text" : "",
+            "qualified_name" : "com.dokumentando.documento:secciones"
+        }
+    ],
+    "text" : "123456-179",
+    "qualified_name" : "com.dokumentando.documento:documento"
+}
