@@ -10,7 +10,7 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: STXT CLI
 		Page: lang-cli-stxt
 	
-	Link: Online Editor
+	Link: Online editor
 		Page: lang-online-editor
 	
 	Link: Tools
@@ -21,14 +21,20 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: @STXT@ Documents
 		Page: lang-reference
 		
-	Link: @STXT@ Schemas
+	Link: @STXT@ Schema
 		Page: lang-schema-ref
 		
-	Link: @STXT@ Slots
-		Page: lang-slots
+	Link: @STXT@ Template
+		Page: lang-template
 			
 	Subheader: Transformations		
 	
+	Link: STXT to XML
+		Page: stxt2xml
+		
+	Link: STXT to YAML
+		Page: stxt2yaml
+		
 	Link: STXT to JSON
 		Page: stxt2json
 		
@@ -38,12 +44,6 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: STXT to PDF
 		Page: stxt2pdf
 		
-	Link: STXT to XML
-		Page: stxt2xml
-		
-	Link: STXT to YAML
-		Page: stxt2yaml
-		
 	Subheader: Migrations		
 	
 	Link: XML to STXT
@@ -52,7 +52,7 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: YAML to STXT
 		Page: migrate-yaml		
 		
-	SubHeader: Use Cases 
+	SubHeader: Use cases 
 	
 	Link: Corporate Documents
 		Page: use-cases-corporate-docs
@@ -66,5 +66,5 @@ Document(dev.stxt.namespace): STXT: The Book
 	Link: Publications
 		Page: use-cases-editorial
 		
-	Link: Configuration Files
+	Link: Configuration files
 		Page: use-cases-config-files

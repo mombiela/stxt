@@ -1,41 +1,51 @@
 Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 	Header: @STXT@: Introduction 
 
-	Assert>>
-		@STXT@ has a **Human-First** spirit, putting people at the center. \\
-		The documents are readable and expressive, while also reliable for machines.
+	Assert >>
+		@STXT@ is a **Human-First** language, where documents 
+		are readable and expressive,\\ 
+		and at the same time reliable for machines.
 		
 	Subheader: Documents
 	
-	Content>>
-		An @STXT@ document is a structured text file, designed to be human-readable and easy for machines to process.
-		It contains "nodes": non-empty lines (outside of `>>` blocks) that define "Name" and value pairs, or literal text blocks.
+	Content >>
+		STXT is a hierarchical and semantic textual format oriented to:
 		
+		* Represent documents and data clearly.
+		* Be extremely simple to read and write.
+		* Be trivial to parse in any language.
+		* Allow both structured content and free text.
+		* Apply content rules via `@stxt.schema` or `@stxt.template`.
+	
 	Subheader: Main features
 		
-	Content>>
-		* Inline/container nodes: `Name: Value` (can have indented children).
+	Content >>
+		* Nodes with indented children: `Name:`
+		* Nodes with values (they can also have indented children): `Name: value`
 		* Text blocks: `Name >>` followed by literal lines that are not parsed internally.
-		* Hierarchy is defined by indentation (tabs or 4 spaces per level depending on the document).
-		* Supports namespaces (e.g. `(@com.example)`), comments outside blocks (`# ...`), and validation via schemas (`@stxt.schema`).
+		* The hierarchy is defined by indentation (tabs or 4 spaces per level depending on the document).
+		* Supports namespaces (e.g. `(com.example)`), comments outside blocks (`# ...`) and validation via schemas (`@stxt.schema` or `@stxt.template`).
 		
-		An STXT document balances human clarity with explicit semantic structure — ideal for content, configurations, and interoperable data.
+		A STXT document balances human clarity with an explicit semantic structure — ideal for content, configurations, and interoperable data.
 	
-	Code>>
+	Code >>
 		***Email***:
 			From: John Smith
 			To: Mery Adams
 			Cc: Keyla Brown
 			Title: Project report
 			***Body Content >>***
-				Hello Mery! 
+				Hello Mery!
 				The book is finished!
 
-	Subheader: Namespaced documents
+	Subheader: Documents with namespace
 	
-	Content: @STXT@ allows the use of namespaces, to give meaning and structure to the content.
+	Content >>
+		@STXT@ allows the use of namespaces, to give meaning and structure to the content.
 		
-	Code>>
+		An `Email` document from the `com.example.docs` namespace:
+		
+	Code >>
 		***Email (com.example.docs)***:
 			From: John Smith
 			To: Mery Adams
@@ -44,26 +54,41 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 			Body Content >>
 				Hello Mery!! 
 				The book is finished!!
-	Content>>
-		And the namespace definition
+	Content >>
+		And the namespace definition as `@stxt.schema`:
 		
-	Code>>
-		***Schema (@stxt.schema):***
-			Namespace: ***com.example.docs***
+	Code >>
+		***Schema (@stxt.schema): com.example.docs***
 			Node: Email
-				Children >>
-					From
-					To
-					Cc
-					Bcc
-					Title
-					Body Content
-			Node: From (1)
+				Children:
+					Child: From
+					Child: To
+					Child: Cc
+					Child: Bcc
+					Child: Title
+						Max: 1
+					Child: Body    Content
+						Min: 1
+						Max: 1
+					Child: Metadata (com.google)
+						Max: 1
+			Node: From
 			Node: To
 			Node: Cc
 			Node: Bcc
-			Node: Title (?)
-			Node: Body Content (1)
+			Node: Title
+			Node: Body   Content
 				Type: TEXT
-			
-			
+	Content: Alternatively, an equivalent `@stxt.template` can be defined to the schema:
+	
+	Code >>
+		***Template (@stxt.template): com.example.docs***
+			Structure >>
+				Email:
+					From:
+					To:
+					Cc:
+					Bcc:
+					Title: (?)
+					Body Content: (1) TEXT
+					Metadata (com.google): (?)
