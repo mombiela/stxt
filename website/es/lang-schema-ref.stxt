@@ -37,7 +37,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		# 2. Terminología
 		
-		Las palabras clave **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, y **"MAY"** se interpretan según **RFC 2119**.
+		Las palabras clave **"DEBE"**, **"NO DEBE"**, **"DEBERÍA"**, **"NO DEBERÍA"**, y **"PUEDE"** deben interpretarse según **RFC 2119**.
 		
 		Términos como *nodo*, *indentación*, *namespace*, *inline* y *bloque `>>`* mantienen su significado en *STXT-SPEC*.
 		
@@ -87,7 +87,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		Para cada namespace lógico:
 		
-		* **MUST NOT** existir más de un schema activo simultáneamente.
+		* **NO DEBE** existir más de un schema activo simultáneamente.
 		* Cargar dos schemas para el mismo namespace ⇒ **error de configuración**.
 		
 		---
@@ -105,7 +105,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		Reglas:
 		
-		* `NombreNodo` **MUST** ser único dentro del schema.
+		* `NombreNodo` **DEBE** ser único dentro del schema.
 		* Cada `Node` define la semántica del nodo en el namespace objetivo.
 		* Si `Type` se omite ⇒ tipo por defecto `TEXT INLINE`.
 		
@@ -167,7 +167,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		* Se aplica por instancia del nodo padre.
 		* Cuenta solo hijos **directos** con nombre + namespace efectivo.
-		* Un validador conforme **MUST** comprobar las cardinalidades.
+		* Un validador conforme **DEBE** comprobar las cardinalidades.
 		
 		---
 		
@@ -204,7 +204,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		* El tipo **NO controla obligatoriedad**, solo forma y validez del valor.
 		  La obligatoriedad de aparición se controla mediante cardinalidad.
 		* Tipos **BLOCK-only** (`TEXT MULTILINE`, `CODE:*`, `BASE64`)
-		  ⇒ **MUST NOT** tener hijos.
+		  ⇒ **NO DEBE** tener hijos.
 		* `EMPTY`:
 		
 		  * Sin valor inline ni bloque.
@@ -218,25 +218,25 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		Un validador STXT Schema en modo *strict*:
 		
-		* **MUST** exigir schema para cada namespace encontrado.
-		* **MUST** rechazar nodos que no estén definidos en su schema.
-		* **MUST** validar:
+		* **DEBE** exigir schema para cada namespace encontrado.
+		* **DEBE** rechazar nodos que no estén definidos en su schema.
+		* **DEBE** validar:
 		
 		  * Formas permitidas (`:`, `>>`, ninguno).
 		  * Tipos del valor.
 		  * Cardinalidades.
 		  * Compatibilidad tipo/hijos.
 		  * Conocimiento de schema para todos los namespaces referenciados.
-		* **MUST** aplicar la regla de sección 7.1:
+		* **DEBE** aplicar la regla de sección 7.1:
 		  **si aparece un hijo en `Childs>>`, su definición debe existir en su schema.**
 		
 		## 10.2. Modo *non-strict* (modo abierto configurable)
 		
-		Un validador **MAY** ofrecer un modo no-strict:
+		Un validador **PUEDE** ofrecer un modo no-strict:
 		
 		* Si un namespace no tiene schema:
 		
-		  * Puede aceptar el documento pero **SHOULD** emitir warning.
+		  * Puede aceptar el documento pero **DEBERÍA** emitir warning.
 		* Si un `Node` no está definido:
 		
 		  * Puede aceptarse con warning.
