@@ -1,5 +1,5 @@
-Document (dev.stxt.namespace):Slots
-	Header: @STXT@ Slots
+Document (dev.stxt.namespace):Template
+	Header: @STXT@ Template
 		
 	Alert >>
 		**Página en construcción.**\\

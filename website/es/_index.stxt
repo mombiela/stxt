@@ -24,11 +24,17 @@ Document(dev.stxt.namespace): STXT: El Libro
 	Link: @STXT@ Schema
 		Page: lang-schema-ref
 		
-	Link: @STXT@ Slots
-		Page: lang-slots
+	Link: @STXT@ Template
+		Page: lang-template
 			
 	Subheader: Transformaciones		
 	
+	Link: STXT a XML
+		Page: stxt2xml
+		
+	Link: STXT a YAML
+		Page: stxt2yaml
+		
 	Link: STXT a JSON
 		Page: stxt2json
 		
@@ -37,12 +43,6 @@ Document(dev.stxt.namespace): STXT: El Libro
 		
 	Link: STXT a PDF
 		Page: stxt2pdf
-		
-	Link: STXT a XML
-		Page: stxt2xml
-		
-	Link: STXT a YAML
-		Page: stxt2yaml
 		
 	Subheader: Migraciones		
 	
