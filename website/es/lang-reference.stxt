@@ -18,9 +18,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		**Status:** Draft\\
 		**Format:** Markdown (RFC-style)
 		
-		---
-		
-	Header: 1. Introducción
+	Subheader: 1. Introducción
 	
 	Content >>
 		Este documento define la especificación del lenguaje **STXT (Semantic Text)**.
@@ -38,17 +36,13 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* Extender su semántica mediante `@stxt.schema`.
 		
 		Este documento describe la **sintaxis base** del lenguaje.
-		
-		---
-		
-	Header: 2. Terminología
+
+	Subheader: 2. Terminología
 
 	Content >>
 		Las palabras clave **"DEBE"**, **"NO DEBE"**, **"DEBERÍA"**, **"NO DEBERÍA"**, y **"PUEDE"** deben interpretarse según **RFC 2119**.
 		
-		---
-		
-	Header: 3. Codificación del Documento
+	Subheader: 3. Codificación del Documento
 
 	Content >>
 		Un documento STXT **DEBERÍA** codificarse en **UTF-8 sin BOM**.
@@ -58,36 +52,23 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* **PUEDE** aceptar documentos que comiencen con BOM.
 		* **DEBERÍA** emitir una advertencia si aparece.
 		
-		---
-		
-	Header: 4. Unidad Sintáctica: Nodo
+	Subheader: 4. Unidad Sintáctica: Nodo
 		
 	Content >>
 		Cada línea no vacía del documento que no sea comentario ni parte de un bloque `>>` define un **nodo**.
 		
 		Existen dos formas de nodo:
 		
-		1. **Nodo simple o contenedor**
-		
-		   ```stxt
-		   Nombre: Valor del Nodo
-		   ```
-		2. **Nodo de bloque textual (`>>`)**
-		
-		   ```stxt
-		   Nombre >>
-		       Línea 1
-		       Línea 2
-		   ```
+		1. **Nodo simple o contenedor**: `Nombre: Valor del Nodo`
+		2. **Nodo de bloque textual (`>>`)**: `Nombre >>`
 		
 		Un nodo puede incluir opcionalmente un namespace:
 		
-		```stxt
+	Code>>
 		Nombre (namespace.normal):
 		Nombre (@namespace.especial) >>
-		```
 		
-	Subheader: 4.1 Normalización del nombre del nodo
+	Subsubheader: 4.1 Normalización del nombre del nodo
 		
 	Content >>
 		El nombre del nodo se toma a partir del texto comprendido entre:
@@ -109,23 +90,22 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Un nodo cuyo nombre lógico sea la cadena vacía (`""`) es inválido y **DEBE** provocar un error de parseo.
 		
 		Ejemplos equivalentes a nivel de `Nombre de nodo`:
-		
-		```stxt
+
+	Code>>
 		Nombre de nodo: valor
 		Nombre  de   nodo   : valor
 		Nombre  de nodo (@ns):
 		Nombre de nodo(@ns):
 		Nombre  de nodo >>
 		Nombre de nodo>>
-		```
 		
-	Subheader: 4.2 Restricciones del nombre del nodo
+	Subsubheader: 4.2 Restricciones del nombre del nodo
 		
 	Content >>
 		El nombre del nodo sólo permitirá carácteres alfanuméricos y los carácteres `-`, `_`, ` `.
 		Se permiten nombres con diacríticos, mayúsculas y minúsculas.		
 		
-	Subheader: 4.3 Nombre canónico del nodo
+	Subsubheader: 4.3 Nombre canónico del nodo
 		
 	Content >>
 		El nombre canónico se forma a partir del nombre del nodo mediante el siguiente proceso:
@@ -148,10 +128,26 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		UN NOMBRE con äcento: un-nombre-con-acento
 		TAMaÑo número 2__ y 3: tamano-numero-2-y-3
 
-	Content >>		
-		---
+	Subsubheader: 4.4 Normas de estilo
+	Content >>
+		La normas de estilo son las siguientes:
 		
-	Header: 5. Nodos con `:` (nodos contenedor, permiten valor)
+		* Separar el nombre de la definición de un namespace con un sólo espacio
+		* Separar `:` del valor con un sólo espacio
+		* `:` va inmediatamente después del nombre o del namespace si lo hubiera
+		* `>>` no tiene ningún carácter después
+		* No se usa más de un espacio en los nombres
+		* Namespace sin espacios en la definición `(namespace.def)`
+		
+		Ejemplos de estilo correcto:
+		
+	Code>>
+		Nombre con valor: El valor
+		Nombre sin valor:
+		Nombre con namespace (el.namespace):
+		Nodo de texto >>
+		
+	Subheader: 5. Nodos con `:` (nodos contenedor, permiten valor)
 		
 	Content >>
 		La forma con `:` define un nodo que:
@@ -174,68 +170,59 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    SubNodo 1: 123
 		    Otro subnodo: 456
 
-	Content >>
-		---
-		
-	Header: 6. Nodos con `>>` (bloque textual)
+	Subheader: 6. Nodos con `>>` (bloque textual)
 		
 	Content >>
 		La forma con `>>` define un bloque de **texto literal**.
 		
 		Ejemplos válidos:
-		
-		```stxt
+
+	Code >>		
 		Descripcion >>
 		    Línea 1
 		    Línea 2
-		```
-		
-		```stxt
+
+	Code >>	
 		Seccion>>
 		    Acepta el operador sin espacio
-		```
 		
-	Subheader: 6.1 Reglas formales
+	Subsubheader: 6.1 Reglas formales
 		
 	Content >>
 		* La línea del nodo `>>` **NO DEBE** contener contenido significativo tras `>>`, excepto espacios opcionales.
 		* Todas las líneas con indentación **estrictamente mayor** que la del nodo `>>` pertenecen al **contenido textual del bloque**.
 		* Dentro del bloque:
-		
 		  * El parser **NO DEBE** interpretar ninguna línea como nodo estructurado, aunque contenga `:` u otra sintaxis de STXT.
 		  * El parser **NO DEBE** interpretar líneas que comienzan por `#` como comentarios; todas las líneas son texto literal.
 		* El bloque termina cuando aparece una **línea no vacía** cuya indentación es **menor o igual** que la indentación del nodo `>>`.
 		* Las líneas vacías **dentro del bloque** se conservan tal cual y **NO DEBE** cerrar el bloque, independientemente de su indentación.
 		
-	Subheader: 6.2 Ejemplo
+	Subsubheader: 6.2 Ejemplo
 		
-	Content >>
-		```stxt
+	Code >>
 		Bloque >>
 		    Texto
 		        Hijo: valor SI permitido, es texto, no se parsea
 		        Otro hijo: SI permitido
 		    # Esto también es texto
 		SiguienteNodo: valor
-		```
-		
+
+	Content >>		
 		En este ejemplo:
 		
 		* Todo lo indentado por debajo de `Bloque >>` es texto literal.
 		* `Hijo: valor` y `Otro hijo: SI permitido` **no** son nodos, sino texto.
 		* `SiguienteNodo: valor` está fuera del bloque `>>`.
 		
-		---
-		
-	Header: 7. Namespaces
+	Subheader: 7. Namespaces
 		
 	Content >>
 		Un namespace es opcional y se especifica así:
-		
-		```stxt
+
+	Code >>		
 		Nodo (@com.example.docs):
-		```
 		
+	Content >>
 		Reglas:
 		
 		* Un namespace **PUEDE** empezar por `@`.
@@ -244,14 +231,12 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* El namespace por defecto es **``**.
 		* Un nodo hijo puede redefinir su namespace indicando (otro.namespace), en cuyo caso usa ese namespace en lugar del heredado.
 		
-		---
-		
-	Header: 8. Indentación y Jerarquía
+	Subheader: 8. Indentación y Jerarquía
 		
 	Content >>
 		La indentación define la jerarquía estructurada del documento.
 		
-	Subheader: 8.1 Indentación Permitida
+	Subsubheader: 8.1 Indentación Permitida
 		
 	Content >>
 		Un documento STXT:
@@ -260,35 +245,29 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* **NO DEBERÍA** mezclarlos en una misma línea. 
 		  En caso de mezclarlos, los espacios que no lleguen a 4 se descartan si aparece un tabulador
 		* Si usa espacios:
-		
 		  * **DEBE** usar exactamente **4 espacios** por nivel.
 		* Si usa tabs:
-		
 		  * Cada tab representa exactamente 1 nivel.
 		
-	Subheader: 8.2 Jerarquía
+	Subsubheader: 8.2 Jerarquía
 		
 	Content >>
 		* La indentación **DEBE** aumentar de forma consecutiva (no se permiten saltos).
 		* Los nodos hijos **DEBE** tener mayor indentación que su padre.
 		* La indentación dentro de un bloque `>>` **no afecta a la jerarquía estructural**: es simplemente texto.
 		
-		---
-		
-	Header: 9. Comentarios
+	Subheader: 9. Comentarios
 		
 	Content >>
 		Fuera de bloques `>>`, una línea es un comentario si, tras su indentación, el primer carácter es `#`.
 		
 		Ejemplo:
-		
-		```stxt
+	Code >>		
 		# Comentario raíz
 		Nodo:
 		    # Comentario interior
-		```
 		
-	Subheader: 9.1 Comentarios dentro de bloques `>>`
+	Subsubheader: 9.1 Comentarios dentro de bloques `>>`
 		
 	Content >>
 		Dentro de un bloque `>>`:
@@ -301,26 +280,22 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		  * Un nodo estructurado.
 		
 		Ejemplo:
-		
-		```stxt
+	Code >>
 		Documento:
 		    Texto >>
 		        # Esto es texto
 		        Línea normal
 		            # También es texto
 		    # Esto sí es comentario
-		```
-		
-		---
-		
-	Header: 10. Normalización de espacios en blanco
+
+	Subheader: 10. Normalización de espacios en blanco
 		
 	Content >>
 		Esta sección define cómo deben normalizarse los espacios en blanco para 
 		garantizar que distintas implementaciones produzcan la misma representación 
 		lógica a partir del mismo texto STXT.
 		
-	Subheader: 10.1 Valores inline (`:`)
+	Subsubheader: 10.1 Valores inline (`:`)
 		
 	Content >>
 		Al parsear un nodo con `:`:
@@ -333,18 +308,18 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Esto implica que las siguientes líneas son equivalentes a nivel de parseo:
 		
-		```stxt
+	Code >>
 		Nombre: Joan
 		Nombre:     Joan
 		Nombre: Joan    
 		Nombre:     Joan    
-		```
-		
+
+	Content >>		
 		En todos los casos, el valor lógico del nodo `Nombre` es `"Joan"`.
 		
 		Si tras el `trim` el valor queda vacío, el valor inline se considera la cadena vacía (`""`).
 		
-	Subheader: 10.2 Líneas dentro de bloques `>>`
+	Subsubheader: 10.2 Líneas dentro de bloques `>>`
 		
 	Content >>
 		Para cada línea que pertenece a un bloque `>>`:
@@ -354,18 +329,18 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Ejemplo de canonicalización de líneas:
 		
-		```stxt
+	Code >>
 		Bloque >>
 		    Hola    
 		        Mundo        
-		```
-		
+
+	Content >>		
 		Representación lógica del contenido del bloque:
 		
 		* Línea 1: `"Hola"`
 		* Línea 2: `"    Mundo"`  (las 4 espacios adicionales tras la indentación mínima se conservan, los espacios del final se eliminan)
 		
-	Subheader: 10.3 Líneas vacías en bloques `>>`
+	Subsubheader: 10.3 Líneas vacías en bloques `>>`
 		
 	Content >>
 		* Las líneas vacías **intermedias** dentro del bloque (es decir, entre líneas no vacías) **DEBE** preservarse como líneas vacías (`""`) en la representación lógica del texto.
@@ -378,15 +353,13 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Ejemplo:
 		
-		```stxt
+	Code >>
 		Texto >>
 		    Línea 1
 		    
 		    Línea 2
 		    
-		    
-		```
-		
+	Content >>		
 		Contenido lógico del bloque:
 		
 		* Línea 1: `"Línea 1"`
@@ -395,7 +368,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Las líneas vacías finales después de `"Línea 2"` se eliminan en la representación lógica.
 		
-	Subheader: 10.4 Normalización del nombre del nodo
+	Subsubheader: 10.4 Normalización del nombre del nodo
 		
 	Content >>
 		La normalización del nombre del nodo ya se define formalmente en la **sección 4.1**.
@@ -407,17 +380,15 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Ejemplo recordatorio:
 		
-		```stxt
+	Code >>
 		Nombre: valor
 		Nombre : valor
 		Nombre    :   valor
-		```
-		
+
+	content >>
 		En los tres casos, el nombre lógico del nodo es `"Nombre"`.
 		
-		---
-		
-	Header: 11. Reglas de Error
+	Subheader: 11. Reglas de Error
 		
 	Content >>
 		Un documento es inválido si ocurre alguna de estas condiciones:
@@ -432,9 +403,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Un parser conforme **DEBE** rechazar el documento.
 		
-		---
-		
-	Header: 12. Conformidad
+	Subheader: 12. Conformidad
 		
 	Content >>
 		Una implementación STXT es conforme si:
@@ -447,44 +416,24 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* Aplica las reglas de normalización de espacios en blanco de la sección 10.
 		* Rechaza documentos inválidos según la sección 11.
 		
-		---
+	Subheader: 13. Extensión de Archivo y Media Type
 		
-	Header: 13. Extensión de Archivo y Media Type
-		
-	Subheader: 13.1 Extensión de Archivo
+	Subsubheader: 13.1 Extensión de Archivo
 		
 	Content >>
-		Los documentos STXT **DEBERÍA** usar la extensión:
+		Los documentos STXT **DEBERÍAN** usar la extensión: `.stxt`
 		
-		```text
-		.stxt
-		```
-		
-	Subheader: 13.2 Media Type (MIME)
+	Subsubheader: 13.2 Media Type (MIME)
 		
 	Content >>
-		Media type oficial:
-		
-		```text
-		text/stxt
-		```
-		
-		Alternativa compatible:
-		
-		```text
-		text/plain
-		```
-		
-		---
-		
-	Header: 14. Ejemplos Normativos
-		
-	Content >>
+		* Media type oficial: `text/stxt`
+		* Alternativa compatible: `text/plain`
 
-	Subheader: 14.1 Documento válido
+	Subheader: 14. Ejemplos Normativos
 		
-	Content >>
-		```stxt
+	Subsubheader: 14.1 Documento válido
+		
+	Code >>
 		Documento (@com.example.docs):
 		    Autor: Joan
 		    Fecha: 03/12/2025
@@ -493,61 +442,49 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		        Con varias líneas.
 		    Config:
 		        Modo: Activo
-		```
 		
-	Subheader: 14.2 Bloque con líneas vacías
+	Subsubheader: 14.2 Bloque con líneas vacías
 		
-	Content >>
-		```stxt
+	Code >>
 		Texto>>
 		    
 		    Línea 2
-		    
-		    
-		```
-		
+	Content >>		
 		Contenido lógico del bloque:
 		
 		1. `""`
 		2. `"Línea 2"`
+
+	
+	Subsubheader: 14.3 Comentarios dentro y fuera de bloques
 		
-		### 14.3 Comentarios dentro y fuera de bloques
-		
-		```stxt
+	Code >>
 		Documento:
 		    Cuerpo >>
 		        # Esto es texto
 		        Más texto
 		    # Esto sí es comentario
-		```
 		
-	Subheader: 14.4 Bloque con “pseudo-hijos” (válido)
+	Subsubheader: 14.4 Bloque con “pseudo-hijos” (válido)
 		
-	Content >>
-		```stxt
+	Code >>
 		Bloque >>
 		    Texto
 		        Hijo: valor SI permitido
 		        Otro hijo: SI permitido
 		    # Esto también es texto
 		Siguiente: Nodo
-		```
 		
-	Subheader: 14.5 Inválido: mezcla de indentación
+	Subsubheader: 14.5 Inválido: mezcla de indentación
 		
-	Content >>
-		```stxt
+	Code >>
 		A:
 		    B:
 		\t\tC: valor
-		```
 		
-		---
+	Subheader: 15. Apéndice A — Gramática (Informal)
 		
-	Header: 15. Apéndice A — Gramática (Informal)
-		
-	Content >>
-		```text
+	Code >>
 		Nodo             = Indent Nombre NamespaceOpt (InlineOpt | BlockOpt)
 		NamespaceOpt     = "(" "@" Ident ")" 
 		InlineOpt        = ":" Esp? TextoInline?
@@ -565,44 +502,49 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		#  - Una línea no vacía con indentación <= la del nodo '>>' lo cierra.
 		
 		Indent           = ("    ")* | ("\t")*
-		```
-		
-		---
-		
-	Header: 16. Apéndice B — Interacción con `@stxt.schema`
+
+	Subheader: 16. Apéndice B — Interacción con `@stxt.schema`
 		
 	Content >>
 		El sistema de schemas permite añadir validación semántica a documentos STXT **sin modificar la sintaxis base** del lenguaje.
 		
 		El núcleo STXT no define cómo debe reaccionar una implementación: el comportamiento pertenece exclusivamente al sistema de schemas (*STXT-SCHEMA-SPEC*).
 		
-		Un schema es un documento STXT cuyo namespace es:
-		
-		```stxt
-		@stxt.schema
-		```
+		Un schema es un documento STXT cuyo namespace es: `@stxt.schema`
 		
 		y cuyo objetivo es definir las reglas estructurales, tipos de valor y cardinalidades de los nodos pertenecientes a un namespace concreto.
 		
 		El núcleo STXT **no interpreta** estas reglas; únicamente define cómo se expresan y cómo se combinan mediante namespaces.
 		
-	Subheader: 16.1. Asociación de un schema a un namespace
+	Subsubheader: 16.1. Asociación de un schema a un namespace
 		
 	Content >>
 		Para asociar un schema al namespace `com.example.docs`, se escribe un documento:
 		
 	Code>>
 		Schema (@stxt.schema): com.example.docs
-		    Node: Documento
-		        Childs>>
-		            (1) Campo1
-		            (?) Campo2
-		            (*) Texto
-		    Node: Campo1
-		    Node: Campo2
-		    Node: Texto
+			Node: Email
+				Children:
+					Child: From
+					Child: To
+					Child: Cc
+					Child: Bcc
+					Child: Title
+						Max: 1
+					Child: Body Content
+						Min: 1
+						Max: 1
+					Child: Metadata (com.google)
+						Max: 1
+			Node: From
+			Node: To
+			Node: Cc
+			Node: Bcc
+			Node: Title
+			Node: Body Content
+				Type: TEXT
 		
-	Subheader: 16.2. Aplicación a documentos STXT
+	Subsubheader: 16.2. Aplicación a documentos STXT
 		
 	Content >>
 		Un documento que declare el mismo namespace:
@@ -619,7 +561,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		* Validando la presencia de nodos según `Node` del schema.
 		* Validando tipos de valor (`TEXT`, `DATE`, `NUMBER`, etc.).
-		* Validando cardinalidades definidas en `Childs>>`.
+		* Validando cardinalidades definidas en `Child`.
 		
 	Subheader: 16.3. Independencia del núcleo
 		
@@ -630,8 +572,43 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		También **PUEDE** actuar como parte del proceso de parseo. En ese caso **DEBERÍA** estar débilmente acoplado con él. 
 		Esto permitiría detectar errores sin tener que esperar al final del parseo de parseo.
 		
-		---
+	Subheader: 17. Apéndice B — Interacción con `@stxt.template`
+
+	Content>>	
+		El sistema de templates permite añadir validación semántica a documentos STXT **sin modificar la sintaxis base** del lenguaje.
 		
-	Header: 18. Fin del Documento
+		El núcleo STXT no define cómo debe reaccionar una implementación: el comportamiento pertenece exclusivamente al sistema de templates (*STXT-TEMPLATE-SPEC*).
+		
+		Un template es un documento STXT cuyo namespace es: `@stxt.template`
+		
+		y cuyo objetivo es definir las reglas estructurales, tipos de valor y cardinalidades de los nodos pertenecientes a un namespace concreto.
+		
+		El sistema de Templates es análogo a los schemas, pero con una syntaxis simplificada, orientada a prototipos rápidos. 
+		Aún así, es un sistema perfectamente válido para todo tipo de documentos.
+		
+		El sistema de templates **PUEDE** convivir junto a un sistema con esquemas, ya que al final un Template define la misma información que un schema.
+	
+	Subsubheader: 17.1. Asociación de un schema a un template
+		
+	Content >>
+		Para asociar un schema al namespace `com.example.docs` con templates, se escribe un documento:
+		
+	Code>>
+		Template (@stxt.template): com.example.docs
+			Structure >>
+				Email:
+					From:
+					To:
+					Cc:
+					Bcc:
+					Title: (?)
+					Body    Content: (1) TEXT
+					Metadata (com.google): (?)
+					
+	Content>>
+		Una vez declarado, los templates cumplen la misma función que los schemas.
+		Un validador estándar **DEBERÍA** priorizar un schema por encima de un template.  
+	
+	Subheader: 18. Fin del Documento
 			
 				
