@@ -13,12 +13,9 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 	Content>>
 	
-		**STXT (Semantic Text) — Core Language Specification**
-		
-		**Category:** Standards Track
-		
-		**Status:** Draft
-		
+		**STXT (Semantic Text) — Core Language Specification**\\
+		**Category:** Standards Track\\
+		**Status:** Draft\\
 		**Format:** Markdown (RFC-style)
 		
 		---
@@ -146,12 +143,12 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Ejemplos de transformación:
 		
-		```txt
+	Code >>
 		Un nombré con äcento: un-nombre-con-acento
 		UN NOMBRE con äcento: un-nombre-con-acento
 		TAMaÑo número 2__ y 3: tamano-numero-2-y-3
-		```
-		
+
+	Content >>		
 		---
 		
 	Header: 5. Nodos con `:` (nodos contenedor, permiten valor)
@@ -594,7 +591,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>
 		Para asociar un schema al namespace `com.example.docs`, se escribe un documento:
 		
-		```stxt
+	Code>>
 		Schema (@stxt.schema): com.example.docs
 		    Node: Documento
 		        Childs>>
@@ -604,7 +601,6 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    Node: Campo1
 		    Node: Campo2
 		    Node: Texto
-		```
 		
 	Subheader: 16.2. Aplicación a documentos STXT
 		
