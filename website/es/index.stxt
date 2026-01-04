@@ -9,7 +9,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 	Subheader: Documentos
 	
 	Content >>
-		STXT es un formato textual jerárquico y semántico orientado a:
+		@STXT@ es un formato textual jerárquico y semántico orientado a:
 		
 		* Representar documentos y datos de manera clara.
 		* Ser extremadamente sencillo de leer y escribir.
@@ -26,7 +26,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 		* La jerarquía se define por la indentación (tabuladores o 4 espacios por nivel según el documento).
 		* Soporta namespaces (e.g. `(com.example)`), comentarios fuera de bloques (`# ...`) y validación mediante schemas (`@stxt.schema` o `@stxt.template`).
 		
-		Un documento STXT equilibra la claridad humana con una estructura semántica explícita — ideal para contenidos, configuraciones y datos inter-operables.
+		Un documento @STXT@ equilibra la claridad humana con una estructura semántica explícita — ideal para contenidos, configuraciones y datos inter-operables.
 	
 	Code >>
 		***Email***:

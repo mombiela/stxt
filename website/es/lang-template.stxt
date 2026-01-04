@@ -6,3 +6,77 @@ Document (dev.stxt.namespace):Template
 		El contenido se muestra sólo como ejemplo del progreso actual,
 		y puede cambiar notablemente con la versión definitiva. 
 		
+	Subsubheader:  6.1 Forma básica
+		
+	Code>>
+		Node: NombreNodo
+		    Type: Tipo
+		    Childs>>
+		        (<card>) NombreHijo [(@namespace)]
+	Content >>
+		Reglas:
+		
+		* `NombreNodo` **DEBE** ser único dentro del schema.
+		* Cada `Node` define la semántica del nodo en el namespace objetivo.
+		* Si `Type` se omite ⇒ tipo por defecto `TEXT INLINE`.
+
+	Subheader: 7. Hijos (`Childs>>`) y namespaces cruzados
+		
+	Content >>
+		Cada entrada de `Childs>>`:
+		
+		```text
+		(<card>) NombreHijo [(@namespace)]
+		```
+		
+		Donde:
+		
+		* `(<card>)` = cardinalidad (ver sección 8).
+		* `NombreHijo` = nombre lógico del nodo hijo.
+		* `(@namespace)` (opcional):
+		
+		  * Si se omite: se asume el namespace objetivo del schema.
+		  * Si se indica: el hijo pertenece a ese namespace concreto.
+		
+	Subsubheader: 7.1. REGLA NUEVA (estricta y obligatoria)
+		
+	Content >>
+		**Todo nodo que aparezca en `Childs>>` debe tener una definición propia como `Node:` en su schema correspondiente.**
+		
+		Esto implica:
+		
+		* Si aparece:
+		
+		  ```stxt
+		  (1) Metadata (@com.google.html)
+		  ```
+		
+		  entonces **debe existir un schema para `com.google.html`**
+		  **y dentro de él debe existir `Node: Metadata`**.
+		
+		* Esta regla es obligatoria tanto en modo *strict* como en modo no-strict.
+		
+		Así evitamos hijos “fantasma” y garantizamos que todos los nodos tienen semántica definida.
+		
+	Subheader: 8. Cardinalidades
+		
+	Content >>
+		Formas permitidas:
+		
+		| Forma     | Significado                |
+		| --------- | -------------------------- |
+		| `num`     | Exactamente `num`.         |
+		| `*`       | Cualquier número (`0..∞`). |
+		| `+`       | Una o más (`1..∞`).        |
+		| `?`       | Cero o una (`0..1`).       |
+		| `num+`    | `num` o más.               |
+		| `num-`    | `0..num`.                  |
+		| `min,max` | Entre `min` y `max`.       |
+		
+		Reglas:
+		
+		* Se aplica por instancia del nodo padre.
+		* Cuenta solo hijos **directos** con nombre + namespace efectivo.
+		* Un validador conforme **DEBE** comprobar las cardinalidades.
+		
+		

@@ -12,19 +12,13 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		y puede cambiar notablemente con la versión definitiva. 
 		
 	Content>>
-	
-		**STXT (Semantic Text) — Schema Language Specification**
-		
-		**Category:** Standards Track
-		
-		**Status:** Draft
-		
+		**STXT (Semantic Text) — Schema Language Specification**\\
+		**Category:** Standards Track\\
+		**Status:** Draft\\
 		**Format:** Markdown (RFC-style)
 		
-		---
-		
-		# 1. Introducción
-		
+	Subheader: 1. Introducción
+	Content >>		
 		Este documento define la especificación del lenguaje **STXT Schema**, un mecanismo para validar documentos STXT mediante reglas semánticas formales.
 		
 		Un **schema**:
@@ -33,37 +27,30 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		* Define los nodos, tipos y cardinalidades del namespace objetivo.
 		* No modifica la sintaxis base de STXT; opera sobre la estructura ya parseada.
 		
-		---
+	Subheader: 2. Terminología
 		
-		# 2. Terminología
-		
+	Content >>
 		Las palabras clave **"DEBE"**, **"NO DEBE"**, **"DEBERÍA"**, **"NO DEBERÍA"**, y **"PUEDE"** deben interpretarse según **RFC 2119**.
 		
 		Términos como *nodo*, *indentación*, *namespace*, *inline* y *bloque `>>`* mantienen su significado en *STXT-SPEC*.
 		
-		---
+	Subheader: 3. Relación entre STXT y Schema
 		
-		# 3. Relación entre STXT y Schema
-		
+	Content >>
 		La validación mediante schema ocurre **después** del parseo STXT:
 		
 		1. Parseo a estructura jerárquica STXT.
 		2. Resolución del namespace lógico (herencia).
 		3. Aplicación del schema correspondiente.
 		
-		---
+	Subheader: 4. Estructura general de un Schema
 		
-		# 4. Estructura general de un Schema
-		
-		Un schema es un documento cuyo nodo raíz es:
-		
-		```stxt
-		Schema (@stxt.schema): <namespace_objetivo>
-		```
+	Content >>
+		Un schema es un documento cuyo nodo raíz es: `Schema (@stxt.schema): <namespace_objetivo>`
 		
 		Ejemplo:
-		
-		```stxt
+
+	Code >>
 		Schema (@stxt.schema): com.example.docs
 		    Description: Schema for example documents
 		    Node: Document
@@ -79,40 +66,34 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		        Type: DATE
 		    Node: Content
 		        Type: TEXT MULTILINE
-		```
+
+	Subheader: 5. Un schema por namespace
 		
-		---
-		
-		# 5. Un schema por namespace
-		
+	Content >>
 		Para cada namespace lógico:
 		
 		* **NO DEBE** existir más de un schema activo simultáneamente.
 		* Cargar dos schemas para el mismo namespace ⇒ **error de configuración**.
 		
-		---
+	Subheader: 6. Definición de Nodos (`Node:`)
 		
-		# 6. Definición de Nodos (`Node:`)
+	Subsubheader:  6.1 Forma básica
 		
-		### 6.1 Forma básica
-		
-		```stxt
+	Code >>
 		Node: NombreNodo
 		    Type: Tipo
 		    Childs>>
 		        (<card>) NombreHijo [(@namespace)]
-		```
-		
+	Content >>
 		Reglas:
 		
 		* `NombreNodo` **DEBE** ser único dentro del schema.
 		* Cada `Node` define la semántica del nodo en el namespace objetivo.
 		* Si `Type` se omite ⇒ tipo por defecto `TEXT INLINE`.
+
+	Subheader: 7. Hijos (`Childs>>`) y namespaces cruzados
 		
-		---
-		
-		# 7. Hijos (`Childs>>`) y namespaces cruzados
-		
+	Content >>
 		Cada entrada de `Childs>>`:
 		
 		```text
@@ -128,8 +109,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		  * Si se omite: se asume el namespace objetivo del schema.
 		  * Si se indica: el hijo pertenece a ese namespace concreto.
 		
-		## 7.1. REGLA NUEVA (estricta y obligatoria)
+	Subsubheader: 7.1. REGLA NUEVA (estricta y obligatoria)
 		
+	Content >>
 		**Todo nodo que aparezca en `Childs>>` debe tener una definición propia como `Node:` en su schema correspondiente.**
 		
 		Esto implica:
@@ -149,8 +131,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		# 8. Cardinalidades
+	Subheader: 8. Cardinalidades
 		
+	Content >>
 		Formas permitidas:
 		
 		| Forma     | Significado                |
@@ -171,16 +154,18 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		# 9. Tipos
+	Subheader: 9. Tipos
 		
+	Content >>
 		Los tipos definen:
 		
 		1. **La forma del valor del nodo** (inline, bloque `>>`, o ninguno).
 		2. **Si el nodo puede tener hijos**.
 		3. **La validación del contenido**.
 		
-		## 9.1. Tabla oficial de tipos
+	Subsubheader: 9.1. Tabla oficial de tipos
 		
+	Content >>
 		| Tipo             | Formas permitidas de valor | Hijos permitidos | Descripción / Validación                                               |
 		|------------------|----------------------------|------------------|------------------------------------------------------------------------|
 		| TEXT INLINE      | INLINE                     | SÍ               | Texto inline. **Tipo por defecto.**                                    |
@@ -199,8 +184,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		| CODE[language]   | BLOCK                      | NO               | Código en `<language>`.                                                |
 		| EMPTY            | NONE                       | SÍ               | Nodo estructural sin valor.                                            |
 		
-		## 9.2. Reglas clave
+	Subsubheader: 9.2. Reglas clave
 		
+	Content >>
 		* El tipo **NO controla obligatoriedad**, solo forma y validez del valor.
 		  La obligatoriedad de aparición se controla mediante cardinalidad.
 		* Tipos **BLOCK-only** (`TEXT MULTILINE`, `CODE:*`, `BASE64`)
@@ -212,10 +198,11 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		# 10. Modos del validador: *strict* y *non-strict*
+	Subheader: 10. Modos del validador: *strict* y *non-strict*
 		
-		## 10.1. Modo *strict* (equivalente al “modo cerrado”) — **por defecto**
+	Subsubheader: 10.1. Modo *strict* (equivalente al “modo cerrado”) — **por defecto**
 		
+	Content >>
 		Un validador STXT Schema en modo *strict*:
 		
 		* **DEBE** exigir schema para cada namespace encontrado.
@@ -230,8 +217,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		* **DEBE** aplicar la regla de sección 7.1:
 		  **si aparece un hijo en `Childs>>`, su definición debe existir en su schema.**
 		
-		## 10.2. Modo *non-strict* (modo abierto configurable)
+	Subsubheader: 10.2. Modo *non-strict* (modo abierto configurable)
 		
+	Content >>
 		Un validador **PUEDE** ofrecer un modo no-strict:
 		
 		* Si un namespace no tiene schema:
@@ -249,12 +237,11 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		> Si un hijo aparece en `Childs>>` de un schema, ese hijo **DEBE** estar definido en su schema correspondiente.
 		
-		---
+	Subheader: 11. Ejemplos Normativos
 		
-		# 11. Ejemplos Normativos
+	Subsubheader: 11.1. Schema con referencias cross-namespace
 		
-		## 11.1. Schema con referencias cross-namespace
-		
+	Content >>
 		```stxt
 		Schema (@stxt.schema): com.example.docs
 		    Node: Document
@@ -274,8 +261,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		        Type: TEXT INLINE
 		```
 		
-		## 11.2. Documento válido
+	Subsubheader: 11.2. Documento válido
 		
+	Content >>
 		```stxt
 		Document (@com.example.docs):
 		    Metadata (@com.google.html): info
@@ -286,8 +274,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		# 12. Errores de Schema
+	Subheader: 12. Errores de Schema
 		
+	Content >>
 		Un schema es inválido si:
 		
 		1. Define dos `Node` con el mismo nombre.
@@ -300,8 +289,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		# 13. Conformidad
+	Subheader: 13. Conformidad
 		
+	Content >>
 		Una implementación es conforme si:
 		
 		* Implementa íntegramente este documento.
@@ -312,14 +302,16 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		# 14. Schema del Schema (`@stxt.schema`)
+	Subheader: 14. Schema del Schema (`@stxt.schema`)
 		
+	Content >>
 		Esta sección define el **schema oficial** del propio sistema de schemas: el meta-schema que valida todos los documentos del namespace `@stxt.schema`.
 		
 		---
 		
-		## 14.1. Consideraciones
+	Subsubheader: 14.1. Consideraciones
 		
+	Content >>
 		* Todo documento schema es:
 		
 		  ```stxt
@@ -344,8 +336,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		## 14.2. Meta-Schema completo
+	Subsubheader: 14.2. Meta-Schema completo
 		
+	Content >>
 		```stxt
 		Schema (@stxt.schema): stxt.schema
 		    Description: Schema that defines the STXT Schema language
@@ -380,8 +373,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		## 14.3. Lectura rápida
+	Subsubheader: 14.3. Lectura rápida
 		
+	Content >>
 		* `Schema`
 		  Valor inline = namespace objetivo (ej. `com.example.docs`).
 		  Hijos: `Description` (?), `Node` (*).
@@ -405,8 +399,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		## 14.4. Ejemplo mínimo válido
+	Subsubheader: 14.4. Ejemplo mínimo válido
 		
+	Content >>
 		```stxt
 		Schema (@stxt.schema): com.example.docs
 		    Node: Document
@@ -416,8 +411,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-		## 14.5. Ejemplo completo
+	Subsubheader: 14.5. Ejemplo completo
 		
+	Content >>
 		```stxt
 		Schema (@stxt.schema): com.example.docs
 		    Description: Example schema
@@ -433,6 +429,6 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		        Type: TEXT INLINE
 		```
 		
-		# 15. Fin del Documento
+	Subheader: 15. Fin del Documento
 			
 				
