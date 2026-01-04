@@ -13,314 +13,337 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 	Content>>
 	
-		**STXT (Semantic Text) — Core Language Specification**
-		
-		**Category:** Standards Track
-		
-		**Status:** Draft
-		
+		**STXT (Semantic Text) — Core Language Specification**\\
+		**Category:** Standards Track\\
+		**Status:** Draft\\
 		**Format:** Markdown (RFC-style)
 		
-		---
-		
-		# 1. Introduction
-		
+	Subheader: 1. Introduction
+	
+	Content >>
 		This document defines the specification of the **STXT (Semantic Text)** language.
 		
-		STXT is a **Human-First** language, designed so that its natural form is readable, clear, and comfortable for people, while maintaining a precise structure that is easily processable by machines.
+		STXT is a **Human-First** language, designed so that its natural form is readable, 
+		clear, and comfortable for people, while at the same time maintaining a precise structure 
+		and being easily processable by machines.
 		
 		STXT is a hierarchical and semantic textual format aimed at:
 		
 		* Representing documents and data clearly.
-		* Being extremely easy to read and write.
+		* Being extremely simple to read and write.
 		* Being trivial to parse in any language.
 		* Allowing both structured content and free text.
 		* Extending its semantics via `@stxt.schema`.
 		
 		This document describes the **base syntax** of the language.
+
+	Subheader: 2. Terminology
+
+	Content >>
+		The key words **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** are to be interpreted as described in **RFC 2119**.
 		
-		---
-		
-		# 2. Terminology
-		
-		The keywords **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** must be interpreted as described in **RFC 2119**.
-		
-		---
-		
-		# 3. Document Encoding
-		
-		STXT documents **SHOULD** be encoded in **UTF-8 without BOM**.
+	Subheader: 3. Document Encoding
+
+	Content >>
+		An STXT document **SHOULD** be encoded in **UTF-8 without BOM**.
 		
 		A parser:
 		
-		* **MAY** accept documents that start with BOM.
+		* **MAY** accept documents that begin with a BOM.
 		* **SHOULD** emit a warning if it appears.
 		
-		---
+	Subheader: 4. Syntactic Unit: Node
 		
-		# 4. Syntactic Unit: Node
-		
+	Content >>
 		Each non-empty line of the document that is not a comment nor part of a `>>` block defines a **node**.
 		
 		There are two forms of node:
 		
-		1. **Simple or container node**
-		
-		   ```stxt
-		   Name: InlineValue
-		   ```
-		2. **Text block node (`>>`)**
-		
-		   ```stxt
-		   Name >>
-		       line 1
-		       line 2
-		   ```
+		1. **Simple or container node**: `Name: Node Value`
+		2. **Text block node (`>>`)**: `Name >>`
 		
 		A node may optionally include a namespace:
 		
-		```stxt
-		Name (@namespace):
-		Name (@namespace) >>
-		```
+	Code>>
+		Name (namespace.normal):
+		Name (@namespace.special) >>
 		
-		## 4.1 Node name normalization
+	Subsubheader: 4.1 Node name normalization
 		
+	Content >>
 		The node name is taken from the text between:
 		
 		- The first character not belonging to the indentation, and
 		- The first character that belongs to any of:
 		  - The start of a namespace `(`,
-		  - The character `:`,
-		  - The operator `>>`,
-		  - Or the end of the line.
+		  - The `:` character,
+		  - The `>>` operator,
+		  - Or end of line.
 		
 		On that fragment, apply:
 		
-		- Removal of leading spaces and tabs (left trim).
-		- Removal of trailing spaces and tabs (right trim).
+		- Removal of leading and trailing spaces and tabs (trim).
+		- Compaction of spaces into a single one
 		
-		The result of this normalization is the **logical name of the node**.
+		The result of this normalization is the **node name**.
 		
 		A node whose logical name is the empty string (`""`) is invalid and **MUST** cause a parse error.
 		
-		Examples equivalent at the name level:
+		Equivalent examples at the `Node name` level:
+
+	Code>>
+		Node name: value
+		Node  name   : value
+		Node  name (@ns):
+		Node name(@ns):
+		Node  name >>
+		Node name>>
 		
-		```stxt
-		Name: value
-		Name   : value
-		   Name: value
-		   Name   : value
-		Name   (@ns):
-		Name(@ns):
-		Name   >>
-		Name>>
-		```
+	Subsubheader: 4.2 Node name restrictions
 		
-		---
+	Content >>
+		The node name will only allow alphanumeric characters and the characters `-`, `_`, ` `.
+		Names with diacritics, uppercase and lowercase are allowed.		
 		
-		# 5. Nodes with `:` (inline or container)
+	Subsubheader: 4.3 Canonical node name
 		
+	Content >>
+		The canonical name is formed from the node name through the following process:
+		
+		* Unicode decomposition (NFKD)
+		* Convert to lowercase
+		* Remove diacritics
+		* Compact spaces (not necessary on an already normalized name)
+		* Replace [^a-z0-9] with `-`. 2 or more consecutive hyphens are not allowed; they must be compacted into a single one (`-`) 
+		* Remove hyphens (`-`) at the beginning and at the end if present
+		
+		The canonical name will be used to know whether a node has the same name as another.
+		It will also be used internally by all lookup or check operations,
+		to know whether it is the same element.
+		
+		Transformation examples:
+		
+	Code >>
+		A namé with äccent: a-name-with-accent
+		A NAME with äccent: a-name-with-accent
+		SIZe number 2__ and 3: size-number-2-and-3
+
+	Subsubheader: 4.4 Style rules
+	Content >>
+		The style rules are as follows:
+		
+		* Separate the name from the definition of a namespace with a single space
+		* Separate `:` from the value with a single space
+		* `:` goes immediately after the name or the namespace if present
+		* `>>` has no character after it
+		* No more than one space is used in names
+		* Namespace without spaces in the definition `(namespace.def)`
+		
+		Correct style examples:
+		
+	Code>>
+		Name with value: The value
+		Name without value:
+		Name with namespace (the.namespace):
+		Text node >>
+		
+	Subheader: 5. Nodes with `:` (container nodes, allow value)
+		
+	Content >>
 		The form with `:` defines a node that:
 		
-		* May have an inline value (optional).
-		* May have no inline value (empty node).
+		* May have a value (optional).
+		* May have no value (empty node).
 		* May have children (nested nodes).
 		* Its structured content includes:
-		
-		  * The node's own line.
-		  * Its descendants with greater indentation that are not part of `>>` blocks.
+		  * The node line itself.
+		  * Its descendants with greater indentation
 		
 		Examples:
 		
-		```stxt
+	Code >>
 		Title: Report
 		Author: Joan
 		Node:
 		Node: Value
 		Node:
-		    SubNode: 123
-		```
+		    SubNode 1: 123
+		    Another subnode: 456
+
+	Subheader: 6. Nodes with `>>` (text block)
 		
-		---
-		
-		# 6. Nodes with `>>` (text block)
-		
+	Content >>
 		The form with `>>` defines a **literal text** block.
 		
 		Valid examples:
-		
-		```stxt
+
+	Code >>		
 		Description >>
 		    Line 1
 		    Line 2
-		```
-		
-		```stxt
+
+	Code >>	
 		Section>>
 		    Accepts the operator without space
-		```
 		
-		## 6.1 Formal rules
+	Subsubheader: 6.1 Formal rules
 		
-		* The `>>` node line **MUST NOT** contain significant content after `>>`, except for optional spaces.
+	Content >>
+		* The `>>` node line **MUST NOT** contain significant content after `>>`, except optional spaces.
 		* All lines with indentation **strictly greater** than that of the `>>` node belong to the **textual content of the block**.
-		* Inside the block:
-		
+		* Within the block:
 		  * The parser **MUST NOT** interpret any line as a structured node, even if it contains `:` or other STXT syntax.
-		  * The parser **MUST NOT** interpret lines starting with `#` as comments; all lines are literal text.
-		* The block ends when a **non-empty line** appears whose indentation is **less than or equal to** the indentation of the `>>` node.
-		* Empty lines **inside the block** are preserved as is and **MUST NOT** close the block, regardless of their indentation.
+		  * The parser **MUST NOT** interpret lines that begin with `#` as comments; all lines are literal text.
+		* The block ends when a **non-empty line** appears whose indentation is **less than or equal** to the indentation of the `>>` node.
+		* Empty lines **within the block** are preserved as-is and **MUST NOT** close the block, regardless of their indentation.
 		
-		Note: the removal of final empty lines from the block is described in section 10.3.
+	Subsubheader: 6.2 Example
 		
-		### 6.2 Example
-		
-		```stxt
+	Code >>
 		Block >>
 		    Text
-		        Child: value YES allowed, it's text, not parsed
+		        Child: value YES allowed, it is text, not parsed
 		        Another child: YES allowed
 		    # This is also text
 		NextNode: value
-		```
-		
+
+	Content >>		
 		In this example:
 		
 		* Everything indented below `Block >>` is literal text.
 		* `Child: value` and `Another child: YES allowed` are **not** nodes, but text.
 		* `NextNode: value` is outside the `>>` block.
 		
-		---
+	Subheader: 7. Namespaces
 		
-		# 7. Namespaces
-		
-		A namespace is optional and specified as follows:
-		
-		```stxt
+	Content >>
+		A namespace is optional and is specified like this:
+
+	Code >>		
 		Node (@com.example.docs):
-		```
 		
+	Content >>
 		Rules:
 		
-		* A namespace **MUST** start with `@`.
-		* **SHOULD** use hierarchical format (`@a.b.c`).
+		* A namespace **MAY** start with `@`.
+		* It **MUST** use hierarchical format (`a.b.c`).
 		* It is inherited by child nodes.
-		* The default namespace is **`@stxt`**.
-		* A child node may redefine its namespace by indicating (@other.namespace), in which case it uses that namespace instead of the inherited one.
+		* The default namespace is **``**.
+		* A child node may redefine its namespace by indicating (other.namespace), in which case it uses that namespace instead of the inherited one.
 		
-		---
+	Subheader: 8. Indentation and Hierarchy
 		
-		# 8. Indentation and Hierarchy
-		
+	Content >>
 		Indentation defines the structured hierarchy of the document.
 		
-		## 8.1 Allowed Indentation
+	Subsubheader: 8.1 Allowed Indentation
 		
+	Content >>
 		An STXT document:
 		
 		* **MAY** use only spaces or only tabs.
-		* **MUST NOT** mix them.
-		* If using spaces:
-		
-		  * **MUST** use exactly **4 spaces** per level.
-		* If using tabs:
-		
+		* **SHOULD NOT** mix them on the same line. 
+		  If they are mixed, spaces fewer than 4 are discarded if a tab appears
+		* If it uses spaces:
+		  * It **MUST** use exactly **4 spaces** per level.
+		* If it uses tabs:
 		  * Each tab represents exactly 1 level.
 		
-		## 8.2 Hierarchy
+	Subsubheader: 8.2 Hierarchy
 		
+	Content >>
 		* Indentation **MUST** increase consecutively (no jumps allowed).
 		* Child nodes **MUST** have greater indentation than their parent.
-		* Indentation inside a `>>` block **does not affect the structural hierarchy**: it is simply text.
+		* Indentation within a `>>` block **does not affect the structural hierarchy**: it is simply text.
 		
-		---
+	Subheader: 9. Comments
 		
-		# 9. Comments
-		
-		Outside of `>>` blocks, a line is a comment if, after its indentation, the first character is `#`.
+	Content >>
+		Outside `>>` blocks, a line is a comment if, after its indentation, the first character is `#`.
 		
 		Example:
-		
-		```stxt
+	Code >>		
 		# Root comment
 		Node:
 		    # Inner comment
-		```
 		
-		## 9.1 Comments inside `>>` blocks
+	Subsubheader: 9.1 Comments inside `>>` blocks
 		
+	Content >>
 		Inside a `>>` block:
 		
-		* Any line with indentation equal to or greater than the minimum indentation of the block **MUST** be treated as literal text, even if it starts with `#`.
+		* Any line with indentation equal to or greater than the minimum indentation of the 
+		  block **MUST** be treated as literal text, even if it starts with `#`.
 		* A line less indented than the block ends the block and may be:
 		
 		  * A comment, if it starts with `#`.
 		  * A structured node.
 		
 		Example:
-		
-		```stxt
+	Code >>
 		Document:
 		    Text >>
 		        # This is text
 		        Normal line
-		            # Also text
+		            # This is also text
 		    # This is a comment
-		```
 		
-		---
+	Subheader: 10. Whitespace normalization
 		
-		# 10. Whitespace Normalization
+	Content >>
+		This section defines how whitespace must be normalized to 
+		ensure that different implementations produce the same logical 
+		representation from the same STXT text.
 		
-		This section defines how whitespace must be normalized to ensure that different implementations produce the same logical representation from the same STXT text.
+	Subsubheader: 10.1 Inline values (`:`)
 		
-		## 10.1 Inline values (`:`)
-		
+	Content >>
 		When parsing a node with `:`:
 		
-		1. The parser takes all characters immediately after `:` up to the end of the line.
+		1. The parser takes all characters from immediately after `:` to the end of the line.
 		2. The inline value **MUST** be normalized by applying:
 		
 		   * Removal of leading spaces and tabs (left trim).
 		   * Removal of trailing spaces and tabs (right trim).
 		
-		This means that the following lines are equivalent at the parsing level:
+		This implies that the following lines are equivalent at the parsing level:
 		
-		```stxt
+	Code >>
 		Name: Joan
 		Name:     Joan
 		Name: Joan    
 		Name:     Joan    
-		```
-		
+
+	Content >>		
 		In all cases, the logical value of the `Name` node is `"Joan"`.
 		
 		If after trimming the value is empty, the inline value is considered the empty string (`""`).
 		
-		## 10.2 Lines inside `>>` blocks
+	Subsubheader: 10.2 Lines inside `>>` blocks
 		
+	Content >>
 		For each line that belongs to a `>>` block:
 		
-		1. The parser determines the content of the line from the text that follows the minimum indentation of the block (i.e., only the block indentation is removed, but any additional indentation is preserved as part of the text).
+		1. The parser determines the content of the line from the text that follows the minimum indentation of the block (i.e., it removes only the block indentation, but preserves any additional indentation as part of the text).
 		2. On that content, the parser **MUST** remove all trailing spaces and tabs (right trim).
 		
-		Example of canonicalization of lines:
+		Example of line canonicalization:
 		
-		```stxt
+	Code >>
 		Block >>
 		    Hello    
 		        World        
-		```
-		
+
+	Content >>		
 		Logical representation of the block content:
 		
 		* Line 1: `"Hello"`
 		* Line 2: `"    World"`  (the 4 additional spaces after the minimum indentation are preserved, trailing spaces are removed)
 		
-		## 10.3 Empty lines in `>>` blocks
+	Subsubheader: 10.3 Empty lines in `>>` blocks
 		
-		* **Intermediate** empty lines inside the block (i.e., between non-empty lines) **MUST** be preserved as empty lines (`""`) in the logical representation of the text.
+	Content >>
+		* Intermediate empty lines within the block (i.e., between non-empty lines) **MUST** be preserved as empty lines (`""`) in the logical representation of the text.
 		* After reading all lines of a `>>` block, implementations **MUST** remove consecutive empty lines at the end of the block (if any).
 		
 		In other words:
@@ -330,50 +353,48 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Example:
 		
-		```stxt
+	Code >>
 		Text >>
 		    Line 1
 		    
 		    Line 2
 		    
-		    
-		```
-		
+	Content >>		
 		Logical content of the block:
 		
 		* Line 1: `"Line 1"`
 		* Line 2: `""`
 		* Line 3: `"Line 2"`
 		
-		Final empty lines after `"Line 2"` are removed in the logical representation.
+		The final empty lines after `"Line 2"` are removed in the logical representation.
 		
-		## 10.4 Node name normalization
+	Subsubheader: 10.4 Node name normalization
 		
+	Content >>
 		Node name normalization is already formally defined in **section 4.1**.
 		As an operational reminder:
 		
 		* Before interpreting `:` or `>>`, the parser **MUST** obtain the logical name by applying the normalization described in 4.2.
-		* This means removing spaces and tabs to the left and right of the fragment that constitutes the name.
-		* Different variants with spaces still produce the same logical name.
+		* This implies removing spaces and tabs to the left and right of the fragment that constitutes the name.
+		* Different whitespace variants still produce the same logical name.
 		
 		Reminder example:
 		
-		```stxt
+	Code >>
 		Name: value
 		Name : value
 		Name    :   value
-		```
+
+	content >>
+		In the three cases, the logical node name is `"Name"`.
 		
-		In all three cases, the logical name of the node is `"Name"`.
+	Subheader: 11. Error Rules
 		
-		---
-		
-		# 11. Error Rules
-		
+	Content >>
 		A document is invalid if any of these conditions occur:
 		
 		1. Mixing spaces and tabs.
-		2. Spaces that are not multiples of 4 (when using spaces for indentation).
+		2. Spaces that are not multiples of 4 (when spaces are used for indentation).
 		3. Jumps in indentation levels.
 		4. A `>>` node contains significant inline content on the same line as `>>`.
 		5. A node contains neither `:` nor `>>`.
@@ -382,119 +403,95 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		A conforming parser **MUST** reject the document.
 		
-		---
+	Subheader: 12. Conformance
 		
-		# 12. Conformance
-		
-		An STXT implementation is conformant if:
+	Content >>
+		An STXT implementation is conforming if:
 		
 		* It implements the syntax described in this document.
 		* It applies the strict indentation and hierarchy rules.
 		* It correctly interprets nodes with `:` and `>>` blocks.
-		* It interprets comments outside of `>>` blocks.
+		* It interprets comments outside `>>` blocks.
 		* It treats **everything** inside `>>` blocks as literal text.
-		* It applies the whitespace normalization rules of section 10.
+		* It applies the whitespace normalization rules in section 10.
 		* It rejects invalid documents according to section 11.
 		
-		---
+	Subheader: 13. File Extension and Media Type
 		
-		# 13. File Extension and Media Type
+	Subsubheader: 13.1 File Extension
 		
-		## 13.1 File Extension
+	Content >>
+		STXT documents **SHOULD** use the extension: `.stxt`
 		
-		STXT documents **SHOULD** use the extension:
+	Subsubheader: 13.2 Media Type (MIME)
 		
-		```text
-		.stxt
-		```
+	Content >>
+		* Official media type: `text/stxt`
+		* Compatible alternative: `text/plain`
+
+	Subheader: 14. Normative Examples
 		
-		## 13.2 Media Type (MIME)
+	Subsubheader: 14.1 Valid document
 		
-		Official media type:
-		
-		```text
-		text/stxt
-		```
-		
-		Compatible alternative:
-		
-		```text
-		text/plain
-		```
-		
-		---
-		
-		# 14. Normative Examples
-		
-		### 14.1 Valid document
-		
-		```stxt
+	Code >>
 		Document (@com.example.docs):
 		    Author: Joan
 		    Date: 03/12/2025
 		    Summary >>
 		        This is a text block.
-		        With several lines.
+		        With multiple lines.
 		    Config:
 		        Mode: Active
-		```
 		
-		### 14.2 Block with empty lines
+	Subsubheader: 14.2 Block with empty lines
 		
-		```stxt
+	Code >>
 		Text>>
 		    
 		    Line 2
-		    
-		    
-		```
-		
+	Content >>		
 		Logical content of the block:
 		
 		1. `""`
 		2. `"Line 2"`
+
+	
+	Subsubheader: 14.3 Comments inside and outside blocks
 		
-		### 14.3 Comments inside and outside blocks
-		
-		```stxt
+	Code >>
 		Document:
 		    Body >>
 		        # This is text
 		        More text
 		    # This is a comment
-		```
 		
-		### 14.4 Block with “pseudo-children” (valid)
+	Subsubheader: 14.4 Block with “pseudo-children” (valid)
 		
-		```stxt
+	Code >>
 		Block >>
 		    Text
 		        Child: value YES allowed
 		        Another child: YES allowed
 		    # This is also text
 		Next: Node
-		```
 		
-		### 14.5 Invalid: mixed indentation
+	Subsubheader: 14.5 Invalid: mixed indentation
 		
-		```stxt
+	Code >>
 		A:
 		    B:
 		\t\tC: value
-		```
 		
-		---
+	Subheader: 15. Appendix A — Grammar (Informal)
 		
-		# 15. Appendix A — Grammar (Informal)
-		
-		```text
+	Code >>
 		Node             = Indent Name NamespaceOpt (InlineOpt | BlockOpt)
 		NamespaceOpt     = "(" "@" Ident ")" 
-		InlineOpt        = ":" Esp? InlineText?
-		BlockOpt         = Esp? ">>"
+		InlineOpt        = ":" Space? InlineText?
+		BlockOpt         = Space? ">>"
 		
-		InlineText       = any content up to end of line
-		BlockText        = indented lines (literal text, not structured)
+		InlineText       = any content until end of line
+		TextBlock        = indented lines (literal text, unstructured)
 		
 		Comment          = Indent "#" Text       ; Only outside '>>' blocks
 		
@@ -505,64 +502,111 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		#  - A non-empty line with indentation <= that of the '>>' node closes it.
 		
 		Indent           = ("    ")* | ("\t")*
-		```
+
+	Subheader: 16. Appendix B — Interaction with `@stxt.schema`
 		
-		---
-		
-		# 16. Appendix B — Interaction with `@stxt.schema`
-		
+	Content >>
 		The schema system allows adding semantic validation to STXT documents **without modifying the base syntax** of the language.
 		
 		The STXT core does not define how an implementation should react: the behavior belongs exclusively to the schema system (*STXT-SCHEMA-SPEC*).
 		
-		A schema is an STXT document whose namespace is:
+		A schema is an STXT document whose namespace is: `@stxt.schema`
 		
-		```stxt
-		@stxt.schema
-		```
-		
-		and whose purpose is to define the structural rules, value types, and cardinalities of nodes belonging to a specific namespace.
+		and whose goal is to define the structural rules, value types, and node cardinalities belonging to a specific namespace.
 		
 		The STXT core **does not interpret** these rules; it only defines how they are expressed and how they are combined via namespaces.
 		
-		## 16.1. Associating a schema to a namespace
+	Subsubheader: 16.1. Associating a schema to a namespace
 		
+	Content >>
 		To associate a schema to the namespace `com.example.docs`, write a document:
 		
-		```stxt
+	Code>>
 		Schema (@stxt.schema): com.example.docs
-		    Node: Document
-		        Childs>>
-		            (1) Field1
-		            (?) Field2
-		            (*) Text
-		    Node: Field1
-		    Node: Field2
-		    Node: Text
-		```
+			Node: Email
+				Children:
+					Child: From
+					Child: To
+					Child: Cc
+					Child: Bcc
+					Child: Title
+						Max: 1
+					Child: Body Content
+						Min: 1
+						Max: 1
+					Child: Metadata (com.google)
+						Max: 1
+			Node: From
+			Node: To
+			Node: Cc
+			Node: Bcc
+			Node: Title
+			Node: Body Content
+				Type: TEXT
 		
-		## 16.2. Application to STXT documents
+	Subsubheader: 16.2. Application to STXT documents
 		
+	Content >>
 		A document that declares the same namespace:
 		
-		```stxt
+	Code >>
 		Document (@com.example.docs):
 		    Field1: value
 		    Text: one
 		    Text: two
-		```
+	
+	Content >>
 		
 		can be validated by an implementation that supports STXT schemas:
 		
 		* Validating the presence of nodes according to `Node` in the schema.
 		* Validating value types (`TEXT`, `DATE`, `NUMBER`, etc.).
-		* Validating cardinalities defined in `Childs>>`.
+		* Validating cardinalities defined in `Child`.
 		
-		## 16.3. Core independence
+	Subheader: 16.3. Core independence
 		
-		STXT **MUST NOT** impose semantic rules from schemas.
-		The schema system is a separate and optional component that operates **on** the already parsed STXT.
+	Content >>
+		STXT **MUST NOT** impose semantic rules coming from schemas.
+		The schema system is a separate and optional component that operates **on** the already-parsed STXT.
 		
-		---
+		It **MAY** also act as part of the parsing process. In that case it **SHOULD** be weakly coupled to it. 
+		This would allow detecting errors without having to wait until the end of parsing.
 		
-		# 17. End of Document
+	Subheader: 17. Appendix B — Interaction with `@stxt.template`
+
+	Content>>	
+		The template system allows adding semantic validation to STXT documents **without modifying the base syntax** of the language.
+		
+		The STXT core does not define how an implementation should react: the behavior belongs exclusively to the template system (*STXT-TEMPLATE-SPEC*).
+		
+		A template is an STXT document whose namespace is: `@stxt.template`
+		
+		and whose goal is to define the structural rules, value types, and node cardinalities belonging to a specific namespace.
+		
+		The Templates system is analogous to schemas, but with a simplified syntax, oriented toward rapid prototypes. 
+		Even so, it is a perfectly valid system for all kinds of documents.
+		
+		The template system **MAY** coexist alongside a schema system, since in the end a Template defines the same information as a schema.
+	
+	Subsubheader: 17.1. Associating a schema to a template
+		
+	Content >>
+		To associate a schema to the namespace `com.example.docs` with templates, write a document:
+		
+	Code>>
+		Template (@stxt.template): com.example.docs
+			Structure >>
+				Email:
+					From:
+					To:
+					Cc:
+					Bcc:
+					Title: (?)
+					Body    Content: (1) TEXT
+					Metadata (com.google): (?)
+					
+	Content>>
+		Once declared, templates fulfill the same function as schemas.
+		A standard validator **SHOULD** prioritize a schema over a template.  
+	
+	Subheader: 18. End of Document

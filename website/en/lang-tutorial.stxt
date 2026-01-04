@@ -4,8 +4,8 @@ Document (dev.stxt.namespace): STXT Tutorial
 
 	Alert >>
 		**Page under construction.**\\
-		The content is shown only as an example of the current progress,
-		and may change significantly in the final version.
+		The content is shown only as an example of current progress,
+		and may change significantly with the final version. 
 		
 	SubHeader: What is @STXT@?
 
@@ -18,11 +18,11 @@ Document (dev.stxt.namespace): STXT Tutorial
 
 	Content>>
 		Below we show a practical and simple example to describe a book
-		that a publisher could use: metadata, chapters, and sample content.
+		that a publisher can use: metadata, chapters, and sample content.
 
 	Code>>
-		Book: Example Book
-			Title: Modern Software Architecture
+		Book: Book example
+			Title: Modern software architecture
 			Authors:
 				Author: María Pérez
 				Author: Juan García
@@ -34,13 +34,13 @@ Document (dev.stxt.namespace): STXT Tutorial
 				for designing distributed and scalable systems.
 			Chapters:
 				Chapter: 1
-					Title: Introduction to Architecture
+					Title: Introduction to architecture
 					Pages: 20
 					Content >>
-						In this chapter we present basic concepts: monoliths, microservices,
-						and criteria for choosing a suitable architecture.
+						In this chapter we present basic concepts: monoliths, microservices
+						and criteria for choosing an appropriate architecture.
 				Chapter: 2
-					Title: Communication Between Services
+					Title: Communication between services
 					Pages: 30
 					Content >>
 						Protocols, messaging, and integration patterns are described.
@@ -51,8 +51,8 @@ Document (dev.stxt.namespace): STXT Tutorial
 		We can associate the record with a namespace to validate it using a schema.
 
 	Code>>
-		Book (@com.acme.book): Example Book
-			Title: Modern Software Architecture
+		Book (@com.acme.book): Book example
+			Title: Modern software architecture
 			Authors:
 				Author: María Pérez
 			ISBN: 978-84-123456-7-8
@@ -60,7 +60,7 @@ Document (dev.stxt.namespace): STXT Tutorial
 	SubHeader: Example schema (simplified)
 
 	Content>>
-		A schema allows you to define the shape and types of the nodes in a namespace.
+		A schema allows defining the shape and types of the nodes of a namespace.
 
 	Code>>
 		Schema (@stxt.schema): com.acme.book
@@ -89,22 +89,24 @@ Document (dev.stxt.namespace): STXT Tutorial
 		- Use `>>` blocks for chapter content or multiline texts.
 		- Keep indentation consistent (4 spaces per level) and do not mix tabs and spaces.
 		- Use namespaces to separate schemas by publishers or collections.
-		- Define minimum cardinalities in schemas to ensure key data.
+		- Define minimum cardinalities in schemas to guarantee key data.
 
-	SubHeader: Complete final example
+	SubHeader: Final complete example
 
 	Code>>
-		Book (@com.acme.book): ACME - Modern Software Architecture
-			Title: Modern Software Architecture
+		Book (@com.acme.book): ACME - Modern software architecture
+			Title: Modern software architecture
 			Authors:
 				Author: María Pérez
 				Author: Juan García
 			ISBN: 978-84-123456-7-8
 			Chapters:
 				Chapter: 1
-					Title: Introduction to Architecture
+					Title: Introduction to architecture
 					Content >>
 						Basic concepts and objectives of the book.
 
 	Content>>
-		If you want, I can generate from this example: (a) an intermediate JSON conversion for automatic processing, (b) a converter to a catalog format (ISBN/OPDS), or (c) validation tests against the example schema. Which do you prefer?
+		If you want, I can generate from this example: (a) a conversion to intermediate JSON
+		to process automatically, (b) a converter to a catalog format
+		(ISBN/OPDS) or (c) validation tests against the example schema. Which do you prefer?

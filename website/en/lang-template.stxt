@@ -3,5 +3,78 @@ Document (dev.stxt.namespace):Template
 		
 	Alert >>
 		**Page under construction.**\\
-		The content is shown only as an example of the current progress,
-		and may change significantly with the final version.
+		The content is shown only as an example of current progress,
+		and may change significantly with the final version. 
+		
+	Subsubheader:  6.1 Basic form
+		
+	Code>>
+		Node: NodeName
+		    Type: Type
+		    Childs>>
+		        (<card>) ChildName [(@namespace)]
+	Content >>
+		Rules:
+		
+		* `NodeName` **MUST** be unique within the schema.
+		* Each `Node` defines the semantics of the node in the target namespace.
+		* If `Type` is omitted ⇒ default type `TEXT INLINE`.
+
+	Subheader: 7. Children (`Childs>>`) and cross namespaces
+		
+	Content >>
+		Each entry in `Childs>>`:
+		
+		```text
+		(<card>) ChildName [(@namespace)]
+		```
+		
+		Where:
+		
+		* `(<card>)` = cardinality (see section 8).
+		* `ChildName` = logical name of the child node.
+		* `(@namespace)` (optional):
+		
+		  * If omitted: the target namespace of the schema is assumed.
+		  * If specified: the child belongs to that specific namespace.
+		
+	Subsubheader: 7.1. NEW RULE (strict and mandatory)
+		
+	Content >>
+		**Every node that appears in `Childs>>` must have its own definition as `Node:` in its corresponding schema.**
+		
+		This implies:
+		
+		* If it appears:
+		
+		  ```stxt
+		  (1) Metadata (@com.google.html)
+		  ```
+		
+		  then **a schema must exist for `com.google.html`**
+		  **and within it `Node: Metadata` must exist**.
+		
+		* This rule is mandatory both in *strict* mode and in non-strict mode.
+		
+		This way we avoid “ghost” children and ensure that all nodes have defined semantics.
+		
+	Subheader: 8. Cardinalities
+		
+	Content >>
+		Allowed forms:
+		
+		| Form      | Meaning                    |
+		| --------- | -------------------------- |
+		| `num`     | Exactly `num`.             |
+		| `*`       | Any number (`0..∞`).       |
+		| `+`       | One or more (`1..∞`).      |
+		| `?`       | Zero or one (`0..1`).      |
+		| `num+`    | `num` or more.             |
+		| `num-`    | `0..num`.                  |
+		| `min,max` | Between `min` and `max`.   |
+		
+		Rules:
+		
+		* Applies per instance of the parent node.
+		* Counts only **direct** children with name + effective namespace.
+		* A compliant validator **MUST** check cardinalities.

@@ -7,14 +7,14 @@ Document(dev.stxt.namespace): STXT: El Libro
 	Link: Tutorial
 		Page: lang-tutorial
 	
-	Link: CLI stxt
-		Page: lang-cli-stxt
+#	Link: CLI stxt
+#		Page: lang-cli-stxt
 	
-	Link: Editor online
-		Page: lang-online-editor
+#	Link: Editor online
+#		Page: lang-online-editor
 	
-	Link: Herramientas
-		Page: lang-tools
+#	Link: Herramientas
+#		Page: lang-tools
 	
 	Subheader: Referencia del Lenguaje
 	
@@ -27,30 +27,30 @@ Document(dev.stxt.namespace): STXT: El Libro
 	Link: @STXT@ Template
 		Page: lang-template
 			
-	Subheader: Transformaciones		
+#	Subheader: Transformaciones		
 	
-	Link: STXT a XML
-		Page: stxt2xml
+#	Link: STXT a XML
+#		Page: stxt2xml
 		
-	Link: STXT a YAML
-		Page: stxt2yaml
+#	Link: STXT a YAML
+#		Page: stxt2yaml
 		
-	Link: STXT a JSON
-		Page: stxt2json
+#	Link: STXT a JSON
+#		Page: stxt2json
 		
-	Link: STXT a HTML
-		Page: stxt2html
+#	Link: STXT a HTML
+#		Page: stxt2html
 		
-	Link: STXT a PDF
-		Page: stxt2pdf
+#	Link: STXT a PDF
+#		Page: stxt2pdf
 		
-	Subheader: Migraciones		
+#	Subheader: Migraciones		
 	
-	Link: XML a STXT
-		Page: migrate-xml		
+#	Link: XML a STXT
+#		Page: migrate-xml		
 		
-	Link: YAML a STXT
-		Page: migrate-yaml		
+#	Link: YAML a STXT
+#		Page: migrate-yaml		
 		
 	SubHeader: Casos de uso 
 	

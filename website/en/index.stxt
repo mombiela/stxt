@@ -9,13 +9,13 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 	Subheader: Documents
 	
 	Content >>
-		STXT is a hierarchical and semantic textual format oriented to:
+		@STXT@ is a hierarchical and semantic textual format aimed at:
 		
-		* Represent documents and data clearly.
-		* Be extremely simple to read and write.
-		* Be trivial to parse in any language.
-		* Allow both structured content and free text.
-		* Apply content rules via `@stxt.schema` or `@stxt.template`.
+		* Representing documents and data clearly.
+		* Being extremely simple to read and write.
+		* Being trivial to parse in any language.
+		* Allowing both structured content and free text.
+		* Applying content rules via `@stxt.schema` or `@stxt.template`.
 	
 	Subheader: Main features
 		
@@ -24,9 +24,9 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 		* Nodes with values (they can also have indented children): `Name: value`
 		* Text blocks: `Name >>` followed by literal lines that are not parsed internally.
 		* The hierarchy is defined by indentation (tabs or 4 spaces per level depending on the document).
-		* Supports namespaces (e.g. `(com.example)`), comments outside blocks (`# ...`) and validation via schemas (`@stxt.schema` or `@stxt.template`).
+		* Supports namespaces (e.g. `(com.example)`), comments outside blocks (`# ...`), and validation via schemas (`@stxt.schema` or `@stxt.template`).
 		
-		A STXT document balances human clarity with an explicit semantic structure — ideal for content, configurations, and interoperable data.
+		An @STXT@ document balances human clarity with an explicit semantic structure — ideal for content, configurations, and interoperable data.
 	
 	Code >>
 		***Email***:
@@ -67,7 +67,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 					Child: Bcc
 					Child: Title
 						Max: 1
-					Child: Body    Content
+					Child: Body Content
 						Min: 1
 						Max: 1
 					Child: Metadata (com.google)
@@ -77,7 +77,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 			Node: Cc
 			Node: Bcc
 			Node: Title
-			Node: Body   Content
+			Node: Body Content
 				Type: TEXT
 	Content: Alternatively, an equivalent `@stxt.template` can be defined to the schema:
 	
