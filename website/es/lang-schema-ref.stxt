@@ -2,7 +2,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 
 	Metadata:
 		Author: Joan Costa Mombiela
-		Last modif: 2025-12-05
+		Last modif: 2026-01-04
 		
 	Header: STXT-SCHEMA-SPEC-DRAFT
 	
@@ -43,6 +43,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		2. Resolución del namespace lógico (herencia).
 		3. Aplicación del schema correspondiente.
 		
+		Opcionalmente **PUEDE** actuar **durante** el proceso de parseo, siempre y cuando esté débilmente acoplado con él.
+		De esta forma los errores pueden ser detectados previamente.
+		
 	Subheader: 4. Estructura general de un Schema
 		
 	Content >>
@@ -55,17 +58,21 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		    Description: Schema for example documents
 		    Node: Document
 		        Type: EMPTY
-		        Childs>>
-		            (?) Metadata (@com.google.html)
-		            (*) Autor
-		            (?) Fecha
-		            (1) Content
+		        Children:
+		        	Child: Metadata (@com.google.html)
+		        		Max: 1
+		        	Child: Autor
+		        	Child: Fecha
+		        		Max: 1
+		        	Child: Content
+		        		Min: 1
+		        		Max: 1
 		    Node: Autor
-		        Type: TEXT INLINE
+		        Type: ?????????????? TEXT INLINE
 		    Node: Fecha
 		        Type: DATE
 		    Node: Content
-		        Type: TEXT MULTILINE
+		        Type: ?????????????? TEXT MULTILINE
 
 	Subheader: 5. Un schema por namespace
 		
@@ -73,7 +80,8 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		Para cada namespace lógico:
 		
 		* **NO DEBE** existir más de un schema activo simultáneamente.
-		* Cargar dos schemas para el mismo namespace ⇒ **error de configuración**.
+		* Si existen varios schemas para el mismo namespace se **DEBERÍA** establecer un criterio claro para
+		  saber cual de ellos está aplicando
 		
 	Subheader: 6. Definición de Nodos (`Node:`)
 		
@@ -82,78 +90,60 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 	Code >>
 		Node: NombreNodo
 		    Type: Tipo
-		    Childs>>
-		        (<card>) NombreHijo [(@namespace)]
+		    Children:
+		    	Child: name_child. Puede tener un namespace en caso que sea distinto al namespace destino
+		    		Min: opcional, indica el número mínimo de childs que pueden aparecer
+		    		Max: opcional, indica el número máximo de childs que pueden aparecer
 	Content >>
 		Reglas:
 		
 		* `NombreNodo` **DEBE** ser único dentro del schema.
 		* Cada `Node` define la semántica del nodo en el namespace objetivo.
-		* Si `Type` se omite ⇒ tipo por defecto `TEXT INLINE`.
+		* Si `Type` se omite, tipo por defecto es `TEXT INLINE ???????????????????????`.
 
-	Subheader: 7. Hijos (`Childs>>`) y namespaces cruzados
+	Subheader: 7. Hijos (`Children:`) y namespaces cruzados
 		
 	Content >>
-		Cada entrada de `Childs>>`:
+		Un nodo puede tener una entrada `Children`. En caso de tenerla debe tener uno o más nodos Child,
+		con la información de los childs permitidos.
 		
-		```text
-		(<card>) NombreHijo [(@namespace)]
-		```
+		Un Child puede pertenecer a otro namespace, en cuyo caso se indica en el nombre del child.
+		Ejemplo:
 		
-		Donde:
+	Code >>
+		Node: nombre del nodo
+			Children:
+				Child: nombre del child (***namespace.del.child***)
+					Min: 0
+					Max: 1
+
+	Content>>		
+		* Si se omite el namespace se asume el namespace objetivo del schema.
+		* Si se indica: el hijo pertenece a ese namespace concreto. La definición será hecha en otro schema.
 		
-		* `(<card>)` = cardinalidad (ver sección 8).
-		* `NombreHijo` = nombre lógico del nodo hijo.
-		* `(@namespace)` (opcional):
-		
-		  * Si se omite: se asume el namespace objetivo del schema.
-		  * Si se indica: el hijo pertenece a ese namespace concreto.
-		
-	Subsubheader: 7.1. REGLA NUEVA (estricta y obligatoria)
+	Subsubheader: 7.1. Nodos deben estar explícitamente mostrados en schemas.
 		
 	Content >>
 		**Todo nodo que aparezca en `Childs>>` debe tener una definición propia como `Node:` en su schema correspondiente.**
 		
 		Esto implica:
 		
-		* Si aparece:
-		
-		  ```stxt
-		  (1) Metadata (@com.google.html)
-		  ```
-		
-		  entonces **debe existir un schema para `com.google.html`**
-		  **y dentro de él debe existir `Node: Metadata`**.
-		
-		* Esta regla es obligatoria tanto en modo *strict* como en modo no-strict.
-		
+		* Si aparece: `(1) Metadata (@com.google.html) entonces **debe existir un schema para `com.google.html` y dentro de él debe existir `Node: Metadata`**.
+
 		Así evitamos hijos “fantasma” y garantizamos que todos los nodos tienen semántica definida.
-		
-		---
 		
 	Subheader: 8. Cardinalidades
 		
 	Content >>
-		Formas permitidas:
-		
-		| Forma     | Significado                |
-		| --------- | -------------------------- |
-		| `num`     | Exactamente `num`.         |
-		| `*`       | Cualquier número (`0..∞`). |
-		| `+`       | Una o más (`1..∞`).        |
-		| `?`       | Cero o una (`0..1`).       |
-		| `num+`    | `num` o más.               |
-		| `num-`    | `0..num`.                  |
-		| `min,max` | Entre `min` y `max`.       |
+		Las cardinalidades se hacen mediante los nodos `Min` y `Max` de Child. Serán **enteros no negativos opcionales**.
+		En caso de existir indican el número mínimo o máximo de apariciones del child.
 		
 		Reglas:
 		
 		* Se aplica por instancia del nodo padre.
 		* Cuenta solo hijos **directos** con nombre + namespace efectivo.
 		* Un validador conforme **DEBE** comprobar las cardinalidades.
-		
-		---
-		
+
 	Subheader: 9. Tipos
 		
 	Content >>
@@ -163,25 +153,29 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		2. **Si el nodo puede tener hijos**.
 		3. **La validación del contenido**.
 		
+		Se definen el Nodo, con un elemento `Type`. Ejemplo:
+		
+	Code >>
+		Node: nombre del nodo
+			***Type: TIPO_DEL_NODO***
+			Children:
+				Child: a child name	
+		
 	Subsubheader: 9.1. Tabla oficial de tipos
 		
 	Content >>
 		| Tipo             | Formas permitidas de valor | Hijos permitidos | Descripción / Validación                                               |
 		|------------------|----------------------------|------------------|------------------------------------------------------------------------|
-		| TEXT INLINE      | INLINE                     | SÍ               | Texto inline. **Tipo por defecto.**                                    |
-		| TEXT MULTILINE   | BLOCK                      | NO               | Solo bloque `>>`.                                                      |
+		| VALUE NODE       | INLINE                     | SÍ               | Texto inline. **Tipo por defecto.**                                    |
+		| TEXT NODE        | BLOCK                      | NO               | Solo bloque `>>`.                                                      |
 		| TEXT             | INLINE or BLOCK            | NO               | Texto genérico. Puede ser inline o bloque `>>`, pero nunca tiene hijos.|
 		| BOOLEAN          | INLINE                     | SÍ               | `true` / `false`.                                                      |
-		| NUMBER           | INLINE                     | SÍ               | Número JSON.                                                           |
+		| NUMBER           | INLINE                     | SÍ               | Número formato JSON.                                                   |
 		| DATE             | INLINE                     | SÍ               | `YYYY-MM-DD`.                                                          |
 		| TIMESTAMP        | INLINE                     | SÍ               | ISO 8601.                                                              |
-		| EMAIL            | INLINE                     | SÍ               | Email válido.                                                          |
-		| URL              | INLINE                     | SÍ               | URL válida.                                                            |
-		| UUID             | INLINE                     | SÍ               | UUID estándar.                                                         |
-		| HEXADECIMAL      | INLINE                     | SÍ               | `[0-9A-Fa-f]+`.                                                        |
-		| BINARY           | INLINE                     | SÍ               | Cadena binaria.                                                        |
-		| BASE64           | BLOCK                      | NO               | Bloque Base64.                                                         |
-		| CODE[language]   | BLOCK                      | NO               | Código en `<language>`.                                                |
+		| HEXADECIMAL      | INLINE or BLOCK            | NO               | `[0-9A-Fa-f]+`. Cadena hexadecimal                                     |
+		| BINARY           | INLINE or BLOCK            | NO               | `[01]+` Cadena binaria.                                                |
+		| BASE64           | INLINE or BLOCK            | NO               | Bloque Base64.                                                         |
 		| EMPTY            | NONE                       | SÍ               | Nodo estructural sin valor.                                            |
 		
 	Subsubheader: 9.2. Reglas clave
