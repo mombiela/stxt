@@ -68,11 +68,10 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		        		Min: 1
 		        		Max: 1
 		    Node: Autor
-		        Type: ?????????????? TEXT INLINE
 		    Node: Fecha
 		        Type: DATE
 		    Node: Content
-		        Type: ?????????????? TEXT MULTILINE
+		        Type: TEXT
 
 	Subheader: 5. Un schema por namespace
 		
@@ -80,15 +79,16 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		Para cada namespace lógico:
 		
 		* **NO DEBE** existir más de un schema activo simultáneamente.
-		* Si existen varios schemas para el mismo namespace se **DEBERÍA** establecer un criterio claro para
-		  saber cual de ellos está aplicando
+		* Si existen varios schemas para el mismo namespace, el parser **DEBERÍA** establecer un criterio claro para
+		  saber cual de ellos está aplicando.
 		
 	Subheader: 6. Definición de Nodos (`Node:`)
 		
 	Subsubheader:  6.1 Forma básica
 		
 	Code >>
-		Node: NombreNodo
+		Node: Nombre Nodo
+			Descrip: Descripción del nodo
 		    Type: Tipo
 		    Children:
 		    	Child: name_child. Puede tener un namespace en caso que sea distinto al namespace destino
@@ -97,9 +97,9 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 	Content >>
 		Reglas:
 		
-		* `NombreNodo` **DEBE** ser único dentro del schema.
+		* `Nombre Nodo` **DEBE** ser único dentro del schema.
 		* Cada `Node` define la semántica del nodo en el namespace objetivo.
-		* Si `Type` se omite, tipo por defecto es `TEXT INLINE ???????????????????????`.
+		* Si `Type` se omite, tipo por defecto es `NODE`.
 
 	Subheader: 7. Hijos (`Children:`) y namespaces cruzados
 		
@@ -119,18 +119,20 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 
 	Content>>		
 		* Si se omite el namespace se asume el namespace objetivo del schema.
-		* Si se indica: el hijo pertenece a ese namespace concreto. La definición será hecha en otro schema.
+		* Si se indica: el hijo pertenece a ese namespace concreto. La definición será hecha en otro documento de esquema.
 		
 	Subsubheader: 7.1. Nodos deben estar explícitamente mostrados en schemas.
 		
 	Content >>
 		**Todo nodo que aparezca en `Childs>>` debe tener una definición propia como `Node:` en su schema correspondiente.**
 		
+		Así evitamos hijos “fantasma” y garantizamos que todos los nodos tienen semántica definida.
+		
 		Esto implica:
 		
 		* Si aparece: `(1) Metadata (@com.google.html) entonces **debe existir un schema para `com.google.html` y dentro de él debe existir `Node: Metadata`**.
+		  No es necesario la validación en ese momento, pero sí al validar un documento concreto.
 
-		Así evitamos hijos “fantasma” y garantizamos que todos los nodos tienen semántica definida.
 		
 	Subheader: 8. Cardinalidades
 		
@@ -160,83 +162,84 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 			***Type: TIPO_DEL_NODO***
 			Children:
 				Child: a child name	
-		
-	Subsubheader: 9.1. Tabla oficial de tipos
-		
+
 	Content >>
-		| Tipo             | Formas permitidas de valor | Hijos permitidos | Descripción / Validación                                               |
-		|------------------|----------------------------|------------------|------------------------------------------------------------------------|
-		| VALUE NODE       | INLINE                     | SÍ               | Texto inline. **Tipo por defecto.**                                    |
-		| TEXT NODE        | BLOCK                      | NO               | Solo bloque `>>`.                                                      |
-		| TEXT             | INLINE or BLOCK            | NO               | Texto genérico. Puede ser inline o bloque `>>`, pero nunca tiene hijos.|
-		| BOOLEAN          | INLINE                     | SÍ               | `true` / `false`.                                                      |
-		| NUMBER           | INLINE                     | SÍ               | Número formato JSON.                                                   |
-		| DATE             | INLINE                     | SÍ               | `YYYY-MM-DD`.                                                          |
-		| TIMESTAMP        | INLINE                     | SÍ               | ISO 8601.                                                              |
-		| HEXADECIMAL      | INLINE or BLOCK            | NO               | `[0-9A-Fa-f]+`. Cadena hexadecimal                                     |
-		| BINARY           | INLINE or BLOCK            | NO               | `[01]+` Cadena binaria.                                                |
-		| BASE64           | INLINE or BLOCK            | NO               | Bloque Base64.                                                         |
-		| EMPTY            | NONE                       | SÍ               | Nodo estructural sin valor.                                            |
-		
-	Subsubheader: 9.2. Reglas clave
-		
-	Content >>
+		Otras consideraciones: 
+				
 		* El tipo **NO controla obligatoriedad**, solo forma y validez del valor.
 		  La obligatoriedad de aparición se controla mediante cardinalidad.
-		* Tipos **BLOCK-only** (`TEXT MULTILINE`, `CODE:*`, `BASE64`)
-		  ⇒ **NO DEBE** tener hijos.
-		* `EMPTY`:
+		* Tipos **BLOCK-only** (`TEXT`, `CODE`, `BASE64`,...) **NO DEBEN** tener hijos, y una definición de hijos **DEBE** dar un error de parseo.
 		
-		  * Sin valor inline ni bloque.
-		  * Hijos según `Childs>>` sí permitidos.
-		
-		---
-		
-	Subheader: 10. Modos del validador: *strict* y *non-strict*
-		
-	Subsubheader: 10.1. Modo *strict* (equivalente al “modo cerrado”) — **por defecto**
-		
+	Subsubheader: 9.1. Tipos estructurales básicos 
 	Content >>
-		Un validador STXT Schema en modo *strict*:
 		
-		* **DEBE** exigir schema para cada namespace encontrado.
-		* **DEBE** rechazar nodos que no estén definidos en su schema.
-		* **DEBE** validar:
+		Un parser **DEBE** permitir estos tipos y **DEBE** validar la estructura.
+	
+		| Tipo      | Formas de texto | Hijos permitidos | Descripción / Validación                                        |
+		|-----------|-----------------|------------------|-----------------------------------------------------------------|
+		| INLINE    | INLINE          | SÍ               | Texto inline `:`. **Tipo por defecto.** Puede tener hijos.      |
+		| BLOCK     | BLOCK           | NO               | Solo bloque `>>` de texto.                                      |
+		| TEXT      | INLINE/BLOCK    | NO               | Texto genérico. Inline `:` o bloque `>>`. No puede tener hijos. |                                                             
+		| GROUP     | NONE            | SÍ               | Texto vacío. Solo hijos permitidos. Contenedor de nodos.        |
 		
-		  * Formas permitidas (`:`, `>>`, ninguno).
-		  * Tipos del valor.
-		  * Cardinalidades.
-		  * Compatibilidad tipo/hijos.
-		  * Conocimiento de schema para todos los namespaces referenciados.
-		* **DEBE** aplicar la regla de sección 7.1:
-		  **si aparece un hijo en `Childs>>`, su definición debe existir en su schema.**
+	Subsubheader: 9.2. Tipos Básicos de contenido INLINE
+	Content>>
 		
-	Subsubheader: 10.2. Modo *non-strict* (modo abierto configurable)
+		Un parser **DEBE** permitir estos tipos y **DEBERÍA** validar la estructura.
+		 
+		| Tipo             | Formas de texto | Hijos permitidos    | Descripción / Validación  |
+		|------------------|-----------------|---------------------|---------------------------|
+		| BOOLEAN          | INLINE          | SÍ                  | `true` / `false`.         |
+		| NUMBER           | INLINE          | SÍ                  | Número formato JSON.      |
+		| DATE             | INLINE          | SÍ                  | `YYYY-MM-DD`.             |
+
+	Subsubheader: 9.3. Tipos ampliados de contenido INLINE
+	Content>>
 		
+		Un parser **DEBERÍA** permitir estos tipos y **DEBERÍA** validar la estructura.
+		
+		| Tipo             | Formas de texto | Hijos permitidos    | Descripción / Validación                         |
+		|------------------|-----------------|---------------------|--------------------------------------------------|
+		| INTEGER          | INLINE          | SÍ                  | Número sin decimales (positivos y negativos).    |
+		| NATURAL          | INLINE          | SÍ                  | Números mayores o iguales a 0 sin decimales.     |
+		| TIME             | INLINE          | SÍ                  | ISO 8601, `hh:mm:ss`                             |
+		| TIMESTAMP        | INLINE          | SÍ                  | ISO 8601 completo.                               |
+		| UUID             | INLINE          | SÍ                  | UUID                                             |
+		| URL              | INLINE          | SÍ                  | URL/URI                                          |
+		| EMAIL            | INLINE          | SÍ                  | EMAIL                                            |
+
+	Subsubheader: 9.4 Tipos de contenido Binario INLINE/BLOCK
+	
 	Content >>
-		Un validador **PUEDE** ofrecer un modo no-strict:
+		Un parser **DEBERÍA** permitir estos tipos y **PUEDE** validar la estructura.
 		
-		* Si un namespace no tiene schema:
+		| Tipo             | Formas de texto | Hijos permitidos | Descripción / Validación              |
+		|------------------|-----------------|------------------|---------------------------------------|
+		| HEXADECIMAL      | INLINE / BLOCK  | NO               | `[0-9A-Fa-f]+`. Cadena hexadecimal    |
+		| BINARY           | INLINE / BLOCK  | NO               | `[01]+` Cadena binaria.               |
+		| BASE64           | INLINE / BLOCK  | NO               | Bloque Base64.                        |
 		
-		  * Puede aceptar el documento pero **DEBERÍA** emitir warning.
-		* Si un `Node` no está definido:
-		
-		  * Puede aceptarse con warning.
-		* Hijos no contemplados en `Childs>>`:
-		
-		  * Se aceptan pero se marcan como "no cubiertos por el schema".
-		
-		**Importante:**
-		Incluso en modo *non-strict*, la regla **7.1** se mantiene:
-		
-		> Si un hijo aparece en `Childs>>` de un schema, ese hijo **DEBE** estar definido en su schema correspondiente.
-		
-	Subheader: 11. Ejemplos Normativos
-		
-	Subsubheader: 11.1. Schema con referencias cross-namespace
-		
+	Subsubheader: 9.5 Lenguajes embebidos INLINE/BLOCK
+	
 	Content >>
-		```stxt
+		
+		Un parser **PUEDE** permitir estos tipos y **PUEDE** validar la estructura de alguno de ellos.
+		
+		| Tipo             | Formas de texto | Hijos permitidos | Descripción / Validación                          |
+		|------------------|-----------------|------------------|---------------------------------------------------|
+		| STXT             | INLINE / BLOCK  | NO               | Texto en formato STXT. Puede ser un nodo o varios |
+		| JSON             | INLINE / BLOCK  | NO               | Formato JSON.                                     |
+		| XML              | INLINE / BLOCK  | NO               | Formato XML.                                      |
+		| YAML             | INLINE / BLOCK  | NO               | Formato YAML.                                     |
+		| HTML             | INLINE / BLOCK  | NO               | Formato HTML.                                     |
+		| MARKDOWN         | INLINE / BLOCK  | NO               | Formato MARKDOWN.                                 |
+		| CODE             | INLINE / BLOCK  | NO               | Código de programación. Texto sin procesar.       |
+		
+	Subheader: 10. Ejemplos Normativos
+		
+	Subsubheader: 10.1. Schema con referencias cross-namespace
+		
+	Code >>
 		Schema (@stxt.schema): com.example.docs
 		    Node: Document
 		        Type: EMPTY
@@ -245,17 +248,15 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		            (1) Content
 		    Node: Content
 		        Type: TEXT MULTILINE
-		```
-		
-		Y en `com.google.html`:
-		
-		```stxt
+
+	Content: Y en `com.google.html`:
+	
+	Code >>
 		Schema (@stxt.schema): com.google.html
 		    Node: Metadata
 		        Type: TEXT INLINE
-		```
 		
-	Subsubheader: 11.2. Documento válido
+	Subsubheader: 10.2. Documento válido
 		
 	Content >>
 		```stxt
@@ -268,7 +269,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-	Subheader: 12. Errores de Schema
+	Subheader: 11. Errores de Schema
 		
 	Content >>
 		Un schema es inválido si:
@@ -283,7 +284,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		---
 		
-	Subheader: 13. Conformidad
+	Subheader: 12. Conformidad
 		
 	Content >>
 		Una implementación es conforme si:
@@ -294,80 +295,67 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		* Maneja correctamente los modos *strict* y *non-strict*.
 		* Rechaza documentos y schemas inválidos.
 		
-		---
-		
-	Subheader: 14. Schema del Schema (`@stxt.schema`)
+	Subheader: 13. Schema del Schema (`@stxt.schema`)
 		
 	Content >>
 		Esta sección define el **schema oficial** del propio sistema de schemas: el meta-schema que valida todos los documentos del namespace `@stxt.schema`.
 		
-		---
-		
-	Subsubheader: 14.1. Consideraciones
+	Subsubheader: 13.1. Consideraciones
 		
 	Content >>
-		* Todo documento schema es:
-		
-		  ```stxt
-		  Schema (@stxt.schema): <namespace-objetivo>
-		  ```
-		
+		* Todo documento schema es: `Schema (@stxt.schema): <namespace-objetivo>`
 		* Un schema contiene:
-		
 		  * Opcionalmente una `Description`.
-		  * Cero o más nodos `Node`.
-		
+		  * Uno o más nodos `Node`.
 		* Cada `Node`:
-		
 		  * Tiene valor inline (el nombre del nodo del namespace objetivo).
 		  * Puede tener opcionalmente:
-		
-		    * `Type`
-		    * `Childs`
 		    * `Description`
+		    * `Type`
+		    * `Children`
+		    * `Child`
+		* Cada `Child` (elemento de `Children`) define el nombre (y opcionalmente un namespace distinto) y pueden tener:
+			* `Min`: Número mínimo de nodos que deben aparecer. Si no existe el nodo no hay un mínimo establecido.
+			* `Max`: Número máximo de nodos que pueden aparecer. Si no existe el nodo no hay un máximo establecido.
+		* Los nombres (`Schema`, `Node`, `Type`, `Children`, `Child, `Description`, `Min`, `Max`) pertenecen al namespace `@stxt.schema`.
 		
-		* Los nombres (`Schema`, `Node`, `Type`, `Childs`, `Description`) pertenecen al namespace `@stxt.schema`.
+	Subsubheader: 13.2. Meta-Schema completo
 		
-		---
-		
-	Subsubheader: 14.2. Meta-Schema completo
-		
-	Content >>
-		```stxt
-		Schema (@stxt.schema): stxt.schema
-		    Description: Schema that defines the STXT Schema language
-		
-		    # Nodo raíz del documento de schema
+	Code >>
+		Schema (@stxt.schema): @stxt.schema
 		    Node: Schema
-		        Type: TEXT INLINE
-		        Childs>>
-		            (?)  Description
-		            (*)  Node
-		
-		    # Define un nodo del namespace objetivo
+		        Children:
+		            Child: Description
+		                Max: 1
+		            Child: Node
+		                Min: 1
 		    Node: Node
-		        Type: TEXT INLINE
-		        Childs>>
-		            (?)  Type
-		            (?)  Childs
-		            (?)  Description
-		
-		    # Tipo declarado para un Node (opcional, por defecto TEXT)
-		    Node: Type
-		        Type: TEXT INLINE
-		
-		    # Lista de hijos permitidos (bloque multiline)
-		    Node: Childs
-		        Type: TEXT MULTILINE
-		
-		    # Descripción opcional (texto general, inline o bloque)
+		        Children:
+		            Child: Type
+		                Max: 1
+		            Child: Children
+		                Max: 1
+		            Child: Description
+		                Max: 1
+		    Node: Children
+		        Children:
+		            Child: Child
+		                Min: 1
 		    Node: Description
 		        Type: TEXT
-		```
+		    Node: Child
+		        Children:
+		            Child: Min
+		                Max: 1
+		            Child: Max
+		                Max: 1
+		    Node: Min
+		        Type: NATURAL
+		    Node: Max
+		        Type: NATURAL
+		    Node: Type	
 		
-		---
-		
-	Subsubheader: 14.3. Lectura rápida
+	Subsubheader: 13.3. Lectura rápida
 		
 	Content >>
 		* `Schema`
@@ -378,51 +366,44 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		  Valor inline = nombre del nodo objetivo (ej. `Document`, `Autor`).
 		  Hijos opcionales:
 		
-		  * `Type` ⇒ tipo concreto (si falta ⇒ `TEXT INLINE`).
-		  * `Childs` ⇒ bloque `Childs>>` literal.
-		  * `Description` ⇒ texto explicativo.
+		  * `Type`: tipo concreto (si falta ⇒ `INLINE`).
+		  * `Children`: bloque `Childs>>` literal.
+		  * `Description`: texto explicativo.
 		
 		* `Type`
-		  Inline (`TEXT INLINE`), con el nombre del tipo (`EMPTY`, `TEXT INLINE`, `NUMBER`, `CODE:json`, etc.).
+		  Inline (`TEXT INLINE`), con el nombre del tipo (`EMPTY`, `INLINE`, `NUMBER`, etc.).
 		
-		* `Childs`
+		* `Children`
 		  `TEXT MULTILINE`: contiene literalmente el bloque `Childs>>`.
 		
 		* `Description`
 		  `TEXT`: puede ser inline o multiline.
 		
-		---
+	Subsubheader: 13.4. Ejemplo mínimo válido
 		
-	Subsubheader: 14.4. Ejemplo mínimo válido
-		
-	Content >>
-		```stxt
+	Code >>
 		Schema (@stxt.schema): com.example.docs
 		    Node: Document
-		```
 		
-		`Document` se considera de tipo `TEXT INLINE` (por defecto).
+	Subsubheader: 13.5. Ejemplo completo
 		
-		---
-		
-	Subsubheader: 14.5. Ejemplo completo
-		
-	Content >>
-		```stxt
+	Code >>
 		Schema (@stxt.schema): com.example.docs
 		    Description: Example schema
 		    Node: Document
 		        Type: EMPTY
-		        Childs>>
-		            (1) Title
-		            (*) Author
-		            (?) Metadata (@com.google.html)
+		        Children:
+		        	Child: Title
+		        		Min: 1
+		        		Max: 1
+		        	Child: Author
+		        	Child: Metadata (@com.google.html)
+		        		Max: 1
 		    Node: Title
 		        Type: TEXT INLINE
 		    Node: Author
 		        Type: TEXT INLINE
-		```
 		
-	Subheader: 15. Fin del Documento
+	Subheader: 14. Fin del Documento
 			
 				
