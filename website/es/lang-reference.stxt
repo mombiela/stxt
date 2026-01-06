@@ -2,7 +2,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 
 	Metadata:
 		Author: Joan Costa Mombiela
-		Last modif: 2025-12-05
+		Last modif: 2026-01-03
 		
 	Header: STXT-SPEC-DRAFT
 	
@@ -21,19 +21,19 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subheader: 1. Introducción
 	
 	Content >>
-		Este documento define la especificación del lenguaje **STXT (Semantic Text)**.
+		Este documento define la especificación del lenguaje **@STXT@ (Semantic Text)**.
 		
-		STXT es un lenguaje **Human-First**, diseñado para que su forma natural sea legible, 
+		@STXT@ es un lenguaje **Human-First**, diseñado para que su forma natural sea legible, 
 		clara y cómoda para las personas, manteniendo al mismo tiempo una estructura precisa 
 		y fácilmente procesable por máquinas.
 		
-		STXT es un formato textual jerárquico y semántico orientado a:
+		@STXT@ es un formato textual jerárquico y semántico orientado a:
 		
 		* Representar documentos y datos de manera clara.
 		* Ser extremadamente sencillo de leer y escribir.
 		* Ser trivial de parsear en cualquier lenguaje.
 		* Permitir tanto contenido estructurado como texto libre.
-		* Extender su semántica mediante `@stxt.schema`.
+		* Extender su semántica mediante `@stxt.schema` o `@stxt.template`.
 		
 		Este documento describe la **sintaxis base** del lenguaje.
 
@@ -45,7 +45,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subheader: 3. Codificación del Documento
 
 	Content >>
-		Un documento STXT **DEBERÍA** codificarse en **UTF-8 sin BOM**.
+		Un documento @STXT@ **DEBERÍA** codificarse en **UTF-8 sin BOM**.
 		
 		Un parser:
 		
@@ -59,14 +59,34 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Existen dos formas de nodo:
 		
-		1. **Nodo simple o contenedor**: `Nombre: Valor del Nodo`
-		2. **Nodo de bloque textual (`>>`)**: `Nombre >>`
+		1. **Nodo contenedor inline (node INLINE text)**: `Nombre: Valor inline`
+		2. **Nodo bloque de texto (node BLOCK text)**: `Nombre >>`
 		
+		**Ejemplo con nodos INLINE:**
+	
+	Code >>
+		Nodo 1: Valor inline
+			Nodo 2 sin valor:
+			Nodo 3 con otro valor: este es el valor
+		
+	Content >>	
+		**Ejemplo con nodo BLOCK:**
+	
+	Code >>
+		***Nodo block >>***
+			Este es el contenido
+			del bloque de texto:
+			
+			  - Se conservan espacios iniciales y saltos de línea
+			  - Se hace trim a la derecha
+			  - NO se hace trim a la izquierda
+		
+	Content>>
 		Un nodo puede incluir opcionalmente un namespace:
 		
 	Code>>
 		Nombre (namespace.normal):
-		Nombre (@namespace.especial) >>
+		Nombre (@namespace.especial):
 		
 	Subsubheader: 4.1 Normalización del nombre del nodo
 		
@@ -78,7 +98,6 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		  - El inicio de un namespace `(`,
 		  - El carácter `:`,
 		  - El operador `>>`,
-		  - O el fin de línea.
 		
 		Sobre ese fragmento se aplica:
 		
@@ -92,12 +111,16 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Ejemplos equivalentes a nivel de `Nombre de nodo`:
 
 	Code>>
+		Nombe de nodo:
 		Nombre de nodo: valor
 		Nombre  de   nodo   : valor
-		Nombre  de nodo (@ns):
-		Nombre de nodo(@ns):
+		Nombre  de nodo (@un.namespace.especial):
+		Nombre de nodo(un.namespace.normal):
 		Nombre  de nodo >>
 		Nombre de nodo>>
+		
+	Content>>
+		La definición de un nodo siempre debe incluir o bien `:` (nodo normal
 		
 	Subsubheader: 4.2 Restricciones del nombre del nodo
 		
@@ -110,12 +133,12 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>
 		El nombre canónico se forma a partir del nombre del nodo mediante el siguiente proceso:
 		
-		* Descomposición Unicodo (NFKD)
-		* Convierte a minúsculas
-		* Elimina diacríticos
-		* Compacta espacios (no necesario sobre nombre ya normalizado)
-		* Reemplaza [^a-z0-9] por `-`. No se permiten 2 o más guiones seguidos, se deben compactar a uno sólo (`-`) 
-		* Elimina guiones (`-`) al inicio y al final si existieran
+		* Descomposición Unicode (NFKD)
+		* Conviersión a minúsculas
+		* Eliminación diacríticos
+		* Compactación espacios (no necesario sobre nombre ya normalizado)
+		* Reemplazo de [^a-z0-9] por `-`. No se permiten 2 o más guiones seguidos, se deben compactar a uno sólo (`-`) 
+		* Eliminar guiones (`-`) al inicio y al final si existieran
 		
 		El nombre canónico será usado para saber si un nodo tiene el mismo nombre que otro.
 		También será usado internamente por todas las operaciones de búsqueda o comprobación,
@@ -130,12 +153,13 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 
 	Subsubheader: 4.4 Normas de estilo
 	Content >>
-		La normas de estilo son las siguientes:
+		La normas de estilo recomendables son las siguientes:
 		
 		* Separar el nombre de la definición de un namespace con un sólo espacio
 		* Separar `:` del valor con un sólo espacio
 		* `:` va inmediatamente después del nombre o del namespace si lo hubiera
 		* `>>` no tiene ningún carácter después
+		* Separar el nombre del nodo o el namespace con un espacio antes de `>>`
 		* No se usa más de un espacio en los nombres
 		* Namespace sin espacios en la definición `(namespace.def)`
 		
