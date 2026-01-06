@@ -34,6 +34,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* Ser trivial de parsear en cualquier lenguaje.
 		* Permitir tanto contenido estructurado como texto libre.
 		* Extender su semántica mediante `@stxt.schema` o `@stxt.template`.
+		* Facilitar la creación de parsers intentando minimzar errores de seguridad
 		
 		Este documento describe la **sintaxis base** del lenguaje.
 
