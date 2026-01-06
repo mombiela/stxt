@@ -171,7 +171,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Nombre con namespace (el.namespace):
 		Nodo de texto >>
 		
-	Subheader: 5. Nodos con `:` (nodos contenedor, permiten valor)
+	Subheader: 5. Nodos con `:` (nodos contenedor, permiten valor inline)
 		
 	Content >>
 		La forma con `:` define un nodo que:
@@ -194,7 +194,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    SubNodo 1: 123
 		    Otro subnodo: 456
 
-	Subheader: 6. Nodos con `>>` (bloque textual)
+	Subheader: 6. Nodos con `>>` (bloque texto)
 		
 	Content >>
 		La forma con `>>` define un bloque de **texto literal**.
@@ -229,14 +229,14 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		        Hijo: valor SI permitido, es texto, no se parsea
 		        Otro hijo: SI permitido
 		    # Esto también es texto
-		SiguienteNodo: valor
+		Siguiente Nodo: valor
 
 	Content >>		
 		En este ejemplo:
 		
 		* Todo lo indentado por debajo de `Bloque >>` es texto literal.
 		* `Hijo: valor` y `Otro hijo: SI permitido` **no** son nodos, sino texto.
-		* `SiguienteNodo: valor` está fuera del bloque `>>`.
+		* `Siguiente Nodo: valor` está fuera del bloque `>>`.
 		
 	Subheader: 7. Namespaces
 		
@@ -244,16 +244,21 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Un namespace es opcional y se especifica así:
 
 	Code >>		
-		Nodo (@com.example.docs):
+		Nodo ***(com.example.docs)***:
+		Otro nodo ***(otro.namespace)***:
+		Más nodos ***(@un.nombre.especial)***:
 		
 	Content >>
 		Reglas:
 		
 		* Un namespace **PUEDE** empezar por `@`.
-		* **DEBE** usar formato jerárquico (`a.b.c`).
+		* **DEBE** usar formato jerárquico (`a.b.c`), con al menos 2 elementos (`a.b`).
 		* Se hereda por los nodos hijos.
 		* El namespace por defecto es **``**.
 		* Un nodo hijo puede redefinir su namespace indicando (otro.namespace), en cuyo caso usa ese namespace en lugar del heredado.
+		* Sólo se permiten caracteres dentro del rango [a-z0-9].
+		* Un parser **DEBE** pasar a minúsculas un namespace. Así debe convertir de `Nombre (COM.DEMO.DOCS)` a `Nombre (com.demo.docs)` internamente
+		* Por reglas de estilo un namespace debería escribirse en minúsculas 
 		
 	Subheader: 8. Indentación y Jerarquía
 		
@@ -265,15 +270,98 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>
 		Un documento STXT:
 		
-		* **PUEDE** usar únicamente espacios o únicamente tabuladores.
-		* **NO DEBERÍA** mezclarlos en una misma línea. 
-		  En caso de mezclarlos, los espacios que no lleguen a 4 se descartan si aparece un tabulador
+		* **PUEDE** usar espacios o tabuladores para identación.
+		* **No se recomienda** mezclar espacios o tabuladores en una misma línea. Un parser **PUEDE** dar un aviso en ese caso. 
+		  En caso de mezclarlos, los espacios que no lleguen a 4 se descartan si aparece un tabulador. Sigiendo el principio
+		  ** Human First**, esta regla es para asegurar que un documento que *parece* correcto lo sea realmente. Es decir, que no sea
+		  necesario ir revisando líneas carácter a carácter para saber si algo es correcto o no, debe verse a simple vista. 
 		* Si usa espacios:
-		  * **DEBE** usar exactamente **4 espacios** por nivel.
+		  * **DEBE** usar múltiples de **4 espacios** para subir de nivel.
 		* Si usa tabs:
 		  * Cada tab representa exactamente 1 nivel.
+		* Se muestran todos los casos posibles de subida de nivel:
+		  * 0 Espacios + 1 TAB
+		  * 1 Espacios + 1 TAB
+		  * 2 Espacios + 1 TAB
+		  * 3 Espacios + 1 TAB
+		  * 4 Espacios + 0 TAB
+		  
+	Subsubheader: 8.2 Ejemplos de identación especiales
+	
+	Content >>
+		En los siguientes ejemplos se muestra `.` para identificar un espacio, y `|-->` para identificar un Tabulador.
+		El tabulador se mostrará con los carácteres que falten hasta llegar a la siguiente columna, como un editor de texto.
+
+	Content >>
+		Ejemplo con tabuladores:
 		
-	Subsubheader: 8.2 Jerarquía
+	Code >>
+		Nodo nivel 0: Valor nivel 0
+		|-->Nodo nivel 1:
+		|-->Otro nodo nivel 1:
+		|-->|-->Nivel 2:
+		|-->|-->Nivel 2:
+		|-->Nivel 1:
+		|-->Nivel 1:
+	
+	Content >>		
+		Ejemplo con espacios:
+		
+	Code >>
+		Nodo nivel 0: Valor nivel 0
+		....Nodo nivel 1:
+		....Otro nodo nivel 1:
+		........Nivel 2:
+		........Nivel 2:
+		....Nivel 1:
+		....Nivel 1:
+	
+	Content >>
+		Ejemplo con mezcla de espacios y tabuladores. 
+		
+		Permitido, aunque no recomendable por estilo.
+		Un parser **PUEDE** dar un aviso de mezcla en la misma línea.
+		Este ejemplo tiene la misma identación que los dos anteriores.
+		
+	Code >>
+		Nodo nivel 0: Valor nivel 0
+		.|->Nodo nivel 1: ***Espacio + 1 TAB: nivel 1***
+		..|>Otro nodo nivel 1: ***2 Espacios + 1 TAB: nivel 1***
+		...|..|>Nivel 2: ***3 Espacios + 1 TAB, 2 Espacios + 1 TAB: nivel 2***
+		|-->....Nivel 2: ***1 TAB, 4 Espacios: nivel 2***
+		..|>Nivel 1: ***2 Espacios + 1 TAB: nivel 1***
+		.|->Nivel 1: ***1 Espacio + 1 TAB: nivel 1***
+		
+		
+	Subsubheader: 8.3 Errores de nivel
+	
+	Content >>
+		Un parser **DEBE** dar error de parseo en los siguientes casos:
+		
+		* Niveles no consecutivos:
+		
+	Code>>
+		Nivel 0:
+		....Nivel 1:
+		............Nivel3: ***ERROR, no se puede pasar de nivel 1 a nivel 3***
+		
+	Content >>
+		* No llegar a múltiplo de 4 al usar espacios o mezcla
+		
+	Code >>
+		Nivel 0:
+		....Nivel 1
+		...Nivel casi 1: ***ERROR: 3 espacios (no se llega a 4)***
+		
+		Nivel 0:
+		....Nivel 1:
+		.|->..Nivel casi 2: ***ERROR: 1 espacios + 1TAB, 2 espacios***
+		
+		Nivel 0:
+		....Nivel 1:
+		..........Nivel mas que 2: ***ERROR: 4 espacios, 4 espacios, 2 espacios*** 
+		
+	Subsubheader: 8.4 Jerarquía
 		
 	Content >>
 		* La indentación **DEBE** aumentar de forma consecutiva (no se permiten saltos).
@@ -305,12 +393,23 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		Ejemplo:
 	Code >>
+		***# Un comentario normal (nivel 0)***
 		Documento:
+			***# Otro comentario normal***
+					***# ¡Esto también es un comentario! Fuera de bloque >>***
 		    Texto >>
 		        # Esto es texto
 		        Línea normal
-		            # También es texto
-		    # Esto sí es comentario
+		            # También es texto normal
+		    ***# Esto sí es comentario***
+		    	Aquí continúa el texto del nodo
+
+	Subsubheader: 9.2 Estilo para comentarios
+	Content >>
+		* Se recomienda que el comentario esté en el mismo nivel que el siguiente nodo.
+		  Es decir, comentarios para el siguiente nodo.
+		* No se recomiendan comentarios dentro de un bloque de texto, ya que visualmente
+		  son extraños. 
 
 	Subheader: 10. Normalización de espacios en blanco
 		
