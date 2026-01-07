@@ -699,7 +699,8 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		y cuyo objetivo es definir las reglas estructurales, tipos de valor y cardinalidades de los nodos pertenecientes a un namespace concreto.
 		
 		El sistema de Templates es análogo a los schemas, pero con una syntaxis simplificada, orientada a prototipos rápidos. 
-		Aún así, es un sistema perfectamente válido para todo tipo de documentos.
+		Aún así, es un sistema perfectamente válido para todo tipo de documentos. Podría considerarse *azúcar sintáctico*, ya que internamente puede usar 
+		la misma representación que un esquema.
 		
 		El sistema de templates **PUEDE** convivir junto a un sistema con esquemas, ya que al final un Template define la misma información que un schema.
 	
