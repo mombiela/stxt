@@ -1,27 +1,43 @@
 Document (dev.stxt.namespace): STXT Tutorial
 
 	Header: @STXT@ Tutorial
-
+	
 	Alert >>
 		**Página en construcción.**\\
-		El contenido se muestra sólo como ejemplo del progreso actual,
-		y puede cambiar notablemente con la versión definitiva. 
+		Este tutorial refleja el estado actual del lenguaje STXT y sus sistemas
+		de validación (Schemas y Templates). El contenido puede ajustarse en versiones
+		posteriores de la especificación.
 		
-	SubHeader: ¿Qué es @STXT@?
-
-	Content>>
-		@STXT@ es un lenguaje textual semántico y legible, pensado para representar
-		documentos estructurados de forma simple y procesable por máquinas. Sus reglas
-		básicas permiten nodos inline, bloques de texto literal y namespaces.
-
-	SubHeader: Ejemplo: ficha de libro para editoriales
-
-	Content>>
-		A continuación mostramos un ejemplo práctico y sencillo para describir un libro
-		que pueda usar una editorial: metadatos, capítulos y contenido de muestra.
-
-	Code>>
-		Book: Ejemplo de libro
+	Subheader: 1. ¿Qué es @STXT@?
+	
+	Content >>
+		**@STXT@ (Semantic Text)** es un lenguaje textual jerárquico y semántico,
+		diseñado para ser **Human-First**:
+		
+		* Fácil de leer y escribir por personas.
+		* Trivial de parsear por máquinas.
+		* Seguro por diseño.
+		
+		STXT permite representar documentos estructurados mediante:
+		
+		* **Nodos inline** (`:`) para valores simples.
+		* **Bloques de texto literal** (`>>`) para contenido multilínea.
+		* **Indentación** para expresar jerarquía.
+		* **Namespaces** para separar semántica y permitir validación externa.
+		
+		La sintaxis base es mínima. La semántica avanzada se añade mediante:
+		
+		* `@stxt.schema` — validación formal y exhaustiva.
+		* `@stxt.template` — validación simplificada y orientada a prototipos.
+		
+	Subheader: 2. Ejemplo básico: ficha de un libro
+	
+	Content >>
+		Veamos un ejemplo sencillo de un documento STXT que describe un libro.
+		No hay validación todavía: es sólo STXT core.
+		
+	Code >>
+		Book:
 			Title: Arquitectura de software moderna
 			Authors:
 				Author: María Pérez
@@ -32,81 +48,227 @@ Document (dev.stxt.namespace): STXT Tutorial
 			Summary >>
 				Este libro ofrece una visión práctica de patrones y buenas prácticas
 				para diseñar sistemas distribuidos y escalables.
+				
 			Chapters:
-				Chapter: 1
+				Chapter:
+					Number: 1
 					Title: Introducción a la arquitectura
 					Pages: 20
 					Content >>
-						En este capítulo presentamos conceptos básicos: monolitos, microservicios
-						y criterios para elegir una arquitectura adecuada.
-				Chapter: 2
+						En este capítulo presentamos conceptos básicos:
+						monolitos, microservicios y criterios de diseño.
+						
+				Chapter:
+					Number: 2
 					Title: Comunicación entre servicios
 					Pages: 30
 					Content >>
 						Se describen protocolos, mensajería y patrones de integración.
-
-	SubHeader: Asociar el documento a un namespace
-
-	Content>>
-		Podemos asociar la ficha a un namespace para validarla mediante un schema.
-
-	Code>>
-		Book (@com.acme.book): Ejemplo de libro
-			Title: Arquitectura de software moderna
-			Authors:
-				Author: María Pérez
-			ISBN: 978-84-123456-7-8
-
-	SubHeader: Schema de ejemplo (simplificado)
-
-	Content>>
-		Un schema permite definir la forma y los tipos de los nodos de un namespace.
-
-	Code>>
-		Schema (@stxt.schema): com.acme.book
-			Node: Book
-				Type: EMPTY
-				Childs >>
-					(1) Title
-					(1) Authors
-					(1) ISBN
-			Node: Title
-				Type: TEXT INLINE
-			Node: Authors
-				Type: TEXT MULTILINE
-			Node: ISBN
-				Type: TEXT INLINE
-			Node: Chapter
-				Type: EMPTY
-				Childs >>
-					(1) Title
-					(?) Pages
-					(?) Content
-
-	SubHeader: Buenas prácticas
-
-	Content>>
-		- Usa bloques `>>` para contenido de capítulos o textos multilínea.
-		- Mantén la indentación consistente (4 espacios por nivel) y no mezcles tabs y espacios.
-		- Usa namespaces para separar esquemas por editoriales o colecciones.
-		- Define cardinalidades mínimas en los schemas para garantizar datos clave.
-
-	SubHeader: Ejemplo final completo
-
-	Code>>
-		Book (@com.acme.book): ACME - Arquitectura de software moderna
+						
+	Content >>
+		Observaciones:
+		
+		* La jerarquía se define **únicamente por indentación**.
+		* `Summary >>` y `Content >>` son bloques de texto literal: su contenido no se interpreta como STXT.
+		* No existe ningún tipo implícito: todo es texto mientras no se valide.
+		
+	Subheader: 3. Uso de namespaces
+	
+	Content >>
+		Para poder validar semánticamente un documento, se asocia a un **namespace**.
+		
+		El namespace identifica qué reglas externas (schema o template) pueden aplicarse.
+		
+	Code >>
+		Book (@com.acme.book):
 			Title: Arquitectura de software moderna
 			Authors:
 				Author: María Pérez
 				Author: Juan García
 			ISBN: 978-84-123456-7-8
+			
+	Content >>
+		Reglas clave:
+		
+		* El namespace se hereda por los nodos hijos.
+		* Un nodo puede redefinir su namespace si es necesario.
+		* STXT core **no valida** el namespace: sólo lo propaga.
+		
+	Subheader: 4. Validación con Templates
+	
+	Content >>
+		Los **Templates** permiten definir reglas estructurales y de tipo
+		de forma compacta. Son ideales para prototipos y documentación viva.
+		
+		Un template es un documento STXT cuyo namespace es `@stxt.template`.
+		
+	Subsubheader: 4.1 Template para libros
+	
+	Code >>
+		Template (@stxt.template): com.acme.book
+			Description: Template para fichas de libros editoriales
+			Structure >>
+				Book:
+					Title: (1)
+					Authors: (1)
+						Author: (+)
+					ISBN: (1)
+					Publisher: (?)
+					Published: (?) DATE
+					Summary: (?) TEXT
+					Chapters: (?)
+						Chapter: (+)
+							Number: (1) INTEGER
+							Title: (1)
+							Pages: (?) INTEGER
+							Content: (?) TEXT
+							
+	Content >>
+		Qué define este template:
+		
+		* `Book` es el nodo raíz esperado.
+		* `Title` e `ISBN` son obligatorios (`(1)`).
+		* `Author` puede repetirse (`(+)`).
+		* `Published` debe tener formato `DATE`.
+		* `Summary` y `Content` son bloques de texto (`TEXT`).
+		
+	Subsubheader: 4.2 Aplicación del template
+	
+	Content >>
+		Un validador que soporte templates puede:
+		
+		* Verificar que los nodos existen.
+		* Comprobar cardinalidades.
+		* Validar tipos básicos (número, fecha, boolean, texto).
+		
+		STXT core **no cambia**: el template se aplica sobre el árbol ya parseado.
+		
+	Subheader: 5. Validación con Schemas
+	
+	Content >>
+		Los **Schemas** proporcionan la misma información que un template,
+		pero de forma más explícita y formal.
+		
+		Un schema:
+		
+		* Es un documento STXT con namespace `@stxt.schema`.
+		* Define nodos, tipos y cardinalidades por separado.
+		* Es la representación “canónica” de validación.
+		
+	Subsubheader: 5.1 Schema equivalente al template
+	
+	Code >>
+		Schema (@stxt.schema): com.acme.book
+			Node: Book
+				Type: GROUP
+				Children:
+					Child: Title
+						Min: 1
+						Max: 1
+					Child: Authors
+						Min: 1
+						Max: 1
+					Child: ISBN
+						Min: 1
+						Max: 1
+					Child: Publisher
+						Max: 1
+					Child: Published
+						Max: 1
+					Child: Summary
+						Max: 1
+					Child: Chapters
+						Max: 1
+						
+			Node: Authors
+				Children:
+					Child: Author
+						Min: 1
+						
+			Node: Chapters
+				Children:
+					Child: Chapter
+						Min: 1
+						
+			Node: Chapter
+				Children:
+					Child: Number
+						Min: 1
+						Max: 1
+					Child: Title
+						Min: 1
+						Max: 1
+					Child: Pages
+						Max: 1
+					Child: Content
+						Max: 1
+						
+			Node: Title
+			Node: Author
+			Node: ISBN
+			Node: Publisher
+			Node: Number
+				Type: INTEGER
+			Node: Pages
+				Type: INTEGER
+			Node: Published
+				Type: DATE
+			Node: Summary
+				Type: TEXT
+			Node: Content
+				Type: TEXT
+				
+	Content confirms >>
+		* El schema es más verboso, pero no ambiguo.
+		* Un template puede compilarse automáticamente a esta forma.
+		* Un validador **DEBERÍA** priorizar schema frente a template si ambos existen.
+		
+	Subheader: 6. Documento final validable
+	
+	Content >>
+		Documento STXT completo que puede validarse con el template o el schema anterior:
+		
+	Code >>
+		Book (@com.acme.book):
+			Title: Arquitectura de software moderna
+			Authors:
+				Author: María Pérez
+				Author: Juan García
+			ISBN: 978-84-123456-7-8
+			Published: 2025-10-01
+			Summary >>
+				Una introducción práctica a la arquitectura de sistemas modernos.
+				
 			Chapters:
-				Chapter: 1
-					Title: Introducción a la arquitectura
+				Chapter:
+					Number: 1
+					Title: Introducción
 					Content >>
 						Conceptos básicos y objetivos del libro.
-
-	Content>>
-		Si quieres, puedo generar a partir de este ejemplo: (a) una conversión a JSON
-		intermedio para procesar automáticamente, (b) un conversor a un formato de catálogo
-		(ISBN/OPDS) o (c) tests de validación frente al schema de ejemplo. ¿Cuál prefieres?
+						
+	Content >>
+		Este documento:
+		
+		* Es STXT válido.
+		* Cumple el template `com.acme.book`.
+		* Cumple el schema `com.acme.book`.
+		
+	Subheader: 7. Buenas prácticas
+	
+	Content >>
+		* Usa bloques `>>` para texto largo o literal.
+		* Mantén indentación consistente (4 espacios por nivel).
+		* Usa templates para iterar rápido.
+		* Usa schemas cuando necesites contratos estrictos.
+		* No mezcles semántica en el core: deja que schemas/templates hagan ese trabajo.
+		
+	Subheader: 8. Siguientes pasos
+	
+	Content >>
+		A partir de aquí es habitual:
+		
+		* Convertir STXT a un modelo intermedio (árbol de nodos).
+		* Transformar a JSON, XML, YAML u otros formatos.
+		* Usar STXT como formato de configuración, documentación o intercambio seguro.
+		
+	Subheader: 9. Fin del Tutorial
