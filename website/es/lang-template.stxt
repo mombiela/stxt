@@ -6,59 +6,141 @@ Document (dev.stxt.namespace):Template
 		El contenido se muestra sólo como ejemplo del progreso actual,
 		y puede cambiar notablemente con la versión definitiva. 
 		
-	Subsubheader:  6.1 Forma básica
+	
+	Content>>
+		**STXT (Semantic Text) — Template Language Specification**\\
+		**Category:** Standards Track\\
+		**Status:** Draft\\
+		**Format:** Markdown (RFC-style)
 		
-	Code>>
-		Node: NombreNodo
-		    Type: Tipo
-		    Childs>>
-		        (<card>) NombreHijo [(@namespace)]
-	Content >>
-		Reglas:
-		
-		* `NombreNodo` **DEBE** ser único dentro del schema.
-		* Cada `Node` define la semántica del nodo en el namespace objetivo.
-		* Si `Type` se omite ⇒ tipo por defecto `TEXT INLINE`.
+	Subheader: 1. Introducción
 
-	Subheader: 7. Hijos (`Childs>>`) y namespaces cruzados
+	Content>>	
+	Explicar que es parecido a Schema, como si fuera "azúcar sintáctico", pero realmente puede ser
+	un sistema completo de schema. Muchos parsers crearán un esquema interno igual que los otros.
+	
+	Las líneas dentro de `structure` tienen la forma:
+	
+	Code >>
+		Nombre del nodo: (cardinalidad opcional) TIPO [values si enum]
+			Nombre del hijo: (cardinalidad opcional) TIPO [values si enum]
+			Otro hijo (namespace.opcional): (cardinalidad opcional) TIPO [values si enum]
+				Otro nodo:
+				
+	Content>>
+		Tanto cardinalidad, tipo y values son opcionales. En caso de no existir:
 		
-	Content >>
-		Cada entrada de `Childs>>`:
-		
-		```text
-		(<card>) NombreHijo [(@namespace)]
-		```
-		
-		Donde:
-		
-		* `(<card>)` = cardinalidad (ver sección 8).
-		* `NombreHijo` = nombre lógico del nodo hijo.
-		* `(@namespace)` (opcional):
-		
-		  * Si se omite: se asume el namespace objetivo del schema.
-		  * Si se indica: el hijo pertenece a ese namespace concreto.
-		
-	Subsubheader: 7.1. REGLA NUEVA (estricta y obligatoria)
-		
-	Content >>
-		**Todo nodo que aparezca en `Childs>>` debe tener una definición propia como `Node:` en su schema correspondiente.**
-		
-		Esto implica:
-		
-		* Si aparece:
-		
-		  ```stxt
-		  (1) Metadata (@com.google.html)
-		  ```
-		
-		  entonces **debe existir un schema para `com.google.html`**
-		  **y dentro de él debe existir `Node: Metadata`**.
-		
-		* Esta regla es obligatoria tanto en modo *strict* como en modo no-strict.
-		
-		Así evitamos hijos “fantasma” y garantizamos que todos los nodos tienen semántica definida.
-		
-	Subheader: 8. Cardinalidades
+		* Cardinalidad: `*` por defecto
+		* Tipo: `INLINE` por defecto
+		* Values: valores separados por `,`. Sólo válidos (y obligatorios) si tipo es `ENUM`
+	
+	Subheader: Ejemplos
+
+	Content>>
+		Un ejemplo de template
+	
+	Code>>
+		Template (@stxt.template): com.dokumentando.documento
+			Structure >>
+				Documento:
+					Título: (1)
+					Cuerpo: (1) TEXT
+					Autor: (1)
+					Fecha Creación: (1) DATE
+					Última modificación: (1) TIMESTAMP
+					Email Contacto: (1) EMAIL
+					Sitio Web: (1) URL
+					Código postal: (*) NUMBER
+					Es Público: (1) BOOLEAN
+					Color Tema: (?) HEXADECIMAL
+					Secciones: (1)
+						Sección: (+)
+							Título: (1) @Titulo
+							Contenido: (1) TEXT
+					Tipo Documento: (1)
+			
+	Content: El esquema equivalente
+	
+	Code >>
+		Schema (@stxt.schema): com.dokumentando.documento
+			Node: Sección
+				Children:
+					Child: Título
+						Min: 1
+						Max: 1
+					Child: Contenido
+						Min: 1
+						Max: 1
+			Node: Documento
+				Children:
+					Child: Título
+						Min: 1
+						Max: 1
+					Child: Cuerpo
+						Min: 1
+						Max: 1
+					Child: Autor
+						Min: 1
+						Max: 1
+					Child: Fecha Creación
+						Min: 1
+						Max: 1
+					Child: Última modificación
+						Min: 1
+						Max: 1
+					Child: Email Contacto
+						Min: 1
+						Max: 1
+					Child: Sitio Web
+						Min: 1
+						Max: 1
+					Child: Código postal
+					Child: Es Público
+						Min: 1
+						Max: 1
+					Child: Color Tema
+						Max: 1
+					Child: Secciones
+						Min: 1
+						Max: 1
+					Child: Tipo Documento
+						Min: 1
+						Max: 1
+			Node: Título
+			Node: Contenido
+				Type: TEXT
+			Node: Cuerpo 
+				Type: TEXT
+			Node: Autor
+			Node: Fecha Creación
+				Type: DATE
+			Node: Última modificación 
+				Type: TIMESTAMP
+			Node: Email Contacto 
+				Type: EMAIL
+			Node: Sitio Web 
+				Type: URL
+			Node: Código postal 
+				Type: NUMBER
+			Node: Es Público 
+				Type: BOOLEAN
+			Node: Color Tema 
+				Type: HEXADECIMAL
+			Node: Secciones
+				Children:
+					Child: Sección
+						Min: 1
+			Node: Tipo Documento
+	
+	Subheader: x. Metatemplate
+	
+	Code>>
+		Template (@stxt.template): @stxt.template
+			Structure >>
+				Template:
+					Structure: (1) BLOCK
+	
+	Subheader: x. Cardinalidades
 		
 	Content >>
 		Formas permitidas:
