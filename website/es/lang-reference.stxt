@@ -366,7 +366,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 	Content >>
 		* La indentación **DEBE** aumentar de forma consecutiva (no se permiten saltos).
-		* Los nodos hijos **DEBE** tener mayor indentación que su padre.
+		* Los nodos hijos **DEBEN** tener mayor indentación que su padre.
 		* La indentación dentro de un bloque `>>` **no afecta a la jerarquía estructural**: es simplemente texto.
 		
 	Subheader: 9. Comentarios
@@ -448,8 +448,10 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>
 		Para cada línea que pertenece a un bloque `>>`:
 		
-		1. El parser determina el contenido de la línea a partir del texto que sigue a la indentación mínima del bloque (es decir, elimina solo la indentación de bloque, pero conserva cualquier indentación adicional como parte del texto).
+		1. El parser determina el contenido de la línea a partir del texto que sigue a la indentación mínima del bloque 
+		   (es decir, elimina solo la indentación de bloque, pero conserva cualquier indentación adicional como parte del texto).
 		2. Sobre ese contenido, el parser **DEBE** eliminar todos los espacios y tabuladores finales (trim a la derecha).
+		3. Las líneas vacías se conservan en todos los casos, exceptio líneas que son comentarios reales, con identación inferior al bloque.
 		
 		Ejemplo de canonicalización de líneas:
 		
@@ -467,7 +469,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subsubheader: 10.3 Líneas vacías en bloques `>>`
 		
 	Content >>
-		* Las líneas vacías **intermedias** dentro del bloque (intermedias o finales) **DEBE*N* preservarse como líneas vacías (`""`) en la representación lógica del texto.
+		* Las líneas vacías **intermedias** dentro del bloque (intermedias o finales) **DEBEN** preservarse como líneas vacías (`""`) en la representación lógica del texto.
 		* Solo se aplica trim a la derecha en cada línea individual (eliminar espacios/tab al final de línea, como ya se hace).
 		* No se elimina ninguna línea vacía, ni intermedia ni final.
 		
@@ -492,13 +494,10 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>
 		Un documento es inválido si ocurre alguna de estas condiciones:
 		
-		1. Mezcla de espacios y tabuladores.
-		2. Espacios que no sean múltiplos de 4 (cuando se usan espacios para indentación).
-		3. Saltos en los niveles de indentación.
-		4. Un nodo `>>` contiene contenido significativo inline en la misma línea que `>>`.
-		5. Un nodo no contiene ni `:` ni `>>`.
-		6. Un namespace no empieza por `@`.
-		7. Se usa `:` y `>>` en la misma línea.
+		1. Espacios que no sean múltiplos de 4 (cuando se usan espacios para indentación).
+		2. Saltos en los niveles de indentación.
+		3. Un nodo `>>` contiene contenido significativo inline en la misma línea que `>>`.
+		4. Un nodo no contiene ni `:` ni `>>`.
 		
 		Un parser conforme **DEBE** rechazar el documento.
 		
@@ -564,43 +563,60 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		        Más texto
 		    # Esto sí es comentario
 		
-	Subsubheader: 14.4 Bloque con “pseudo-hijos” (válido)
-		
-	Code >>
-		Bloque >>
-		    Texto
-		        Hijo: valor SI permitido
-		        Otro hijo: SI permitido
-		    # Esto también es texto
-		Siguiente: Nodo
-		
-	Subsubheader: 14.5 Inválido: mezcla de indentación
-		
-	Code >>
-		A:
-		    B:
-		\t\tC: valor
-		
 	Subheader: 15. Apéndice A — Gramática (Informal)
 		
 	Code >>
-		Nodo             = Indent Nombre NamespaceOpt (InlineOpt | BlockOpt)
-		NamespaceOpt     = "(" "@" Ident ")" 
-		InlineOpt        = ":" Esp? TextoInline?
-		BlockOpt         = Esp? ">>"
+		Documento       = { Línea }
 		
-		TextoInline      = cualquier contenido hasta el fin de línea
-		BloqueTexto      = líneas indentadas (texto literal, no estructurado)
+		Línea           = [Indentación] ( Comentario | Nodo | BloqueContinuación | LíneaVacía )
 		
-		Comentario       = Indent "#" Texto       ; Solo fuera de bloques '>>'
+		Nodo            = Indentación Nombre [Namespace] ( Inline | BlockStart )
+		Inline          = ":" [Espacio] [TextoInline]
+		BlockStart      = [Espacio] ">>" [EspaciosFinales]
 		
-		# Regla esencial:
-		#  - Dentro de un bloque '>>', cualquier línea con indentación >= la
-		#    indentación mínima del bloque es texto.
-		#  - Las líneas vacías nunca cierran el bloque.
-		#  - Una línea no vacía con indentación <= la del nodo '>>' lo cierra.
+		Namespace       = "(" ["@"] Ident { "." Ident } ")"
+		Ident           = [a-z0-9]+   ; solo minúsculas y números según reglas de estilo y normalización
 		
-		Indent           = ("    ")* | ("\t")*
+		Comentario      = "#" { cualquier carácter hasta fin de línea }
+		
+		BloqueContinuación = IndentaciónMayorQueBloqueAnterior { cualquier texto }   ; texto literal
+		
+		Indentación     = Mezcla permitida de espacios y tabuladores según sección 8
+		                  - Puros espacios: múltiplos exactos de 4 por nivel
+		                  - Puros tabs: 1 tab = 1 nivel
+		                  - Mixtos en línea: tab gana, espacios <4 se ignoran
+		
+		Nombre          = Texto normalizado (trim + compactación espacios) según sección 4.1
+		
+	Content >>	
+		**Notas clave para implementadores:**
+		
+		* El parser debe procesar el documento línea por línea, manteniendo estado de:
+		  - Nivel de indentación actual del nodo padre.
+		  - Indentación base y estado de bloque `>>` activo (si lo hay).
+		  - Namespace heredado actual.
+		
+		* **Flujo básico de parseo:**
+		  1. Leer línea y calcular su indentación efectiva (según reglas de sección 8).
+		  2. Si hay bloque `>>` activo:
+		     - Si indentación ≥ indentación mínima del bloque → añadir línea como texto literal (trim derecha).
+		     - Si indentación ≤ indentación del nodo `>>` y línea no vacía y línea no comentario → cerrar bloque y procesar como nuevo nodo.
+		  3. Si no hay bloque activo:
+		     - Línea vacía → ignorar (no afecta jerarquía).
+		     - Empieza por `#` → comentario.
+		     - En caso contrario → nuevo nodo (normalizar nombre, detectar namespace, tipo : o >>).
+		
+		* **Herencia de namespace:**
+		  - El namespace del nodo raíz es vacío por defecto.
+		  - Cada nodo hereda el namespace de su padre.
+		  - Si un nodo define su propio namespace entre `()`, este reemplaza al heredado para él y todos sus descendientes.
+		
+		* **Normalización adicional:**
+		  - Nombres de nodo: según sección 4.1–4.3.
+		  - Namespaces: convertidos internamente a minúsculas (sección 7).
+		  - Valores inline: trim izquierdo y derecho (sección 10.1).
+		  - Líneas de bloque: conservar indentación relativa + trim derecha + preservar todas las líneas vacías (sección 10.2–10.3).
+				Comentario       = Indent "#" Texto       ; Solo fuera de bloques '>>'
 
 	Subheader: 16. Apéndice B — Interacción con `@stxt.schema`
 		
