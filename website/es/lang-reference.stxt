@@ -467,13 +467,9 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subsubheader: 10.3 Líneas vacías en bloques `>>`
 		
 	Content >>
-		* Las líneas vacías **intermedias** dentro del bloque (es decir, entre líneas no vacías) **DEBE** preservarse como líneas vacías (`""`) en la representación lógica del texto.
-		* Tras leer todas las líneas de un bloque `>>`, las implementaciones **DEBE** eliminar las líneas vacías consecutivas al final del bloque (si las hubiera).
-		
-		En otras palabras:
-		
-		* Las líneas en blanco **no cierran** el bloque.
-		* No se conservan “saltos de línea sueltos” al final del bloque a nivel lógico.
+		* Las líneas vacías **intermedias** dentro del bloque (intermedias o finales) **DEBE*N* preservarse como líneas vacías (`""`) en la representación lógica del texto.
+		* Solo se aplica trim a la derecha en cada línea individual (eliminar espacios/tab al final de línea, como ya se hace).
+		* No se elimina ninguna línea vacía, ni intermedia ni final.
 		
 		Ejemplo:
 		
@@ -489,28 +485,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* Línea 1: `"Línea 1"`
 		* Línea 2: `""`
 		* Línea 3: `"Línea 2"`
-		
-		Las líneas vacías finales después de `"Línea 2"` se eliminan en la representación lógica.
-		
-	Subsubheader: 10.4 Normalización del nombre del nodo
-		
-	Content >>
-		La normalización del nombre del nodo ya se define formalmente en la **sección 4.1**.
-		Como recordatorio operativo:
-		
-		* Antes de interpretar `:` o `>>`, el parser **DEBE** obtener el nombre lógico aplicando la normalización descrita en 4.2.
-		* Esto implica eliminar espacios y tabuladores a izquierda y derecha del fragmento que constituye el nombre.
-		* Distintas variantes con espacios siguen produciendo el mismo nombre lógico.
-		
-		Ejemplo recordatorio:
-		
-	Code >>
-		Nombre: valor
-		Nombre : valor
-		Nombre    :   valor
-
-	content >>
-		En los tres casos, el nombre lógico del nodo es `"Nombre"`.
+		* Línea 4: `""`
 		
 	Subheader: 11. Reglas de Error
 		
