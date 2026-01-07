@@ -195,6 +195,22 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    SubNodo 1: 123
 		    Otro subnodo: 456
 
+	Subheader: 5.1 Normalización del valor
+	
+	Content>>
+		El valor (INLINE) de un nodo debe normalizarse con un trim (derecha e izquierda).
+		
+		Ejemplo:
+	Code>>
+		Nombre: valor 1
+		Nombre:    valor 1    
+		# en los dos casos, el valor inline de Nombre es "valor 1", aunque en el 
+		# segundo haya espacios antes y después.		
+	
+	Content>>	
+		La normalización fuerte se aplica sólo a identificadores estructurales.
+		Los valores son literales, aunque se aplica una **normalización senzilla: trim derecha e izquierda**.
+
 	Subheader: 6. Nodos con `>>` (bloque texto)
 		
 	Content >>
