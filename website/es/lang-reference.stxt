@@ -63,6 +63,8 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		1. **Nodo contenedor inline (node INLINE text)**: `Nombre: Valor inline`
 		2. **Nodo bloque de texto (node BLOCK text)**: `Nombre >>`
 		
+		El nombre **NO puede estar vacío**. Una línea con sólo `:` o `>>` no es válida. 
+		
 		**Ejemplo con nodos INLINE:**
 	
 	Code >>
@@ -121,7 +123,8 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Nombre de nodo>>
 		
 	Content>>
-		La definición de un nodo siempre debe incluir o bien `:` (nodo normal
+		La definición de un nodo siempre debe incluir o bien `:` (nodo container INLINE) o bien `>>` (nodo texto BLOCK),
+		**siempre precedido de un nombre no vacío**.
 		
 	Subsubheader: 4.2 Restricciones del nombre del nodo
 		
@@ -273,7 +276,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* Se hereda por los nodos hijos.
 		* El namespace por defecto es **``**.
 		* Un nodo hijo puede redefinir su namespace indicando (otro.namespace), en cuyo caso usa ese namespace en lugar del heredado.
-		* Sólo se permiten caracteres dentro del rango [a-z0-9].
+		* Sólo se permiten caracteres dentro del rango [a-z0-9], precedido por `@` de forma opcional, para indicar que es un namespace especial.
 		* Un parser **DEBE** pasar a minúsculas un namespace. Así debe convertir de `Nombre (COM.DEMO.DOCS)` a `Nombre (com.demo.docs)` internamente
 		* Por reglas de estilo un namespace debería escribirse en minúsculas 
 		
