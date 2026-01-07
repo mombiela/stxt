@@ -57,7 +57,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		Schema (@stxt.schema): com.example.docs
 		    Description: Schema for example documents
 		    Node: Document
-		        Type: EMPTY
+		        Type: GROUP
 		        Children:
 		        	Child: Metadata (@com.google.html)
 		        		Max: 1
@@ -99,7 +99,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		
 		* `Nombre Nodo` **DEBE** ser único dentro del schema.
 		* Cada `Node` define la semántica del nodo en el namespace objetivo.
-		* Si `Type` se omite, tipo por defecto es `NODE`.
+		* Si `Type` se omite, tipo por defecto es `INLINE`.
 		
 	Subsubheader: 6.2 Valores en tipos ENUM
 	Code>>
@@ -142,7 +142,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 	Subsubheader: 7.1. Nodos deben estar explícitamente mostrados en schemas.
 		
 	Content >>
-		**Todo nodo que aparezca en `Childs>>` debe tener una definición propia como `Node:` en su schema correspondiente.**
+		**Todo nodo que aparezca en `Children` debe tener una definición propia como `Node:` en su schema correspondiente.**
 		
 		Así evitamos hijos “fantasma” y garantizamos que todos los nodos tienen semántica definida.
 		
@@ -411,12 +411,12 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		  Hijos opcionales:
 		
 		  * `Type`: tipo concreto (si falta ⇒ `INLINE`).
-		  * `Children`: bloque `Childs>>` literal.
+		  * `Children`: Nodo con listado de `Child` permitidos
 		  * `Description`: texto explicativo.
 		  * `Values`: Valores permitidos (sólo tipo ENUM)
 		
 		* `Type`
-		  Inline (`INLINE`), con el nombre del tipo (`EMPTY`, `INLINE`, `NUMBER`, etc.).
+		  Inline (`INLINE`), con el nombre del tipo (`GROUP`, `INLINE`, `NUMBER`, etc.).
 		
 		* `Children`
 		  `BLOCK`: contiene literalmente el bloque `Childs>>`.
@@ -436,7 +436,7 @@ Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
 		Schema (@stxt.schema): com.example.docs
 		    Description: Example schema
 		    Node: Document
-		        Type: EMPTY
+		        Type: GROUP
 		        Children:
 		        	Child: Title
 		        		Min: 1
