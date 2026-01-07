@@ -305,6 +305,8 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		  * 2 Espacios + 1 TAB
 		  * 3 Espacios + 1 TAB
 		  * 4 Espacios + 0 TAB
+		* Una vez se ha subido de nivel se vuelven a aplicar las reglas anteriores. Es decir, se resetea el conteo en cada subida
+		  de nivel. 
 		  
 	Subsubheader: 8.2 Ejemplos de identación especiales
 	
