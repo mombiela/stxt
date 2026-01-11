@@ -1,10 +1,11 @@
-Document (dev.stxt.namespace):Casos de uso — Ficheros de configuración
+Document (dev.stxt.namespace):Ficheros de configuración
 
 	Metadata:
 		Author: ChatGPT 5.2
+		Revision: Joan Costa Mombiela
 		Last modif: 2026-01-11
 		
-	Header: Casos de uso — Ficheros de configuración
+	Header: Ficheros de configuración
 	
 	Content >>
 		Los ficheros de configuración suelen empezar siendo simples…
