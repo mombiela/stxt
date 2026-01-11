@@ -227,23 +227,7 @@ Document: STXT @stxt.schema — Especificación del Lenguaje de Esquemas
 		| BINARY           | INLINE / BLOCK  | NO               | `[01]+` Cadena binaria.               |
 		| BASE64           | INLINE / BLOCK  | NO               | Bloque Base64.                        |
 		
-	Subsubheader: 9.5 Lenguajes embebidos INLINE/BLOCK
-	
-	Content >>
-		
-		Un parser **PUEDE** permitir estos tipos y **PUEDE** validar la estructura de alguno de ellos.
-		
-		| Tipo             | Formas de texto | Hijos compatibles | Descripción / Validación                          |
-		|------------------|-----------------|-------------------|---------------------------------------------------|
-		| STXT             | INLINE / BLOCK  | NO                | Texto en formato STXT. Puede ser un nodo o varios |
-		| JSON             | INLINE / BLOCK  | NO                | Formato JSON.                                     |
-		| XML              | INLINE / BLOCK  | NO                | Formato XML.                                      |
-		| YAML             | INLINE / BLOCK  | NO                | Formato YAML.                                     |
-		| HTML             | INLINE / BLOCK  | NO                | Formato HTML.                                     |
-		| MARKDOWN         | INLINE / BLOCK  | NO                | Formato MARKDOWN.                                 |
-		| CODE             | INLINE / BLOCK  | NO                | Código de programación. Texto sin procesar.       |
-		
-	Subsubheader: 9.6 Tipo ENUM
+	Subsubheader: 9.5 Tipo ENUM
 	
 	Content >>
 		El tipo ENUM es especial, ya que permite enumerar los valores permitidos para ese nodo. Características:

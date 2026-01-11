@@ -227,23 +227,7 @@ Document (dev.stxt.namespace):STXT @stxt.schema — Schema Language Specificatio
 		| BINARY           | INLINE / BLOCK   | NO                  | `[01]+` Binary string.                 |
 		| BASE64           | INLINE / BLOCK   | NO                  | Base64 block.                          |
 		
-	Subsubheader: 9.5 Embedded languages INLINE/BLOCK
-	
-	Content >>
-		
-		A parser **MAY** allow these types and **MAY** validate the structure of some of them.
-		
-		| Type             | Text forms       | Compatible children | Description / Validation                           |
-		|------------------|------------------|---------------------|----------------------------------------------------|
-		| STXT             | INLINE / BLOCK   | NO                  | Text in STXT format. Can be one node or several    |
-		| JSON             | INLINE / BLOCK   | NO                  | JSON format.                                       |
-		| XML              | INLINE / BLOCK   | NO                  | XML format.                                        |
-		| YAML             | INLINE / BLOCK   | NO                  | YAML format.                                       |
-		| HTML             | INLINE / BLOCK   | NO                  | HTML format.                                       |
-		| MARKDOWN         | INLINE / BLOCK   | NO                  | MARKDOWN format.                                   |
-		| CODE             | INLINE / BLOCK   | NO                  | Programming code. Raw text.                        |
-		
-	Subsubheader: 9.6 ENUM Type
+	Subsubheader: 9.5 ENUM Type
 	
 	Content >>
 		The ENUM type is special, since it allows enumerating the allowed values for that node. Characteristics:
