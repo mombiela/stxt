@@ -1,5 +1,9 @@
 Document (dev.stxt.namespace):Casos de uso — Ficheros de configuración
 
+	Metadata:
+		Author: ChatGPT 5.2
+		Last modif: 2026-01-11
+		
 	Header: Casos de uso — Ficheros de configuración
 	
 	Content >>
@@ -11,6 +15,7 @@ Document (dev.stxt.namespace):Casos de uso — Ficheros de configuración
 		* comentarios humanos,
 		* y lógica “aprendida de memoria”.
 		
+	Assert >>
 		@STXT@ está especialmente pensado para este punto de fricción:
 		configuración **legible por humanos**, **estructurada**, y **validable** sin
 		convertirse en un lenguaje de programación.
