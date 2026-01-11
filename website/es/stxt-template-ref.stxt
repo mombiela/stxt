@@ -1,21 +1,10 @@
-Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
+Document (dev.stxt.namespace):STXT @stxt.template — Especificación del Lenguaje de Templates
 	Metadata:
 		Author: Joan Costa Mombiela
 		Last modif: 2026-01-07
 		
-	Header: STXT-TEMPLATE-SPEC-DRAFT
+	Header: STXT @stxt.template — Especificación del Lenguaje de Templates
 	
-	Alert >>
-		**Página en construcción.**\\
-		El contenido se muestra sólo como ejemplo del progreso actual,
-		y puede cambiar notablemente con la versión definitiva. 
-		
-	Content>>
-		**STXT (Semantic Text) — Template Language Specification**\\
-		**Category:** Standards Track\\
-		**Status:** Draft\\
-		**Format:** Markdown (RFC-style)
-		
 	Subheader: 1. Introducción
 	
 	Content >>

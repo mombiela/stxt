@@ -1,23 +1,11 @@
-Document (dev.stxt.namespace):STXT-SPEC-DRAFT
+Document (dev.stxt.namespace): STXT (Semantic Text) — Especificación del Lenguaje
 
 	Metadata:
 		Author: Joan Costa Mombiela
 		Last modif: 2026-01-03
 		
-	Header: STXT-SPEC-DRAFT
+	Header: STXT (Semantic Text) — Especificación del Lenguaje
 	
-	Alert >>
-		**Página en construcción.**\\
-		El contenido se muestra sólo como ejemplo del progreso actual,
-		y puede cambiar notablemente con la versión definitiva. 
-		
-	Content>>
-	
-		**STXT (Semantic Text) — Core Language Specification**\\
-		**Category:** Standards Track\\
-		**Status:** Draft\\
-		**Format:** Markdown (RFC-style)
-		
 	Subheader: 1. Introducción
 	
 	Content >>

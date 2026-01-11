@@ -1,22 +1,11 @@
-Document (dev.stxt.namespace):STXT-SCHEMA-SPEC-DRAFT
+Document (dev.stxt.namespace):STXT @stxt.schema — Especificación del Lenguaje de Esquemas
 
 	Metadata:
 		Author: Joan Costa Mombiela
 		Last modif: 2026-01-04
 		
-	Header: STXT-SCHEMA-SPEC-DRAFT
+	Header: STXT @stxt.schema — Especificación del Lenguaje de Esquemas
 	
-	Alert >>
-		**Página en construcción.**\\
-		El contenido se muestra sólo como ejemplo del progreso actual,
-		y puede cambiar notablemente con la versión definitiva. 
-		
-	Content>>
-		**STXT (Semantic Text) — Schema Language Specification**\\
-		**Category:** Standards Track\\
-		**Status:** Draft\\
-		**Format:** Markdown (RFC-style)
-		
 	Subheader: 1. Introducción
 	Content >>		
 		Este documento define la especificación del lenguaje **STXT Schema**, un mecanismo para validar documentos STXT mediante reglas semánticas formales.
