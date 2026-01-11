@@ -21,10 +21,10 @@ Document: STXT: El Libro
 	Link: @STXT@ Documentos
 		Page: stxt-core-ref
 		
-	Link: @STXT@ Schema
+	Link: @STXT@ Esquemas
 		Page: stxt-schema-ref
 		
-	Link: @STXT@ Template
+	Link: @STXT@ Plantillas
 		Page: stxt-template-ref
 			
 #	Subheader: Transformaciones		
