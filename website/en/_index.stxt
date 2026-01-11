@@ -68,3 +68,9 @@ Document(dev.stxt.namespace): STXT: The Book
 		
 	Link: Configuration files
 		Page: use-cases-config-files
+		
+	Link: RFCs and technical proposals
+		Page: use-cases-rfcs
+		
+	Link: Contracts and legal agreements
+		Page: use-cases-contracts
