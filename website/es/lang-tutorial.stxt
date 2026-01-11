@@ -1,13 +1,11 @@
 Document (dev.stxt.namespace): STXT Tutorial
 
+	Metadata:
+		Author: ChatGPT 5.2
+		Last modif: 2026-01-11
+		
 	Header: @STXT@ Tutorial
 	
-	Alert >>
-		**Página en construcción.**\\
-		Este tutorial refleja el estado actual del lenguaje STXT y sus sistemas
-		de validación (Schemas y Templates). El contenido puede ajustarse en versiones
-		posteriores de la especificación.
-		
 	Subheader: 1. ¿Qué es @STXT@?
 	
 	Content >>

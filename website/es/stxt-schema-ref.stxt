@@ -4,7 +4,7 @@ Document (dev.stxt.namespace):STXT @stxt.schema — Especificación del Lenguaje
 		Author: Joan Costa Mombiela
 		Last modif: 2026-01-04
 		
-	Header: STXT @stxt.schema — Especificación del Lenguaje de Esquemas
+	Header: @STXT@ Esquemas (@stxt.schema)
 	
 	Subheader: 1. Introducción
 	Content >>		

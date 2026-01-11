@@ -1,9 +1,9 @@
-Document (dev.stxt.namespace):STXT @stxt.template — Especificación del Lenguaje de Templates
+Document (dev.stxt.namespace):STXT Templates (@stxt.template)
 	Metadata:
 		Author: Joan Costa Mombiela
 		Last modif: 2026-01-07
 		
-	Header: STXT @stxt.template — Especificación del Lenguaje de Templates
+	Header: @STXT@ Templates (@stxt.template)
 	
 	Subheader: 1. Introducción
 	

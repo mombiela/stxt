@@ -1,13 +1,11 @@
 Document (dev.stxt.namespace): STXT Tutorial
 
+	Metadata:
+		Author: ChatGPT 5.2
+		Last modif: 2026-01-11
+		
 	Header: @STXT@ Tutorial
 	
-	Alert >>
-		**Page under construction.**\\
-		This tutorial reflects the current state of the STXT language and its
-		validation systems (Schemas and Templates). The content may be adjusted in later
-		versions of the specification.
-		
 	Subheader: 1. What is @STXT@?
 	
 	Content >>
@@ -28,7 +26,7 @@ Document (dev.stxt.namespace): STXT Tutorial
 		The base syntax is minimal. Advanced semantics are added through:
 		
 		* `@stxt.schema` — formal and exhaustive validation.
-		* `@stxt.template` — simplified, prototype-oriented validation.
+		* `@stxt.template` — simplified and prototype-oriented validation.
 		
 	Subheader: 2. Basic example: a book record
 	
@@ -66,16 +64,16 @@ Document (dev.stxt.namespace): STXT Tutorial
 						Protocols, messaging, and integration patterns are described.
 						
 	Content >>
-		Notes:
+		Observations:
 		
 		* The hierarchy is defined **only by indentation**.
 		* `Summary >>` and `Content >>` are literal text blocks: their content is not interpreted as STXT.
-		* There is no implicit type: everything is text unless it is validated.
+		* There is no implicit typing: everything is text unless validated.
 		
 	Subheader: 3. Using namespaces
 	
 	Content >>
-		To be able to validate a document semantically, it is associated with a **namespace**.
+		To be able to semantically validate a document, it is associated with a **namespace**.
 		
 		The namespace identifies which external rules (schema or template) can be applied.
 		
@@ -220,7 +218,7 @@ Document (dev.stxt.namespace): STXT Tutorial
 				
 	Content confirms >>
 		* The schema is more verbose, but unambiguous.
-		* A template can be compiled automatically into this form.
+		* A template can be automatically compiled into this form.
 		* A validator **SHOULD** prioritize schema over template if both exist.
 		
 	Subheader: 6. Final validatable document
@@ -237,7 +235,7 @@ Document (dev.stxt.namespace): STXT Tutorial
 			ISBN: 978-84-123456-7-8
 			Published: 2025-10-01
 			Summary >>
-				A practical introduction to the architecture of modern systems.
+				A practical introduction to modern systems architecture.
 				
 			Chapters:
 				Chapter:

@@ -24,7 +24,7 @@ Document (dev.stxt.namespace):STXT - Built for humans. Reliable for machines.
 		* Nodes with values (they can also have indented children): `Name: value`
 		* Text blocks: `Name >>` followed by literal lines that are not parsed internally.
 		* The hierarchy is defined by indentation (tabs or 4 spaces per level depending on the document).
-		* Supports namespaces (e.g. `(com.example)`), comments outside blocks (`# ...`), and validation via schemas (`@stxt.schema` or `@stxt.template`).
+		* Supports namespaces (e.g. `(com.example)`), comments outside blocks (`# ...`) and validation via schemas (`@stxt.schema` or `@stxt.template`).
 		
 		An @STXT@ document balances human clarity with an explicit semantic structure — ideal for content, configurations, and interoperable data.
 	

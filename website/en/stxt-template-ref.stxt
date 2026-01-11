@@ -1,21 +1,10 @@
-Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
+Document (dev.stxt.namespace):STXT Templates (@stxt.template)
 	Metadata:
 		Author: Joan Costa Mombiela
 		Last modif: 2026-01-07
 		
-	Header: STXT-TEMPLATE-SPEC-DRAFT
+	Header: @STXT@ Templates (@stxt.template)
 	
-	Alert >>
-		**Page under construction.**\\
-		The content is shown only as an example of current progress,
-		and may change significantly with the final version. 
-		
-	Content>>
-		**STXT (Semantic Text) — Template Language Specification**\\
-		**Category:** Standards Track\\
-		**Status:** Draft\\
-		**Format:** Markdown (RFC-style)
-		
 	Subheader: 1. Introduction
 	
 	Content >>
@@ -25,8 +14,8 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 		
 		* Is an STXT document whose namespace is `@stxt.template`.
 		* Is associated with a **target namespace**, analogous to a schema.
-		* Describes the **expected structure** via a `Structure >>` block with simplified syntax.
-		* Is **information-equivalent** to a schema: a template can be compiled to an `@stxt.schema` document with an equivalent internal representation.
+		* Describes the **expected structure** through a `Structure >>` block with simplified syntax.
+		* Is **information-equivalent** to a schema: a template can be compiled into an `@stxt.schema` document with an equivalent internal representation.
 		
 		Relationship with `@stxt.schema`:
 		
@@ -39,19 +28,19 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 	Content >>
 		The key words **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** are to be interpreted as described in **RFC 2119**.
 		
-		Terms such as *node*, *indentation*, *namespace*, *inline*, and *`>>` block* retain their meaning in *STXT-SPEC*.
+		Terms such as *node*, *indentation*, *namespace*, *inline* and *`>>` block* retain their meaning in *STXT-SPEC*.
 		
 		Additional definitions:
 		
 		* **Target namespace**: the STXT namespace to which the template applies (for example `com.example.docs`).
 		* **Node template**: an entry within the `Structure >>` block that defines a node (and optionally its type/cardinality and its children).
-		* **Type**: a semantic validation tag (for example `TEXT`, `DATE`, `ENUM`) equivalent to STXT Schema types.
-		* **Cardinality**: a rule that defines how many times a child node may appear with respect to its parent.
+		* **Type**: a semantic validation label (for example `TEXT`, `DATE`, `ENUM`) equivalent to STXT Schema types.
+		* **Cardinality**: a rule that defines how many times a child node may appear relative to its parent.
 		
 	Subheader: 3. Relationship between STXT and Template
 	
 	Content >>
-		Validation via templates occurs **after** STXT parsing:
+		Validation using templates occurs **after** STXT parsing:
 		
 		1. Parsing the STXT document into a hierarchical structure.
 		2. Resolving the logical namespace by inheritance.
@@ -90,8 +79,8 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 		For each logical namespace:
 		
 		* There **MUST NOT** be more than one active template simultaneously.
-		* If multiple templates exist for the same namespace, the validator **SHOULD** have a clear criterion for
-		  deciding which one applies, but **MUST NOT** apply several at once.
+		* If multiple templates exist for the same namespace, the validator **SHOULD** have a clear criterion to
+		  decide which one applies, but **MUST NOT** apply several at once.
 		
 	Subheader: 6. `Structure >>` block
 	
@@ -150,7 +139,7 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 		
 		1. Read the `Structure >>` block as a sequence of lines (already canonicalized by STXT core: right-trim per line).
 		2. Ignore empty lines.
-		3. Compute hierarchy by indentation (same principles as STXT: consecutive indentation, no level jumps).
+		3. Compute hierarchy by indentation (same principles as STXT: consecutive indentation, no jumps).
 		4. For each line, parse:
 		   * Node name + optional namespace `(ns)` if present.
 		   * The mandatory `:` character.
@@ -163,7 +152,7 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 	Content >>
 		Cardinality applies **per instance of the parent node**, counting only direct children that match by:
 		
-		* Canonical node name (per STXT-SPEC).
+		* Canonical node name (according to STXT-SPEC).
 		* Effective namespace of the node.
 		
 		Cardinality is expressed as an optional token in parentheses: `( ... )`.
@@ -173,20 +162,20 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 	Content >>
 		Allowed forms:
 		
-		| Form       | Meaning                    |
-		|------------|----------------------------|
-		| `num`      | Exactly `num`.             |
-		| `*`        | Any number (`0..∞`).       |
-		| `+`        | One or more (`1..∞`).      |
-		| `?`        | Zero or one (`0..1`).      |
-		| `num+`     | `num` or more (`num..∞`).  |
-		| `num-`     | Up to `num` (`0..num`).    |
-		| `min,max`  | Between `min` and `max`.   |
+		| Form       | Meaning                      |
+		|------------|------------------------------|
+		| `num`      | Exactly `num`.               |
+		| `*`        | Any number (`0..∞`).         |
+		| `+`        | One or more (`1..∞`).        |
+		| `?`        | Zero or one (`0..1`).        |
+		| `num+`     | `num` or more (`num..∞`).    |
+		| `num-`     | Up to `num` (`0..num`).      |
+		| `min,max`  | Between `min` and `max`.     |
 		
 		Rules:
 		
 		* `num`, `min`, and `max` **MUST** be non-negative integers.
-		* In `min,max`, it **MUST** hold that `min <= max`.
+		* In `min,max`, `min <= max` **MUST** hold.
 		* `+` is equivalent to `1+`.
 		* `?` is equivalent to `0,1`.
 		
@@ -227,7 +216,7 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 		* **BLOCK-only** types (for example `BLOCK`, `TEXT`, `CODE`, `BASE64`, `JSON`, `XML`, `YAML`, `HTML`, `MARKDOWN`, etc.) are **NOT** compatible with children.
 		  If a node template has children in `Structure >>` and its effective type is BLOCK-only, the template **MUST** be considered invalid.
 		
-		* **GROUP** types (or equivalent structural types without a value) **DO** allow children.
+		* **GROUP** types (or equivalent structural types without value) **DO** allow children.
 		
 		* INLINE types (for example `INLINE`, `NUMBER`, `DATE`, `BOOLEAN`, `ENUM`, etc.) **MAY** allow children (same philosophy as Schema).
 		  Value validation applies to the node, and structure validation applies to its children.
@@ -300,7 +289,7 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 	Subheader: 12. Compilation to Schema (semantic equivalence)
 	
 	Content >>
-		A template can be compiled to an equivalent schema:
+		A template can be compiled into an equivalent schema:
 		
 		* Each `Structure` line generates a `Node` definition for the node template (in the corresponding namespace).
 		* The indentation hierarchy in `Structure` generates `Children/Child` in the schema.
@@ -324,7 +313,7 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 	Content >>
 		A template is invalid if any of these conditions occur:
 		
-		1. The document does not have the root `Template (@stxt.template): <target_namespace>`.
+		1. The document does not have root `Template (@stxt.template): <target_namespace>`.
 		2. `Structure >>` is missing or `Structure` is not a `>>` block.
 		3. A non-empty line within `Structure` does not contain `:`.
 		4. Malformed cardinality or invalid numbers.
@@ -339,9 +328,9 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 		A template implementation is conforming if it:
 		
 		* Implements the `Template` and `Structure` grammar of this document.
-		* Applies cardinality, type, and ENUM rules.
-		* Applies child-compatibility rules by type.
-		* Rejects invalid templates per section 13.
+		* Applies the cardinality, type, and ENUM rules.
+		* Applies the child-compatibility rules by type.
+		* Rejects invalid templates according to section 13.
 		* Defines a stable template selection criterion (if multiple sources exist), without applying more than one simultaneously per target namespace.
 		
 	Subheader: 15. Meta-template of the `@stxt.template` system itself
@@ -435,7 +424,7 @@ Document (dev.stxt.namespace):STXT-TEMPLATE-SPEC-DRAFT
 		Type             = IdentUpper
 		EnumValues       = "[" Value { "," Value } "]"
 		
-		NodeName         = Text (up to "(" or ":"), with trim and compaction of spaces
+		NodeName         = Text (up to "(" or ":"), with trim and space compaction
 		NamespaceTarget  = Namespace per STXT-SPEC
 		Namespace        = Ident { "." Ident }
 		Ident            = [a-z0-9]+

@@ -1,23 +1,11 @@
-Document (dev.stxt.namespace):STXT-SPEC-DRAFT
+Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 
 	Metadata:
 		Author: Joan Costa Mombiela
 		Last modif: 2026-01-03
 		
-	Header: STXT-SPEC-DRAFT
+	Header: @STXT@ Documents
 	
-	Alert >>
-		**Page under construction.**\\
-		The content is shown only as an example of current progress,
-		and may change significantly with the final version. 
-		
-	Content>>
-	
-		**STXT (Semantic Text) — Core Language Specification**\\
-		**Category:** Standards Track\\
-		**Status:** Draft\\
-		**Format:** Markdown (RFC-style)
-		
 	Subheader: 1. Introduction
 	
 	Content >>
@@ -25,7 +13,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		@STXT@ is a **Human-First** language, designed so that its natural form is readable,
 		clear, and comfortable for people, while at the same time maintaining a precise structure
-		and easily machine-processable.
+		and easily processable by machines.
 		
 		@STXT@ is a hierarchical and semantic textual format aimed at:
 		
@@ -41,7 +29,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subheader: 2. Terminology
 
 	Content >>
-		The key words **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** are to be interpreted as described in **RFC 2119**.
+		The key words **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** must be interpreted according to **RFC 2119**.
 		
 	Subheader: 3. Document Encoding
 
@@ -50,7 +38,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		A parser:
 		
-		* **MAY** accept documents that begin with a BOM.
+		* **MAY** accept documents that begin with BOM.
 		* **SHOULD** emit a warning if it appears.
 		
 	Subheader: 4. Syntactic Unit: Node
@@ -63,7 +51,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		1. **Inline container node (node INLINE text)**: `Name: Inline value`
 		2. **Text block node (node BLOCK text)**: `Name >>`
 		
-		The name **cannot be empty**. A line with only `:` or `>>` is not valid. 
+		The name **CANNOT be empty**. A line with only `:` or `>>` is not valid.
 		
 		**Example with INLINE nodes:**
 	
@@ -96,7 +84,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>
 		The node name is taken from the text between:
 		
-		- The first character not belonging to indentation, and
+		- The first character not belonging to the indentation, and
 		- The first character that belongs to any of:
 		  - The start of a namespace `(`,
 		  - The `:` character,
@@ -105,11 +93,11 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		On that fragment, apply:
 		
 		- Removal of leading and trailing spaces and tabs (trim).
-		- Compaction of spaces into a single space
+		- Compaction of spaces into a single one
 		
 		The result of this normalization is the **node name**.
 		
-		A node whose logical name is the empty string (`""`) is invalid and **MUST** cause a parse error.
+		A node whose logical name is the empty string (`""`) is invalid and **MUST** cause a parsing error.
 		
 		Equivalent examples at the `Node name` level:
 
@@ -139,13 +127,13 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		* Unicode decomposition (NFKD)
 		* Conversion to lowercase
-		* Diacritics removal
+		* Removal of diacritics
 		* Space compaction (not necessary on an already normalized name)
-		* Replace [^a-z0-9] with `-`. Two or more consecutive hyphens are not allowed; they must be compacted into a single one (`-`) 
-		* Remove hyphens (`-`) at the beginning and end if present
+		* Replace [^a-z0-9] with `-`. 2 or more consecutive hyphens are not allowed; they must be compacted into a single one (`-`)
+		* Remove hyphens (`-`) at the beginning and at the end if present
 		
 		The canonical name will be used to know whether a node has the same name as another.
-		It will also be used internally by all lookup or check operations,
+		It will also be used internally by all search or check operations,
 		to know whether it is the same element.
 		
 		Transformation examples:
@@ -157,12 +145,12 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 
 	Subsubheader: 4.4 Style rules
 	Content >>
-		The recommended style rules are as follows:
+		The recommended style rules are the following:
 		
 		* Separate the name from the definition of a namespace with a single space
 		* Separate `:` from the value with a single space
 		* `:` goes immediately after the name or the namespace if present
-		* `>>` has no characters after it
+		* `>>` has no character after it
 		* Separate the node name or the namespace with a space before `>>`
 		* Do not use more than one space in names
 		* Namespace without spaces in the definition `(namespace.def)`
@@ -178,7 +166,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subheader: 5. Nodes with `:` (container nodes, allow inline value)
 		
 	Content >>
-		The `:` form defines a node that:
+		The form with `:` defines a node that:
 		
 		* May have a value (optional).
 		* May have no value (empty node).
@@ -198,7 +186,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    SubNode 1: 123
 		    Another subnode: 456
 
-	Subsubheader: 5.1 Value normalization
+	SubSubheader: 5.1 Value normalization
 	
 	Content>>
 		The (INLINE) value of a node must be normalized with a trim (right and left).
@@ -212,12 +200,12 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	
 	Content>>	
 		Strong normalization applies only to structural identifiers.
-		Values are literals, although a **simple normalization is applied: right and left trim**.
+		Values are literals, although a **simple normalization is applied: left and right trim**.
 
 	Subheader: 6. Nodes with `>>` (text block)
 		
 	Content >>
-		The `>>` form defines a **literal text** block.
+		The form with `>>` defines a **literal text** block.
 		
 		Valid examples:
 
@@ -233,7 +221,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subsubheader: 6.1 Formal rules
 		
 	Content >>
-		* The `>>` node line **MUST NOT** contain significant content after `>>`, except optional spaces.
+		* The `>>` node line **MUST NOT** contain meaningful content after `>>`, except optional spaces.
 		* All lines with indentation **strictly greater** than that of the `>>` node belong to the **textual content of the block**.
 		* Inside the block:
 		  * The parser **MUST NOT** interpret any line as a structured node, even if it contains `:` or other STXT syntax.
@@ -291,10 +279,10 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		An STXT document:
 		
 		* **MAY** use spaces or tabs for indentation.
-		* It is **not recommended** to mix spaces and tabs on the same line. A parser **MAY** issue a warning in that case.
-		  If they are mixed, spaces fewer than 4 are discarded if a tab appears. Following the
+		* **It is not recommended** to mix spaces or tabs on the same line. A parser **MAY** give a warning in that case.
+		  If they are mixed, spaces that do not reach 4 are discarded if a tab appears. Following the
 		  ** Human First** principle, this rule is to ensure that a document that *looks* correct really is. That is, that it is not
-		  necessary to review lines character by character to know whether something is correct or not; it should be visible at a glance.
+		  necessary to review lines character by character to know whether something is correct or not; it must be visible at a glance.
 		* If it uses spaces:
 		  * It **MUST** use multiples of **4 spaces** to go up a level.
 		* If it uses tabs:
@@ -305,7 +293,8 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		  * 2 Spaces + 1 TAB
 		  * 3 Spaces + 1 TAB
 		  * 4 Spaces + 0 TAB
-		* Once you have gone up a level, the previous rules are applied again. That is, the count is reset at each level increase.
+		* Once a level has been increased, the previous rules are applied again. That is, the count is reset at each level increase
+		  of level.
 		  
 	Subsubheader: 8.2 Special indentation examples
 	
@@ -340,9 +329,9 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>
 		Example with a mix of spaces and tabs.
 		
-		Allowed, though not recommended by style.
-		A parser **MAY** issue a mixing warning on the same line.
-		This example has the same indentation as the two above.
+		Allowed, although not recommended by style.
+		A parser **MAY** give a mixing warning on the same line.
+		This example has the same indentation as the two previous ones.
 		
 	Code >>
 		Node level 0: Value level 0
@@ -357,7 +346,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subsubheader: 8.3 Level errors
 	
 	Content >>
-		A parser **MUST** raise a parse error in the following cases:
+		A parser **MUST** raise a parsing error in the following cases:
 		
 		* Non-consecutive levels:
 		
@@ -406,7 +395,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		Inside a `>>` block:
 		
 		* Any line with indentation equal to or greater than the minimum indentation of the block
-		  **MUST** be treated as literal text, even if it starts with `#`.
+		  content **MUST** be treated as literal text, even if it starts with `#`.
 		* A line less indented than the block ends the block and may be:
 		
 		  * A comment, if it starts with `#`.
@@ -425,12 +414,12 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    ***# This is a comment***
 		    	Here the text of the node continues
 
-	Subsubheader: 9.2 Comment style
+	Subsubheader: 9.2 Style for comments
 	Content >>
 		* It is recommended that the comment be at the same level as the next node.
 		  That is, comments for the next node.
 		* Comments inside a text block are not recommended, since visually
-		  they are strange. 
+		  they are strange.
 
 	Subheader: 10. Whitespace normalization
 		
@@ -450,7 +439,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		   * Removal of leading spaces and tabs (left trim).
 		   * Removal of trailing spaces and tabs (right trim).
 		
-		This implies that the following lines are equivalent at parse level:
+		This implies that the following lines are equivalent at the parsing level:
 		
 	Code >>
 		Name: Joan
@@ -461,7 +450,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Content >>		
 		In all cases, the logical value of the `Name` node is `"Joan"`.
 		
-		If after `trim` the value is empty, the inline value is considered the empty string (`""`).
+		If after the `trim` the value is empty, the inline value is considered the empty string (`""`).
 		
 	Subsubheader: 10.2 Lines inside `>>` blocks
 		
@@ -489,7 +478,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subsubheader: 10.3 Empty lines in `>>` blocks
 		
 	Content >>
-		* **Intermediate** empty lines within the block (intermediate or final) **MUST** be preserved as empty lines (`""`) in the logical representation of the text.
+		* Intermediate empty lines within the block (intermediate or final) **MUST** be preserved as empty lines (`""`) in the logical representation of the text.
 		* Only right trim is applied on each individual line (remove spaces/tab at end of line, as is already done).
 		* No empty line is removed, neither intermediate nor final.
 		
@@ -516,7 +505,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		1. Spaces that are not multiples of 4 (when spaces are used for indentation).
 		2. Jumps in indentation levels.
-		3. A `>>` node contains significant inline content on the same line as `>>`.
+		3. A `>>` node contains meaningful inline content on the same line as `>>`.
 		4. A node contains neither `:` nor `>>`.
 		
 		A conforming parser **MUST** reject the document.
@@ -592,11 +581,11 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		A conforming STXT parser is inherently resistant to common classes of vulnerabilities:
 		
 		* **Immune to entity expansion attacks** (such as "billion laughs" or XXE):
-		  the format defines no entities, external references, or inclusion of remote resources.
+		  the format does not define entities, external references, or inclusion of remote resources.
 		* **Immune to arbitrary code execution**: there are no dynamic features, custom tags,
 		  loaders, or object deserialization. The only resulting structure is a simple tree of nodes and textual values.
 		* **Immune to injection inside literal blocks**: all content inside a `>>` node is treated
-		  as literal text without any interpretation, even if it contains `:`, `>>`, `#`, or other STXT syntax.
+		  as literal text without any interpretation, even if it contains `:`, `>>`, `#` or other STXT syntax.
 		* **Low risk of denial of service**: strict consecutive indentation rules
 		  and the absence of circular references or anchors limit structural complexity.
 		  Implementations **SHOULD** impose a reasonable nesting depth limit (recommended: ≤ 100 levels)
@@ -648,7 +637,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		  1. Read line and compute its effective indentation (according to section 8 rules).
 		  2. If there is an active `>>` block:
 		     - If indentation ≥ minimum indentation of the block → add line as literal text (right trim).
-		     - If indentation ≤ indentation of the `>>` node and line is not empty and line is not a comment → close block and process as a new node.
+		     - If indentation ≤ indentation of the `>>` node and line is non-empty and line is not a comment → close block and process as a new node.
 		  3. If there is no active block:
 		     - Empty line → ignore (does not affect hierarchy).
 		     - Starts with `#` → comment.
@@ -661,7 +650,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		* **Additional normalization:**
 		  - Node names: according to sections 4.1–4.3.
-		  - Namespaces: internally lowercased (section 7).
+		  - Namespaces: internally converted to lowercase (section 7).
 		  - Inline values: left and right trim (section 10.1).
 		  - Block lines: preserve relative indentation + right trim + preserve all empty lines (sections 10.2–10.3).
 				Comment       = Indent "#" Text       ; Only outside '>>' blocks
@@ -675,14 +664,14 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		A schema is an STXT document whose namespace is: `@stxt.schema`
 		
-		and whose goal is to define the structural rules, value types, and cardinalities of nodes belonging to a specific namespace.
+		and whose goal is to define the structural rules, value types, and node cardinalities belonging to a specific namespace.
 		
 		The STXT core **does not interpret** these rules; it only defines how they are expressed and how they are combined via namespaces.
 		
 	Subsubheader: 17.1. Associating a schema to a namespace
 		
 	Content >>
-		To associate a schema to the namespace `com.example.docs`, write a document:
+		To associate a schema to the `com.example.docs` namespace, write a document:
 		
 	Code>>
 		Schema (@stxt.schema): com.example.docs
@@ -744,7 +733,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		
 		A template is an STXT document whose namespace is: `@stxt.template`
 		
-		and whose goal is to define the structural rules, value types, and cardinalities of nodes belonging to a specific namespace.
+		and whose goal is to define the structural rules, value types, and node cardinalities belonging to a specific namespace.
 		
 		The Template system is analogous to schemas, but with a simplified syntax, oriented to rapid prototypes.
 		Even so, it is a perfectly valid system for all kinds of documents. It could be considered *syntactic sugar*, since internally it can use
@@ -755,7 +744,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 	Subsubheader: 18.1. Associating a schema to a template
 		
 	Content >>
-		To associate a schema to the namespace `com.example.docs` with templates, write a document:
+		To associate a schema to the `com.example.docs` namespace with templates, write a document:
 		
 	Code>>
 		Template (@stxt.template): com.example.docs

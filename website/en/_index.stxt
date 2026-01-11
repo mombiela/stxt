@@ -19,13 +19,13 @@ Document(dev.stxt.namespace): STXT: The Book
 	Subheader: Language Reference
 	
 	Link: @STXT@ Documents
-		Page: lang-reference
+		Page: stxt-core-ref
 		
 	Link: @STXT@ Schema
-		Page: lang-schema-ref
+		Page: stxt-schema-ref
 		
 	Link: @STXT@ Template
-		Page: lang-template
+		Page: stxt-template-ref
 			
 #	Subheader: Transformations		
 	
