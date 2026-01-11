@@ -198,7 +198,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		    SubNodo 1: 123
 		    Otro subnodo: 456
 
-	Subheader: 5.1 Normalización del valor
+	SubSubheader: 5.1 Normalización del valor
 	
 	Content>>
 		El valor (INLINE) de un nodo debe normalizarse con un trim (derecha e izquierda).
@@ -727,7 +727,7 @@ Document (dev.stxt.namespace):STXT-SPEC-DRAFT
 		* Validando tipos de valor (`TEXT`, `DATE`, `NUMBER`, etc.).
 		* Validando cardinalidades definidas en `Child`.
 		
-	Subheader: 17.3. Independencia del núcleo
+	Subsubheader: 17.3. Independencia del núcleo
 		
 	Content >>
 		STXT **NO DEBE** imponer reglas semánticas provenientes de schemas.
