@@ -17,7 +17,7 @@ Document: STXT - Built for humans. Reliable for machines.
 		* Allowing both structured content and free text.
 		* Applying content rules via `@stxt.schema` or `@stxt.template`.
 	
-		An @STXT@ document balances human clarity with an explicit semantic structure, ideal for **content, wikis, and configurations**:
+		An @STXT@ document balances human clarity with an explicit semantic structure, ideal for **documents, wikis, and configurations**:
 	
 	Code >>
 		***Email***:
@@ -52,10 +52,10 @@ Document: STXT - Built for humans. Reliable for machines.
 		***Template (@stxt.template): com.example.docs***
 			Structure >>
 				Email:
-					From:
-					To:
-					Cc:
-					Bcc:
+					From: EMAIL
+					To: EMAIL
+					Cc: EMAIL
+					Bcc: EMAIL
 					Title: (?)
 					Body Content: (1) TEXT
 					Metadata (com.google): (?)
