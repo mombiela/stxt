@@ -163,10 +163,10 @@ Document: STXT (Semantic Text) — Documentos
 		Nombre con namespace (el.namespace):
 		Nodo de texto >>
 		
-	Subheader: 5. Nodos con `:` (nodos contenedor, permiten valor inline)
+	Subheader: 5. Nodos contenedor, tipo INLINE
 		
 	Content >>
-		La forma con `:` define un nodo que:
+		La forma con `:` define un nodo contenedor INLINE con las siguientes caracteríticas:
 		
 		* Puede tener valor (opcional).
 		* Puede no tener valor (nodo vacío).
@@ -202,7 +202,7 @@ Document: STXT (Semantic Text) — Documentos
 		La normalización fuerte se aplica sólo a identificadores estructurales.
 		Los valores son literales, aunque se aplica una **normalización sencilla: trim derecha e izquierda**.
 
-	Subheader: 6. Nodos con `>>` (bloque texto)
+	Subheader: 6. Nodos bloque texto, tipo BLOCK
 		
 	Content >>
 		La forma con `>>` define un bloque de **texto literal**.
