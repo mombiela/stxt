@@ -38,8 +38,8 @@ Document: STXT (Semantic Text) — Documentos
 		
 		Un parser:
 		
-		* **PUEDE** aceptar documentos que comiencen con BOM.
-		* **DEBERÍA** emitir una advertencia si aparece.
+		* **DEBERÍA** aceptar documentos que comiencen con BOM.
+		* **PUEDE** emitir una advertencia en documentos que comiencen con BOM.
 		
 	Subheader: 4. Unidad Sintáctica: Nodo
 		
@@ -48,17 +48,17 @@ Document: STXT (Semantic Text) — Documentos
 		
 		Existen dos formas de nodo:
 		
-		1. **Nodo contenedor inline (node INLINE text)**: `Nombre: Valor inline`
-		2. **Nodo bloque de texto (node BLOCK text)**: `Nombre >>`
+		1. **Nodo contenedor inline (nodo INLINE text)**: `Nombre nodo: Valor inline`
+		2. **Nodo bloque de texto (nodo BLOCK text)**: `Nombre nodo >>`
 		
-		El nombre **NO puede estar vacío**. Una línea con sólo `:` o `>>` no es válida. 
+		El nombre del nodo **NO puede estar vacío**. Una línea con sólo `:` o `>>` no es válida. 
 		
 		**Ejemplo con nodos INLINE:**
 	
 	Code >>
-		Nodo 1: Valor inline
-			Nodo 2 sin valor:
-			Nodo 3 con otro valor: este es el valor
+		***Nodo 1***: Valor inline
+			***Nodo 2 sin valor***:
+			***Nodo 3 con otro valor***: este es el otro valor
 		
 	Content >>	
 		**Ejemplo con nodo BLOCK:**
@@ -200,7 +200,7 @@ Document: STXT (Semantic Text) — Documentos
 	
 	Content>>	
 		La normalización fuerte se aplica sólo a identificadores estructurales.
-		Los valores son literales, aunque se aplica una **normalización senzilla: trim derecha e izquierda**.
+		Los valores son literales, aunque se aplica una **normalización sencilla: trim derecha e izquierda**.
 
 	Subheader: 6. Nodos con `>>` (bloque texto)
 		
@@ -226,8 +226,8 @@ Document: STXT (Semantic Text) — Documentos
 		* Dentro del bloque:
 		  * El parser **NO DEBE** interpretar ninguna línea como nodo estructurado, aunque contenga `:` u otra sintaxis de STXT.
 		  * El parser **NO DEBE** interpretar líneas que comienzan por `#` como comentarios; todas las líneas son texto literal.
-		* El bloque termina cuando aparece una **línea no vacía** cuya indentación es **menor o igual** que la indentación del nodo `>>`.
-		* Las líneas vacías **dentro del bloque** se conservan tal cual y **NO DEBE** cerrar el bloque, independientemente de su indentación.
+		* El bloque termina cuando aparece una **línea no vacía que no sea comentario** cuya indentación es **menor o igual** que la indentación del nodo `>>`.
+		* Las líneas vacías **dentro del bloque** se conservan y **NO DEBEN** cerrar el bloque, independientemente de su indentación.
 		
 	Subsubheader: 6.2 Ejemplo
 		
@@ -262,8 +262,10 @@ Document: STXT (Semantic Text) — Documentos
 		* Un namespace **PUEDE** empezar por `@`.
 		* **DEBE** usar formato jerárquico (`a.b.c`), con al menos 2 elementos (`a.b`).
 		* Se hereda por los nodos hijos.
-		* El namespace por defecto es **``**.
-		* Un nodo hijo puede redefinir su namespace indicando (otro.namespace), en cuyo caso usa ese namespace en lugar del heredado.
+		* Si no se especifica namespace, por defecto es el namespace vacío `""`.
+		* El namespace vacío NO puede especificarse como `Nombre nodo ()`. 
+		* El namespace vacío de un nodo siempre se sobreescribe con el namespace del padre
+		* Un nodo hijo puede redefinir su namespace indicando `(otro.namespace)`, en cuyo caso usa ese namespace en lugar del heredado.
 		* Sólo se permiten caracteres dentro del rango [a-z0-9], precedido por `@` de forma opcional, para indicar que es un namespace especial.
 		* Un parser **DEBE** pasar a minúsculas un namespace. Así debe convertir de `Nombre (COM.DEMO.DOCS)` a `Nombre (com.demo.docs)` internamente
 		* Por reglas de estilo un namespace debería escribirse en minúsculas 
@@ -337,7 +339,7 @@ Document: STXT (Semantic Text) — Documentos
 		Nodo nivel 0: Valor nivel 0
 		.|->Nodo nivel 1: ***Espacio + 1 TAB: nivel 1***
 		..|>Otro nodo nivel 1: ***2 Espacios + 1 TAB: nivel 1***
-		...|..|>Nivel 2: ***3 Espacios + 1 TAB, 2 Espacios + 1 TAB: nivel 2***
+		...>..|>Nivel 2: ***3 Espacios + 1 TAB, 2 Espacios + 1 TAB: nivel 2***
 		|-->....Nivel 2: ***1 TAB, 4 Espacios: nivel 2***
 		..|>Nivel 1: ***2 Espacios + 1 TAB: nivel 1***
 		.|->Nivel 1: ***1 Espacio + 1 TAB: nivel 1***
@@ -396,10 +398,7 @@ Document: STXT (Semantic Text) — Documentos
 		
 		* Toda línea con indentación igual o superior a la indentación mínima del contenido del 
 		  bloque **DEBE** tratarse como texto literal, incluso si empieza por `#`.
-		* Una línea menos indentada que el bloque termina el bloque y puede ser:
-		
-		  * Un comentario, si empieza por `#`.
-		  * Un nodo estructurado.
+		* Una línea menos indentada que el bloque que no sea comentario termina el bloque
 		
 		Ejemplo:
 	Code >>
@@ -412,6 +411,7 @@ Document: STXT (Semantic Text) — Documentos
 		        Línea normal
 		            # También es texto normal
 		    ***# Esto sí es comentario***
+		***# Esto también es un comentario***
 		    	Aquí continúa el texto del nodo
 
 	Subsubheader: 9.2 Estilo para comentarios
@@ -541,9 +541,9 @@ Document: STXT (Semantic Text) — Documentos
 	Subsubheader: 14.1 Documento válido
 		
 	Code >>
-		Documento (@com.example.docs):
+		Documento (com.example.docs):
 		    Autor: Joan
-		    Fecha: 03/12/2025
+		    Fecha: 2025/12/03
 		    Resumen >>
 		        Este es un bloque de texto.
 		        Con varias líneas.
@@ -575,10 +575,10 @@ Document: STXT (Semantic Text) — Documentos
 	Subheader: 15. Consideraciones de Seguridad
 	
 	Content >>
-		STXT ha sido diseñado con la seguridad del parseo como prioridad fundamental, 
+		@STXT@ ha sido diseñado con la seguridad del parseo como prioridad fundamental, 
 		minimizando la superficie de ataque en comparación con otros formatos textuales estructurados.
 		
-		Un parser conforme de STXT es inherentemente resistente a clases comunes de vulnerabilidades:
+		Un parser conforme de @STXT@ es inherentemente resistente a clases comunes de vulnerabilidades:
 		
 		* **Inmune a ataques de expansión de entidades** (como "billion laughs" o XXE): 
 		  el formato no define entidades, referencias externas ni inclusión de recursos remotos.
@@ -702,7 +702,7 @@ Document: STXT (Semantic Text) — Documentos
 		Un documento que declare el mismo namespace:
 		
 	Code >>
-		Documento (@com.example.docs):
+		Documento (com.example.docs):
 		    Campo1: valor
 		    Texto: uno
 		    Texto: dos

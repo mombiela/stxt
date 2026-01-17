@@ -1,4 +1,4 @@
-Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
+Document: STXT (Semantic Text) — Documents
 
 	Metadata:
 		Author: Joan Costa Mombiela
@@ -29,7 +29,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Subheader: 2. Terminology
 
 	Content >>
-		The key words **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** must be interpreted according to **RFC 2119**.
+		The key words **"MUST"**, **"MUST NOT"**, **"SHOULD"**, **"SHOULD NOT"**, and **"MAY"** are to be interpreted as described in **RFC 2119**.
 		
 	Subheader: 3. Document Encoding
 
@@ -38,8 +38,8 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		
 		A parser:
 		
-		* **MAY** accept documents that begin with BOM.
-		* **SHOULD** emit a warning if it appears.
+		* **SHOULD** accept documents that begin with a BOM.
+		* **MAY** emit a warning for documents that begin with a BOM.
 		
 	Subheader: 4. Syntactic Unit: Node
 		
@@ -48,20 +48,20 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		
 		There are two forms of node:
 		
-		1. **Inline container node (node INLINE text)**: `Name: Inline value`
-		2. **Text block node (node BLOCK text)**: `Name >>`
+		1. **Inline container node (INLINE text node)**: `Node name: Inline value`
+		2. **Text block node (BLOCK text node)**: `Node name >>`
 		
-		The name **CANNOT be empty**. A line with only `:` or `>>` is not valid.
+		The node name **cannot be empty**. A line with only `:` or `>>` is not valid.
 		
 		**Example with INLINE nodes:**
 	
 	Code >>
-		Node 1: Inline value
-			Node 2 without value:
-			Node 3 with another value: this is the value
+		***Node 1***: Inline value
+			***Node 2 without value***:
+			***Node 3 with another value***: this is the other value
 		
 	Content >>	
-		**Example with BLOCK node:**
+		**Example with a BLOCK node:**
 	
 	Code >>
 		***Block node >>***
@@ -87,8 +87,8 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		- The first character not belonging to the indentation, and
 		- The first character that belongs to any of:
 		  - The start of a namespace `(`,
-		  - The `:` character,
-		  - The `>>` operator,
+		  - The character `:`,
+		  - The operator `>>`,
 		
 		On that fragment, apply:
 		
@@ -97,7 +97,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		
 		The result of this normalization is the **node name**.
 		
-		A node whose logical name is the empty string (`""`) is invalid and **MUST** cause a parsing error.
+		A node whose logical name is the empty string (`""`) is invalid and **MUST** cause a parse error.
 		
 		Equivalent examples at the `Node name` level:
 
@@ -129,8 +129,8 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		* Conversion to lowercase
 		* Removal of diacritics
 		* Space compaction (not necessary on an already normalized name)
-		* Replace [^a-z0-9] with `-`. 2 or more consecutive hyphens are not allowed; they must be compacted into a single one (`-`)
-		* Remove hyphens (`-`) at the beginning and at the end if present
+		* Replace [^a-z0-9] with `-`. Two or more consecutive hyphens are not allowed; they must be compacted into a single one (`-`)
+		* Remove hyphens (`-`) at the beginning and end if present
 		
 		The canonical name will be used to know whether a node has the same name as another.
 		It will also be used internally by all search or check operations,
@@ -141,11 +141,11 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Code >>
 		A namé with äccent: a-name-with-accent
 		AN NAME with äccent: a-name-with-accent
-		SIZe number 2__ and 3: size-number-2-and-3
+		SIZe number 2__ and 3: size-number-2-y-3
 
 	Subsubheader: 4.4 Style rules
 	Content >>
-		The recommended style rules are the following:
+		The recommended style rules are as follows:
 		
 		* Separate the name from the definition of a namespace with a single space
 		* Separate `:` from the value with a single space
@@ -216,18 +216,18 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 
 	Code >>	
 		Section>>
-		    Accepts the operator without space
+		    Accepts the operator without a space
 		
 	Subsubheader: 6.1 Formal rules
 		
 	Content >>
 		* The `>>` node line **MUST NOT** contain meaningful content after `>>`, except optional spaces.
 		* All lines with indentation **strictly greater** than that of the `>>` node belong to the **textual content of the block**.
-		* Inside the block:
+		* Within the block:
 		  * The parser **MUST NOT** interpret any line as a structured node, even if it contains `:` or other STXT syntax.
 		  * The parser **MUST NOT** interpret lines that begin with `#` as comments; all lines are literal text.
-		* The block ends when a **non-empty line** appears whose indentation is **less than or equal** to the indentation of the `>>` node.
-		* Empty lines **inside the block** are preserved as-is and **MUST NOT** close the block, regardless of their indentation.
+		* The block ends when a **non-empty line that is not a comment** appears whose indentation is **less than or equal** to the indentation of the `>>` node.
+		* Empty lines **within the block** are preserved and **MUST NOT** close the block, regardless of their indentation.
 		
 	Subsubheader: 6.2 Example
 		
@@ -262,10 +262,12 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		* A namespace **MAY** start with `@`.
 		* It **MUST** use hierarchical format (`a.b.c`), with at least 2 elements (`a.b`).
 		* It is inherited by child nodes.
-		* The default namespace is **``**.
-		* A child node may redefine its namespace by indicating (another.namespace), in which case it uses that namespace instead of the inherited one.
+		* If no namespace is specified, by default it is the empty namespace `""`.
+		* The empty namespace cannot be specified as `Node name ()`.
+		* A node’s empty namespace is always overwritten with the parent’s namespace
+		* A child node may redefine its namespace by indicating `(another.namespace)`, in which case it uses that namespace instead of the inherited one.
 		* Only characters within the range [a-z0-9] are allowed, optionally preceded by `@`, to indicate that it is a special namespace.
-		* A parser **MUST** lowercase a namespace. Thus it must convert `Name (COM.DEMO.DOCS)` to `Name (com.demo.docs)` internally
+		* A parser **MUST** lowercase a namespace. Thus it must convert from `Name (COM.DEMO.DOCS)` to `Name (com.demo.docs)` internally
 		* By style rules a namespace should be written in lowercase 
 		
 	Subheader: 8. Indentation and Hierarchy
@@ -279,10 +281,10 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		An STXT document:
 		
 		* **MAY** use spaces or tabs for indentation.
-		* **It is not recommended** to mix spaces or tabs on the same line. A parser **MAY** give a warning in that case.
-		  If they are mixed, spaces that do not reach 4 are discarded if a tab appears. Following the
+		* **It is not recommended** to mix spaces and tabs on the same line. A parser **MAY** warn in that case.
+		  If they are mixed, spaces fewer than 4 are discarded if a tab appears. Following the
 		  ** Human First** principle, this rule is to ensure that a document that *looks* correct really is. That is, that it is not
-		  necessary to review lines character by character to know whether something is correct or not; it must be visible at a glance.
+		  necessary to review lines character by character to know whether something is correct or not; it should be visible at a glance.
 		* If it uses spaces:
 		  * It **MUST** use multiples of **4 spaces** to go up a level.
 		* If it uses tabs:
@@ -293,8 +295,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		  * 2 Spaces + 1 TAB
 		  * 3 Spaces + 1 TAB
 		  * 4 Spaces + 0 TAB
-		* Once a level has been increased, the previous rules are applied again. That is, the count is reset at each level increase
-		  of level.
+		* Once a level has been increased, the previous rules apply again. That is, the count is reset at each level increase.
 		  
 	Subsubheader: 8.2 Special indentation examples
 	
@@ -329,15 +330,15 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Content >>
 		Example with a mix of spaces and tabs.
 		
-		Allowed, although not recommended by style.
-		A parser **MAY** give a mixing warning on the same line.
+		Allowed, though not recommended by style.
+		A parser **MAY** warn about mixing on the same line.
 		This example has the same indentation as the two previous ones.
 		
 	Code >>
 		Node level 0: Value level 0
 		.|->Node level 1: ***Space + 1 TAB: level 1***
 		..|>Another node level 1: ***2 Spaces + 1 TAB: level 1***
-		...|..|>Level 2: ***3 Spaces + 1 TAB, 2 Spaces + 1 TAB: level 2***
+		...>..|>Level 2: ***3 Spaces + 1 TAB, 2 Spaces + 1 TAB: level 2***
 		|-->....Level 2: ***1 TAB, 4 Spaces: level 2***
 		..|>Level 1: ***2 Spaces + 1 TAB: level 1***
 		.|->Level 1: ***1 Space + 1 TAB: level 1***
@@ -346,7 +347,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Subsubheader: 8.3 Level errors
 	
 	Content >>
-		A parser **MUST** raise a parsing error in the following cases:
+		A parser **MUST** raise a parse error in the following cases:
 		
 		* Non-consecutive levels:
 		
@@ -376,7 +377,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Content >>
 		* Indentation **MUST** increase consecutively (no jumps allowed).
 		* Child nodes **MUST** have greater indentation than their parent.
-		* Indentation inside a `>>` block **does not affect the structural hierarchy**: it is simply text.
+		* Indentation within a `>>` block **does not affect the structural hierarchy**: it is simply text.
 		
 	Subheader: 9. Comments
 		
@@ -395,11 +396,8 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		Inside a `>>` block:
 		
 		* Any line with indentation equal to or greater than the minimum indentation of the block
-		  content **MUST** be treated as literal text, even if it starts with `#`.
-		* A line less indented than the block ends the block and may be:
-		
-		  * A comment, if it starts with `#`.
-		  * A structured node.
+		  **MUST** be treated as literal text, even if it starts with `#`.
+		* A line less indented than the block that is not a comment ends the block
 		
 		Example:
 	Code >>
@@ -412,9 +410,10 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		        Normal line
 		            # This is also normal text
 		    ***# This is a comment***
-		    	Here the text of the node continues
+		***# This is also a comment***
+		    	Here the node text continues
 
-	Subsubheader: 9.2 Style for comments
+	Subsubheader: 9.2 Comment style
 	Content >>
 		* It is recommended that the comment be at the same level as the next node.
 		  That is, comments for the next node.
@@ -425,8 +424,8 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		
 	Content >>
 		This section defines how whitespace must be normalized to
-		ensure that different implementations produce the same
-		logical representation from the same STXT text.
+		ensure that different implementations produce the same logical
+		representation from the same STXT text.
 		
 	Subsubheader: 10.1 Inline values (`:`)
 		
@@ -450,7 +449,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Content >>		
 		In all cases, the logical value of the `Name` node is `"Joan"`.
 		
-		If after the `trim` the value is empty, the inline value is considered the empty string (`""`).
+		If after `trim` the value is empty, the inline value is considered the empty string (`""`).
 		
 	Subsubheader: 10.2 Lines inside `>>` blocks
 		
@@ -478,8 +477,8 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Subsubheader: 10.3 Empty lines in `>>` blocks
 		
 	Content >>
-		* Intermediate empty lines within the block (intermediate or final) **MUST** be preserved as empty lines (`""`) in the logical representation of the text.
-		* Only right trim is applied on each individual line (remove spaces/tab at end of line, as is already done).
+		* **Intermediate** empty lines within the block (intermediate or final) **MUST** be preserved as empty lines (`""`) in the logical representation of the text.
+		* Only right trim is applied to each individual line (remove spaces/tabs at end of line, as already done).
 		* No empty line is removed, neither intermediate nor final.
 		
 		Example:
@@ -541,9 +540,9 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Subsubheader: 14.1 Valid document
 		
 	Code >>
-		Document (@com.example.docs):
+		Document (com.example.docs):
 		    Author: Joan
-		    Date: 03/12/2025
+		    Date: 2025/12/03
 		    Summary >>
 		        This is a text block.
 		        With multiple lines.
@@ -575,20 +574,20 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 	Subheader: 15. Security Considerations
 	
 	Content >>
-		STXT has been designed with parsing security as a fundamental priority,
+		@STXT@ has been designed with parsing security as a fundamental priority,
 		minimizing the attack surface compared to other structured textual formats.
 		
-		A conforming STXT parser is inherently resistant to common classes of vulnerabilities:
+		A conforming @STXT@ parser is inherently resistant to common classes of vulnerabilities:
 		
 		* **Immune to entity expansion attacks** (such as "billion laughs" or XXE):
-		  the format does not define entities, external references, or inclusion of remote resources.
+		  the format defines no entities, external references, or inclusion of remote resources.
 		* **Immune to arbitrary code execution**: there are no dynamic features, custom tags,
 		  loaders, or object deserialization. The only resulting structure is a simple tree of nodes and textual values.
 		* **Immune to injection inside literal blocks**: all content inside a `>>` node is treated
-		  as literal text without any interpretation, even if it contains `:`, `>>`, `#` or other STXT syntax.
+		  as literal text without any interpretation, even if it contains `:`, `>>`, `#`, or other STXT syntax.
 		* **Low risk of denial of service**: strict consecutive indentation rules
 		  and the absence of circular references or anchors limit structural complexity.
-		  Implementations **SHOULD** impose a reasonable nesting depth limit (recommended: ≤ 100 levels)
+		  Implementations **SHOULD** impose a reasonable limit on nesting depth (recommended: ≤ 100 levels)
 		  and total document size.
 		* **Optional external schemas**: semantic validation is a separate layer.
 		  A basic parser **MAY** operate without loading external schemas, eliminating risks associated with their resolution.
@@ -612,7 +611,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		BlockStart      = [Space] ">>" [TrailingSpaces]
 		
 		Namespace       = "(" ["@"] Ident { "." Ident } ")"
-		Ident           = [a-z0-9]+   ; lowercase letters and numbers only according to style and normalization rules
+		Ident           = [a-z0-9]+   ; lowercase and numbers only according to style and normalization rules
 		
 		Comment      = "#" { any character until end of line }
 		
@@ -645,7 +644,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		
 		* **Namespace inheritance:**
 		  - The root node namespace is empty by default.
-		  - Each node inherits the namespace of its parent.
+		  - Each node inherits its parent’s namespace.
 		  - If a node defines its own namespace in `()`, it replaces the inherited one for it and all its descendants.
 		
 		* **Additional normalization:**
@@ -664,14 +663,14 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		
 		A schema is an STXT document whose namespace is: `@stxt.schema`
 		
-		and whose goal is to define the structural rules, value types, and node cardinalities belonging to a specific namespace.
+		and whose goal is to define the structural rules, value types, and cardinalities of nodes belonging to a specific namespace.
 		
 		The STXT core **does not interpret** these rules; it only defines how they are expressed and how they are combined via namespaces.
 		
 	Subsubheader: 17.1. Associating a schema to a namespace
 		
 	Content >>
-		To associate a schema to the `com.example.docs` namespace, write a document:
+		To associate a schema to the namespace `com.example.docs`, write a document:
 		
 	Code>>
 		Schema (@stxt.schema): com.example.docs
@@ -702,7 +701,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		A document that declares the same namespace:
 		
 	Code >>
-		Document (@com.example.docs):
+		Document (com.example.docs):
 		    Field1: value
 		    Text: one
 		    Text: two
@@ -721,7 +720,7 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		STXT **MUST NOT** impose semantic rules coming from schemas.
 		The schema system is a separate and optional component that operates **on** the already-parsed STXT.
 		
-		It also **MAY** act as part of the parsing process. In that case it **SHOULD** be weakly coupled to it.
+		It also **MAY** act as part of the parsing process. In that case it **SHOULD** be weakly coupled with it.
 		This would allow detecting errors without having to wait until the end of parsing.
 		
 	Subheader: 18. Appendix B — Interaction with `@stxt.template`
@@ -733,18 +732,18 @@ Document (dev.stxt.namespace): STXT (Semantic Text) — Documents
 		
 		A template is an STXT document whose namespace is: `@stxt.template`
 		
-		and whose goal is to define the structural rules, value types, and node cardinalities belonging to a specific namespace.
+		and whose goal is to define the structural rules, value types, and cardinalities of nodes belonging to a specific namespace.
 		
-		The Template system is analogous to schemas, but with a simplified syntax, oriented to rapid prototypes.
+		The Template system is analogous to schemas, but with a simplified syntax, oriented toward rapid prototypes.
 		Even so, it is a perfectly valid system for all kinds of documents. It could be considered *syntactic sugar*, since internally it can use
 		the same representation as a schema.
 		
-		The template system **MAY** coexist alongside a system with schemas, since in the end a Template defines the same information as a schema.
+		The template system **MAY** coexist alongside a schema system, since in the end a Template defines the same information as a schema.
 	
 	Subsubheader: 18.1. Associating a schema to a template
 		
 	Content >>
-		To associate a schema to the `com.example.docs` namespace with templates, write a document:
+		To associate a schema to the namespace `com.example.docs` with templates, write a document:
 		
 	Code>>
 		Template (@stxt.template): com.example.docs
