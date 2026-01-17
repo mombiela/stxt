@@ -32,7 +32,9 @@ Document: STXT - Built for humans. Reliable for machines.
 	Subheader: Documentos con namespace y esquemas
 	
 	Content >>
-		@STXT@ permite el uso de namespaces, así como de esquemas o plantillas para validar el contenido.
+		@STXT@ permite el uso de namespaces para agrupar documentos.
+		Además, también se pueden definir esquemas o plantillas 
+		para validar el contenido de un documento.
 		
 		Un documento `Email` del namespace `com.example.docs`:
 		
