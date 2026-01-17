@@ -162,7 +162,7 @@ Document: STXT Plantillas (@stxt.template)
 	Content >>
 		Formas permitidas:
 		
-		| Forma       | Significado                  |
+		| Forma      | Significado                  |
 		|------------|------------------------------|
 		| `num`      | Exactamente `num`.           |
 		| `*`        | Cualquier número (`0..∞`).   |

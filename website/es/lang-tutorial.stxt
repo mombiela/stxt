@@ -146,7 +146,21 @@ Document: STXT Tutorial
 		* `Summary` y `Content` son bloques de texto (`TEXT`).
 		* Al menos debe haber un `Chapter`.
 		
-	Subsubheader: 4.2 Aplicación del template
+	Subsubheader: 4.2 Formas permitidas para la numeración
+	
+	Content >>
+		
+		| Forma      | Significado                  |
+		|------------|------------------------------|
+		| `num`      | Exactamente `num`.           |
+		| `*`        | Cualquier número (`0..∞`).   |
+		| `+`        | Una o más (`1..∞`).          |
+		| `?`        | Cero o una (`0..1`).         |
+		| `num+`     | `num` o más (`num..∞`).      |
+		| `num-`     | Hasta `num` (`0..num`).      |
+		| `min,max`  | Entre `min` y `max`.         |
+	
+	Subsubheader: 4.3 Aplicación del template
 	
 	Content >>
 		Un validador que soporte plantillas debe:
@@ -157,6 +171,7 @@ Document: STXT Tutorial
 		
 		El lenguaje @STXT@ **no cambia**: el template se aplica sobre el árbol ya parseado.
 		Dependiendo del parser, puede validar al mismo tiempo que parsea el contenido. 
+		
 		
 	Subheader: 5. Validación con Schemas
 	
